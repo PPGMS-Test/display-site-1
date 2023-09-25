@@ -11,7 +11,7 @@ export default function Root() {
         <SideBar />
       </div>
 
-      <div id="detail">
+      <div id="detail" style={{ overflow: "scroll" }}>
         <Outlet />
       </div>
     </>

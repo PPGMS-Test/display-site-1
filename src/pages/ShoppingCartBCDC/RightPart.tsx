@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import PricingSeparate from "./PricingSeparate";
 import PricingTotal from "./PricingTotal";
-import SmartPaymentButton from "./SmartPaymentButton";
+import SmartPaymentButton from "../../components/StandardSPB/SmartPaymentButton";
 
 const Part: FC = () => {
   return (
