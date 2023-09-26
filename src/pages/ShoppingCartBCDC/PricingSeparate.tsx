@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function () {
+const PricingSeparate = ()=>{
   return (
     <div>
       <div>
@@ -23,3 +23,5 @@ export default function () {
     </div>
   );
 }
+
+export default PricingSeparate;

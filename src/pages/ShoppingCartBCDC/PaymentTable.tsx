@@ -8,16 +8,17 @@ import {
   RadioGroup,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import { useDispatch } from "react-redux";
+// import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import { useAppDispatch, useAppSelector } from "../../typeHooks";
 import { setPaymentMethod } from "../../reducer/reducers/paymentMethodReducer";
 
-export default function () {
-  const dispatch = useDispatch();
-  let [radio_value, setRadioValue] = useState(1);
+const PaymentTable = () => {
+  const dispatch = useAppDispatch();
+  const radio_value = useAppSelector((state) => state.paymentMethod.method);
 
   const handleChange = (event: any) => {
-    setRadioValue(event?.target?.value);
+    // setRadioValue(event?.target?.value);
+    dispatch(setPaymentMethod(event?.target?.value));
   };
 
   const style_div = {
@@ -78,7 +79,7 @@ export default function () {
                       control={<Radio color="primary" />}
                       label="PayPal"
                     />
-                    ========================
+                    *LOGO* &nbsp;
                   </div>
                 </td>
               </tr>
@@ -88,9 +89,9 @@ export default function () {
                     <FormControlLabel
                       value="2"
                       control={<Radio color="primary" />}
-                      label="PayPal Credit Card"
+                      label="Debit or Credit Card"
                     />
-                    ========================
+                    *LOGO* &nbsp;
                   </div>
                 </td>
               </tr>
@@ -100,9 +101,9 @@ export default function () {
                     <FormControlLabel
                       value="3"
                       control={<Radio color="primary" />}
-                      label="Other"
+                      label="APM"
                     />
-                    ========================
+                    *LOGO* &nbsp;
                   </div>
                 </td>
               </tr>
@@ -114,10 +115,10 @@ export default function () {
       <Button
         variant="contained"
         color="primary"
-        endIcon={<ArrowForwardIosIcon />}
+        // endIcon={<ArrowForwardIosIcon />}
         // endIcon={<Icon>send</Icon>}
         onClick={() => {
-          console.log("当前radio value:", radio_value);
+          console.log("[OnClick事件]当前radio value:", radio_value);
           dispatch(setPaymentMethod(radio_value));
         }}
       >
@@ -125,4 +126,6 @@ export default function () {
       </Button>
     </div>
   );
-}
+};
+
+export default PaymentTable;

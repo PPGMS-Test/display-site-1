@@ -3,7 +3,7 @@ import { FC } from "react";
 import LeftPart from "./LeftPart";
 import RightPart from "./RightPart";
 
-const BCDC: FC = () => {
+const BCDCShoppingCart: FC = () => {
   return (
     <div>
       Shipping Cart BCDC
@@ -21,4 +21,4 @@ const BCDC: FC = () => {
   );
 };
 
-export default BCDC;
+export default BCDCShoppingCart;

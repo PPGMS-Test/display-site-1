@@ -1,7 +1,7 @@
 import { Button, IconButton, Tooltip } from "@mui/material";
 import { FC } from "react";
 
-const Part: FC = () => {
+const ShippingMethod: FC = () => {
   return (
     <div className="space-y-6 py-8 text-base  leading-7 relative">
       <p className="text-gray-400 font-extrabold">Shipping Method</p>
@@ -24,4 +24,4 @@ const Part: FC = () => {
     </div>
   );
 };
-export default Part;
+export default ShippingMethod;

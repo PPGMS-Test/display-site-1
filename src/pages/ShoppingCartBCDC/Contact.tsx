@@ -11,7 +11,7 @@ type Props = {
 };
 
 // const Part = ({ userInfo: User, addressInfo: Address }: Props) => {
-const Part:FC = () => {
+const Contact:FC = () => {
   const user: User = user_data as User;
   const address: Address = address_data as Address;
   //   console.log(user.Gender);
@@ -69,4 +69,4 @@ const Part:FC = () => {
     </div>
   );
 };
-export default Part;
+export default Contact;
