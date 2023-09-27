@@ -1,42 +1,48 @@
 import {
-  Button,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Icon,
-  Radio,
-  RadioGroup,
+    Button,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Icon,
+    Radio,
+    RadioGroup,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 // import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useAppDispatch, useAppSelector } from "../../typeHooks";
 import { setPaymentMethod } from "../../reducer/reducers/paymentMethodReducer";
 
+import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
+
 const PaymentTable = () => {
-  const dispatch = useAppDispatch();
-  const radio_value = useAppSelector((state) => state.paymentMethod.method);
+    const dispatch = useAppDispatch();
+    const radio_value_global = useAppSelector(
+        (state) => state.paymentMethod.method
+    );
+    const [radio_value, setRadioValue] =
+        useState<PAYMENT_METHOD>(radio_value_global);
 
-  const handleChange = (event: any) => {
-    // setRadioValue(event?.target?.value);
-    dispatch(setPaymentMethod(event?.target?.value));
-  };
+    const handleChange = (event: any) => {
+        setRadioValue(event?.target?.value);
+        // dispatch(setPaymentMethod(event?.target?.value));
+    };
 
-  const style_div = {
-    width: "100%",
-    "border-radius": "10px",
-    overflow: "hidden",
-  };
+    const style_div = {
+        width: "100%",
+        "border-radius": "10px",
+        overflow: "hidden",
+    };
 
-  const style_table = {
-    "border-collapse": "separate",
-    "border-spacing": 0,
-    "border-radius": "10px",
-    border: "solid 2px #dfdfdf",
-  };
+    const style_table = {
+        "border-collapse": "separate",
+        "border-spacing": 0,
+        "border-radius": "10px",
+        border: "solid 2px #dfdfdf",
+    };
 
-  return (
-    <div className=" space-y-6 py-8 text-base  leading-7 relative">
-      {/* <FormControl component="fieldset">
+    return (
+        <div className=" space-y-6 py-8 text-base  leading-7 relative">
+            {/* <FormControl component="fieldset">
         <FormLabel component="legend">
           <p className="text-gray-400 font-extrabold">Payment Method</p>
         </FormLabel>
@@ -66,66 +72,75 @@ const PaymentTable = () => {
         </RadioGroup>
       </FormControl> */}
 
-      <div>
-        表格式样还需调整, width max属性不起作用
-        <table className=" mx-auto w-full table-auto  rounded-lg border-separate border-spacing-2 border border-slate-400">
-          <tbody>
-            <RadioGroup value={radio_value} onChange={handleChange}>
-              <tr className="w-full">
-                <td className="w-full border border-slate-300 rounded">
-                  <div className="pl-2 w-full">
-                    <FormControlLabel
-                      value="1"
-                      control={<Radio color="primary" />}
-                      label="PayPal"
-                    />
-                    *LOGO* &nbsp;
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-slate-300 rounded">
-                  <div className="pl-2 w-full">
-                    <FormControlLabel
-                      value="2"
-                      control={<Radio color="primary" />}
-                      label="Debit or Credit Card"
-                    />
-                    *LOGO* &nbsp;
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="border border-slate-300 rounded">
-                  <div className="pl-2 w-full">
-                    <FormControlLabel
-                      value="3"
-                      control={<Radio color="primary" />}
-                      label="APM"
-                    />
-                    *LOGO* &nbsp;
-                  </div>
-                </td>
-              </tr>
-            </RadioGroup>
-          </tbody>
-        </table>
-      </div>
+            <div>
+                表格式样还需调整, width max属性不起作用
+                <table className=" mx-auto w-full table-auto  rounded-lg border-separate border-spacing-2 border border-slate-400">
+                    <tbody>
+                        <RadioGroup value={radio_value} onChange={handleChange}>
+                            <tr className="w-full">
+                                <td className="w-full border border-slate-300 rounded">
+                                    <div className="pl-2 w-full">
+                                        <FormControlLabel
+                                            value={
+                                                PAYMENT_METHOD.PAYPAL_STANDARD
+                                            }
+                                            control={<Radio color="primary" />}
+                                            label="PayPal"
+                                        />
+                                        *LOGO* &nbsp;
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="border border-slate-300 rounded">
+                                    <div className="pl-2 w-full">
+                                        <FormControlLabel
+                                            value={PAYMENT_METHOD.PAYPAL_BCDC}
+                                            control={<Radio color="primary" />}
+                                            label="Debit or Credit Card"
+                                        />
+                                        *LOGO* &nbsp;
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="border border-slate-300 rounded">
+                                    <div className="pl-2 w-full">
+                                        <FormControlLabel
+                                            value={PAYMENT_METHOD.PAYPAL_APM}
+                                            control={<Radio color="primary" />}
+                                            label="APM"
+                                        />
+                                        *LOGO* &nbsp;
+                                    </div>
+                                </td>
+                            </tr>
+                        </RadioGroup>
+                    </tbody>
+                </table>
+            </div>
 
-      <Button
-        variant="contained"
-        color="primary"
-        // endIcon={<ArrowForwardIosIcon />}
-        // endIcon={<Icon>send</Icon>}
-        onClick={() => {
-          console.log("[OnClick事件]当前radio value:", radio_value);
-          dispatch(setPaymentMethod(radio_value));
-        }}
-      >
-        更改支付方式
-      </Button>
-    </div>
-  );
+            <Button
+                variant="contained"
+                color="primary"
+                // endIcon={<ArrowForwardIosIcon />}
+                // endIcon={<Icon>send</Icon>}
+                onClick={() => {
+                    console.clear();
+                    console.log(
+                        "[OnClick事件]当前radio value:",
+                        radio_value,
+                        "| typeof radio_value:",
+                        typeof radio_value
+                    );
+
+                    dispatch(setPaymentMethod(radio_value as PAYMENT_METHOD));
+                }}
+            >
+                更改支付方式
+            </Button>
+        </div>
+    );
 };
 
 export default PaymentTable;

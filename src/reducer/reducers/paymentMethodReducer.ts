@@ -1,13 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
+import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
+
 interface PaymentState {
-  method: number;
+  method: PAYMENT_METHOD;
 }
 
 //默认的支付方式是1
 const initialState: PaymentState = {
-  method: 2,
+  method: PAYMENT_METHOD.PAYPAL_STANDARD,
 } as PaymentState;
 
 export const paymentSlice = createSlice({
@@ -15,7 +17,7 @@ export const paymentSlice = createSlice({
   initialState,
   reducers: {
     //改变store中的支付方式
-    setPaymentMethod: (state, action: PayloadAction<number>) => {
+    setPaymentMethod: (state, action: PayloadAction<PAYMENT_METHOD>) => {
       state.method = action.payload;
     },
   },
