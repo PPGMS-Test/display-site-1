@@ -11,9 +11,9 @@ const LeftPart: FC = () => {
       <div className="mx-auto max-w-md">
         {/* Divide line in each div */}
         <div className="divide-y divide-gray-300/50">
-          <PaymentTable />
           <Contacts></Contacts>
           <ShippingMethod></ShippingMethod>
+          <PaymentTable />
          
 
         </div>
