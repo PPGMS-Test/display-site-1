@@ -10,7 +10,7 @@ export const defaultNavItems: NavItem[] = [
   },
   {
     label: "TodoList",
-    href: "/tooltips",
+    href: "/todoList",
     icon: <HomeIcon className="w-6 h-6" />,
   },
   {

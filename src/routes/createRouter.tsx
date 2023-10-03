@@ -5,6 +5,7 @@ import GooglePay from "../pages/GooglePay";
 import Venmo from "../pages/Venmo";
 import Tooltips from "../pages/Tooltips";
 import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
+import TodoList from "../pages/TodoList";
 
 import { createBrowserRouter } from "react-router-dom";
 
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/tooltips",
         element: <Tooltips />,
+      },
+      {
+        path: "/todoList",
+        element: <TodoList />,
       },
       {
         path: "/shoppingCartBCDC",

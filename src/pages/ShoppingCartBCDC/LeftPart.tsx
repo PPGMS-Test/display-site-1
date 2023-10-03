@@ -1,5 +1,4 @@
 import { FC } from "react";
-import classNames from "classnames";
 
 import Contacts from "./Contact";
 import ShippingMethod from "./ShippingMethod";
