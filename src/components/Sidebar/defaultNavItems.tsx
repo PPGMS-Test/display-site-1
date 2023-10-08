@@ -24,6 +24,11 @@ export const defaultNavItems: NavItem[] = [
     icon: <WalletIcon className="w-6 h-6" />,
   },
   {
+    label: "APM",
+    href: "/APM",
+    icon: <WalletIcon className="w-6 h-6" />,
+  },
+  {
     label: "ApplePay",
     href: "/applePay",
     icon: <ClipboardDocumentIcon className="w-6 h-6" />,

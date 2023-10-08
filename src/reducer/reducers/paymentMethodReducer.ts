@@ -27,6 +27,6 @@ export const { setPaymentMethod } = paymentSlice.actions;
 
 //获取当前的支付方式
 export const get_payment_method = (state: RootState) =>
-  state.paymentMethod.method;
+  state.isMoreSpace.useMoreSpace;
 
 export default paymentSlice.reducer;

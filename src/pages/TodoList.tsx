@@ -29,7 +29,7 @@ export default function TodoList() {
             label="Todo list变成checkbox"
           />
           <FormControlLabel
-            control={<Checkbox checked={false} />}
+            control={<Checkbox checked={true} />}
             label="APM拿掉, 变成一个新的tab"
           />
           <FormControlLabel

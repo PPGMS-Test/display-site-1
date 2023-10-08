@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import paymentMethodReducer from "./reducers/paymentMethodReducer";
+import moreSpaceReduer from "./reducers/moreSpaceReduer";
 
 const store = configureStore({
-  reducer: {
-    paymentMethod: paymentMethodReducer,
-  },
+    reducer: {
+        paymentMethod: paymentMethodReducer,
+        isMoreSpace: moreSpaceReduer,
+    },
 });
 
 // 从 store 本身推断 `RootState` 和 `AppDispatch` 类型

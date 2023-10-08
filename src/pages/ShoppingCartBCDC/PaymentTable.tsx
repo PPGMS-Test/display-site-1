@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../typeHooks";
 import { setPaymentMethod } from "../../reducer/reducers/paymentMethodReducer";
 
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
+import classNames from "classnames";
 
 const PaymentTable = () => {
     const dispatch = useAppDispatch();
@@ -40,8 +41,16 @@ const PaymentTable = () => {
         border: "solid 2px #dfdfdf",
     };
 
+    const isUseMoreSpace: boolean = useAppSelector(
+        (state) => state.isMoreSpace.useMoreSpace
+    );
     return (
-        <div className=" space-y-6 py-8 text-base  leading-7 relative">
+        <div
+            className={classNames({
+                "text-base  leading-7 relative": true,
+                "space-y-6 py-8": isUseMoreSpace,
+            })}
+        >
             {/* <FormControl component="fieldset">
         <FormLabel component="legend">
           <p className="text-gray-400 font-extrabold">Payment Method</p>
@@ -103,7 +112,8 @@ const PaymentTable = () => {
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
+                            {/* [2023-10-08 去除支付方式中的APM按钮 ]*/}
+                            {/* <tr>
                                 <td className="border border-slate-300 rounded">
                                     <div className="pl-2 w-full">
                                         <FormControlLabel
@@ -114,7 +124,7 @@ const PaymentTable = () => {
                                         *LOGO* &nbsp;
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> */}
                         </RadioGroup>
                     </tbody>
                 </table>

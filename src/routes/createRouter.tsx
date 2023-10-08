@@ -6,6 +6,7 @@ import Venmo from "../pages/Venmo";
 import Tooltips from "../pages/Tooltips";
 import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
 import TodoList from "../pages/TodoList";
+import APM from "../pages/APM";
 
 import { createBrowserRouter } from "react-router-dom";
 
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
         path: "/venmo",
         element: <Venmo />,
       },
+      {
+        path:"/APM",
+        element:<APM/>
+      }
     ],
   },
 ]);
