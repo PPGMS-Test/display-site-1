@@ -1,5 +1,6 @@
 import { Checkbox, Chip, FormControlLabel, FormGroup } from "@mui/material";
 import CircleCheckMark from "../components/svgIcon/CircleCheckMark";
+// import DoneIcon from '@material-ui/icons/Done';
 
 export default function TodoList() {
     return (
@@ -37,9 +38,26 @@ export default function TodoList() {
 
                 <div className=" border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
                     <FormControlLabel
-                        control={<Checkbox checked={false} />}
-                        label="radio box点击的更改方式 -- 点击事件添加遮罩, 延迟反馈(困难)"
+                        control={<Checkbox checked={true} />}
+                        label="radio box点击的更改方式 "
                     ></FormControlLabel>
+                    <div className="ml-8 pr-2 mb-1 ">
+                        <Chip
+                            variant="outlined"
+                            size="small"
+                            color="primary"
+                            label="按钮点击之间有0.8s的延迟防止重复点击"
+                            // deleteIcon={<CircleCheckMark />}
+                            // deleteIcon={<DoneIcon />}
+                        />
+                        
+                        <Chip
+                            variant="outlined"
+                            size="small"
+                            color="primary"
+                            label="可以给radio button区域添加遮罩, 延迟反馈 但比较困难"
+                        />
+                    </div>
                 </div>
                 <div className=" border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
                     <FormControlLabel

@@ -7,6 +7,8 @@ import Tooltips from "../pages/Tooltips";
 import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
 import TodoList from "../pages/TodoList";
 import APM from "../pages/APM";
+import HomePage from "../pages/HomePage";
+import SinglePageTest from "../pages/SingleTestPage";
 
 import { createBrowserRouter } from "react-router-dom";
 
@@ -20,6 +22,7 @@ const router = createBrowserRouter([
         path: "/tooltips",
         element: <Tooltips />,
       },
+      
       {
         path: "/todoList",
         element: <TodoList />,
@@ -43,7 +46,15 @@ const router = createBrowserRouter([
       {
         path:"/APM",
         element:<APM/>
-      }
+      },
+      {
+        path:"/",
+        element:<HomePage/>
+      },
+      {
+        path: "/singlePageTest",
+        element: <SinglePageTest />,
+      },
     ],
   },
 ]);

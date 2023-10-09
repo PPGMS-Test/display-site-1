@@ -1,11 +1,11 @@
-import { ClipboardDocumentIcon, HomeIcon,ArrowUturnLeftIcon, WalletIcon } from "@heroicons/react/24/outline";
+import { ClipboardDocumentIcon, HomeIcon,ArrowUturnLeftIcon, WalletIcon, BeakerIcon } from "@heroicons/react/24/outline";
 import { NavItem } from "./Sidebar";
 import { ShoppingCartIcon } from "@heroicons/react/20/solid";
 
 export const defaultNavItems: NavItem[] = [
   {
     label: "Dashboard",
-    href: "/tooltips",
+    href: "/",
     icon: <HomeIcon className="w-6 h-6" />,
   },
   {
@@ -33,9 +33,21 @@ export const defaultNavItems: NavItem[] = [
     href: "/applePay",
     icon: <ClipboardDocumentIcon className="w-6 h-6" />,
   },
+
+  {
+    label: "Tooltips",
+    href: "/tooltips",
+    icon: <ClipboardDocumentIcon className="w-6 h-6" />,
+  },
   {
     label: "Venmo",
     href: "/venmo",
     icon: <ArrowUturnLeftIcon className="w-6 h-6" />,
+  },
+
+  {
+    label: "SinglePageTest",
+    href: "/singlePageTest",
+    icon: <BeakerIcon className="w-6 h-6" />,
   },
 ];
