@@ -1,4 +1,4 @@
-import CircleCheckMark from "../../components/svgIcon/CircleCheckMark";
+
 import { User } from "../../interface/user/User";
 import { Address } from "../../interface/address/Address";
 // import user_data from "../../Mock/Person/Tom.json";

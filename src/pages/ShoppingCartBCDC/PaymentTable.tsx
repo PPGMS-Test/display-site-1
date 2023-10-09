@@ -51,7 +51,8 @@ const PaymentTable = () => {
                 "space-y-6 py-8": isUseMoreSpace,
             })}
         >
-            {/* <FormControl component="fieldset">
+{/* radio group sample
+    <FormControl component="fieldset">
         <FormLabel component="legend">
           <p className="text-gray-400 font-extrabold">Payment Method</p>
         </FormLabel>
@@ -79,7 +80,8 @@ const PaymentTable = () => {
           />
           
         </RadioGroup>
-      </FormControl> */}
+    </FormControl> 
+*/}
 
             {/* <div>
                 表格式样还需调整, width max属性不起作用
@@ -173,6 +175,9 @@ const PaymentTable = () => {
             >
                 更改支付方式
             </Button>
+
+
+
         </div>
     );
 };
