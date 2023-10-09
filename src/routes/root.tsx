@@ -6,8 +6,8 @@ export default function Root() {
   return (
     <>
       <div id="sidebar">
-        <h1>Use React Router</h1>
-        <SearchBar />
+        {/* <h1>Use React Router</h1> */}
+        {/* <SearchBar /> */}
         <SideBar />
       </div>
 

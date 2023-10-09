@@ -81,7 +81,7 @@ const PaymentTable = () => {
         </RadioGroup>
       </FormControl> */}
 
-            <div>
+            {/* <div>
                 表格式样还需调整, width max属性不起作用
                 <table className=" mx-auto w-full table-auto  rounded-lg border-separate border-spacing-2 border border-slate-400">
                     <tbody>
@@ -111,9 +111,10 @@ const PaymentTable = () => {
                                         *LOGO* &nbsp;
                                     </div>
                                 </td>
-                            </tr>
-                            {/* [2023-10-08 去除支付方式中的APM按钮 ]*/}
-                            {/* <tr>
+                            </tr>*/}
+
+            {/* [2023-10-08 去除支付方式中的APM按钮 ]
+                            <tr>
                                 <td className="border border-slate-300 rounded">
                                     <div className="pl-2 w-full">
                                         <FormControlLabel
@@ -124,11 +125,34 @@ const PaymentTable = () => {
                                         *LOGO* &nbsp;
                                     </div>
                                 </td>
-                            </tr> */}
-                        </RadioGroup>
+                            </tr>
+            */}
+
+            {/* </RadioGroup>
                     </tbody>
                 </table>
-            </div>
+            </div>  */}
+
+            {/* [2023-10-09 ]为了控制台不报 validateDOMNesting(...) 错, 把表格去掉 */}
+            <RadioGroup value={radio_value} onChange={handleChange}>
+                <div className="pl-2 w-full">
+                    <FormControlLabel
+                        value={PAYMENT_METHOD.PAYPAL_STANDARD}
+                        control={<Radio color="primary" />}
+                        label="PayPal"
+                    />
+                    *LOGO* &nbsp;
+                </div>
+
+                <div className="pl-2 w-full">
+                    <FormControlLabel
+                        value={PAYMENT_METHOD.PAYPAL_BCDC}
+                        control={<Radio color="primary" />}
+                        label="Debit or Credit Card"
+                    />
+                    *LOGO* &nbsp;
+                </div>
+            </RadioGroup>
 
             <Button
                 variant="contained"

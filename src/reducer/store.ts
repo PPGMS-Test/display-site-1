@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import paymentMethodReducer from "./reducers/paymentMethodReducer";
 import moreSpaceReduer from "./reducers/moreSpaceReduer";
+import buyerInfoReducer from "./reducers/buyerInfoReducer";
 
 const store = configureStore({
     reducer: {
         paymentMethod: paymentMethodReducer,
         isMoreSpace: moreSpaceReduer,
+        buyerInfo: buyerInfoReducer
     },
 });
 

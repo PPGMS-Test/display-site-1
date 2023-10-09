@@ -1,5 +1,6 @@
 let PayPal_SPB_JS_SDK_LoadScript = document.createElement("script");
 
+console.log("[JSSDK.ts] PayPal JS SDK load!")
 const client_id =
     "AY13GPAAVtyuFAmqUT9FWoLIpTQo2B1u_LXupEn3390NjUnOK6qPZFbeJbMqY2nBnVLLronvqG8uNeIE";
 const url = `https://www.paypal.com/sdk/js?client-id=${client_id}&buyer-country=US`;

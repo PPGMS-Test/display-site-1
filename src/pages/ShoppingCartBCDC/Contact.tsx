@@ -1,23 +1,22 @@
 import CircleCheckMark from "../../components/svgIcon/CircleCheckMark";
 import { User } from "../../interface/user/User";
 import { Address } from "../../interface/address/Address";
-import user_data from "../../Mock/Person/Tom.json";
-import address_data from "../../Mock/Address/TomAddress.json";
+// import user_data from "../../Mock/Person/Tom.json";
+// import address_data from "../../Mock/Address/TomAddress.json";
 import { FC } from "react";
 import classNames from "classnames";
 import UseMoreSpace from "../../components/UseMoreSpaceToggle";
 import { useAppSelector } from "../../typeHooks";
 
-type Props = {
-    userInfo: User;
-    addressInfo: Address;
-};
-
-// const Part = ({ userInfo: User, addressInfo: Address }: Props) => {
+//[2023-10-08 BCDB 一定要下拉式的]
 const Contact: FC = () => {
-    const user: User = user_data as User;
-    const address: Address = address_data as Address;
-    //   console.log(user.Gender);
+    const user: User = useAppSelector(
+        (state) => state.buyerInfo.Contact
+    ) as User;
+    const address: Address = useAppSelector(
+        (state) => state.buyerInfo.Address
+    ) as Address;
+
 
     const isUseMoreSpace: boolean = useAppSelector(
         (state) => state.isMoreSpace.useMoreSpace

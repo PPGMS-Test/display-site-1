@@ -1,4 +1,4 @@
-export default function Root() {
+export default function SearchBar() {
   return (
     <div >
       <form id="search-form" role="search">
