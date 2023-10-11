@@ -1,16 +1,13 @@
 import { FC } from "react";
 import { Tooltip, Button, FormControlLabel, Switch } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../typeHooks";
-import { setIsMoreSpace } from "../reducer/reducers/moreSpaceReduer";
+import { useAppDispatch, useAppSelector } from "../../typeHooks";
+import { setShippingOption } from "../../reducer/reducers/shippingOptionReducer";
 
-const UseMoreSpace: FC = () => {
+const AddShippingInCreateOrder: FC = () => {
     const dispatch = useAppDispatch();
-    const isUseMoreSpace: boolean = useAppSelector(
-        (state) => state.isMoreSpace.useMoreSpace
-    );
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // console.log("[handleChange]event?.target?.checked:", event?.target?.checked)
-        dispatch(setIsMoreSpace(event?.target?.checked));
+        console.log("[handleChange]event?.target?.checked:", event?.target?.checked)
+        dispatch(setShippingOption(event?.target?.checked));
     };
     return (
         <div className="top-2 right-2 absolute ">
@@ -22,15 +19,15 @@ const UseMoreSpace: FC = () => {
                 <FormControlLabel
                     control={
                         <Switch
-                            checked={isUseMoreSpace}
+                            // checked={isUseMoreSpace}
                             onChange={handleChange}
                         />
                     }
-                    label="切换大间距"
+                    label="是否在create order中使用物流运输地址参数, 这会导致BCDC按钮的表现不一样"
                 />
             </Tooltip>
         </div>
     );
 };
 
-export default UseMoreSpace;
+export default AddShippingInCreateOrder;

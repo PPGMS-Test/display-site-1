@@ -1,6 +1,6 @@
 import { BuyerInfo } from "../../reducer/reducers/buyerInfoReducer";
 
-const CreateOrderObjectFn = (buyerInfo: BuyerInfo) => {
+const CreateOrderObjectFn = (buyerInfo: BuyerInfo, isWithShippingOption: boolean = false) => {
     let payer_info = {};
     if (buyerInfo) {
         payer_info = {
@@ -37,20 +37,21 @@ const CreateOrderObjectFn = (buyerInfo: BuyerInfo) => {
                     // currency_code: "EUR",
                     currency_code: "USD",
                 },
-                shipping: {
-                    options: [
-                        {
-                            id: "SHIP_123",
-                            label: "Free Shipping",
-                            type: "SHIPPING",
-                            selected: true,
-                            amount: {
-                                value: "3.00",
-                                currency_code: "USD",
-                            },
-                        },
-                    ],
-                },
+                
+                // shipping: {
+                //     options: [
+                //         {
+                //             id: "SHIP_123",
+                //             label: "Free Shipping",
+                //             type: "SHIPPING",
+                //             selected: true,
+                //             amount: {
+                //                 value: "3.00",
+                //                 currency_code: "USD",
+                //             },
+                //         },
+                //     ],
+                // },
             },
         ],
     };
@@ -64,29 +65,29 @@ const CreateOrderObjectFn = (buyerInfo: BuyerInfo) => {
         createOrder: function (data: any, actions: any) {
             return actions.order.create(create_order_obj);
         },
-        onShippingChange: function (data: any, actions: any) {
-            debugger;
-            data.amount.value =
-                // parseFloat(baseOrderAmount) +
-                (
-                    15 + parseFloat(data.selected_shipping_option.amount.value)
-                ).toFixed(2);
-            console.log("data.amount.value", data.amount.value);
+        // onShippingChange: function (data: any, actions: any) {
+        //     debugger;
+        //     data.amount.value =
+        //         // parseFloat(baseOrderAmount) +
+        //         (
+        //             15 + parseFloat(data.selected_shipping_option.amount.value)
+        //         ).toFixed(2);
+        //     console.log("data.amount.value", data.amount.value);
 
-            let obj = actions.order.patch([
-                {
-                    op: "replace",
-                    path: "/purchase_units/@reference_id=='default'/amount",
-                    value: {
-                        value: data.amount.value,
-                        // value: 88,
-                        currency_code: "USD",
-                    },
-                },
-            ]);
-            debugger;
-            return obj;
-        },
+        //     let obj = actions.order.patch([
+        //         {
+        //             op: "replace",
+        //             path: "/purchase_units/@reference_id=='default'/amount",
+        //             value: {
+        //                 value: data.amount.value,
+        //                 // value: 88,
+        //                 currency_code: "USD",
+        //             },
+        //         },
+        //     ]);
+        //     debugger;
+        //     return obj;
+        // },
     };
     console.log(JSON.stringify(create_order_obj, null, "  "));
     return paypalObject;

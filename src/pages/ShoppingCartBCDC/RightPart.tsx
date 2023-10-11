@@ -71,7 +71,14 @@ const RightPart: FC = () => {
     const count = useAppSelector(
         (state) => state.paymentMethod.method
     ) as PAYMENT_METHOD;
+
     let [showPaymentMethod, setShowPaymentMethod] = useState(count);
+
+    const isWithShippingOption =  useAppSelector(
+        (state) => state.withShippingOption.isWithShipping
+    ) as boolean
+
+    // console.log("isWithShippingOption:",isWithShippingOption)
 
     return (
         <div className="relative bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 ">
@@ -86,6 +93,7 @@ const RightPart: FC = () => {
                     </div>
                     <div>
                         <p>当前的支付方式: {count}</p>
+                        <p>是否带有运输参数: {`${isWithShippingOption}`}</p>
 
                         <div>{CurrentPaymentMethod(count)}</div>
                     </div>

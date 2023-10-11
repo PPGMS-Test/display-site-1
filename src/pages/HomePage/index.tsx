@@ -1,12 +1,14 @@
-import { FC } from "react"
+import { FC } from "react";
+
+import AddShippingInCreateOrder from "../../components/Toggles/AddShippingInCreateOrder";
 
 const HomePage: FC = () => {
-
-    return(
+    return (
         <div>
             Home Page
+            <AddShippingInCreateOrder />
         </div>
-    )
-}
+    );
+};
 
-export default HomePage
+export default HomePage;

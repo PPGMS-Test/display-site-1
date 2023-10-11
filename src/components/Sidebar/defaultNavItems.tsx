@@ -11,10 +11,10 @@ export const defaultNavItems: NavItem[] = [
   {
     label: "TodoList",
     href: "/todoList",
-    icon: <HomeIcon className="w-6 h-6" />,
+    icon: <ClipboardDocumentIcon className="w-6 h-6" />,
   },
   {
-    label: "ShoppingCart BCDC",
+    label: "BCDC Standalone",
     href: "/shoppingCartBCDC",
     icon: <ShoppingCartIcon className="w-6 h-6" />,
   },
@@ -24,25 +24,25 @@ export const defaultNavItems: NavItem[] = [
     icon: <WalletIcon className="w-6 h-6" />,
   },
   {
-    label: "APM",
+    label: "APM Standalone",
     href: "/APM",
     icon: <WalletIcon className="w-6 h-6" />,
   },
   {
     label: "ApplePay",
     href: "/applePay",
-    icon: <ClipboardDocumentIcon className="w-6 h-6" />,
+    icon: <WalletIcon className="w-6 h-6" />,
   },
 
   {
     label: "Tooltips",
     href: "/tooltips",
-    icon: <ClipboardDocumentIcon className="w-6 h-6" />,
+    icon: <ArrowUturnLeftIcon className="w-6 h-6" />,
   },
   {
     label: "Venmo",
     href: "/venmo",
-    icon: <ArrowUturnLeftIcon className="w-6 h-6" />,
+    icon: <WalletIcon className="w-6 h-6" />,
   },
 
   {
