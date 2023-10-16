@@ -4,7 +4,7 @@ import AddShippingInCreateOrder from "../../components/Toggles/AddShippingInCrea
 
 const HomePage: FC = () => {
     return (
-        <div>
+        <div className=" block">
             Home Page
             <AddShippingInCreateOrder />
         </div>

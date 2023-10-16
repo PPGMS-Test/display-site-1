@@ -6,11 +6,19 @@ import { setShippingOption } from "../../reducer/reducers/shippingOptionReducer"
 const AddShippingInCreateOrder: FC = () => {
     const dispatch = useAppDispatch();
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("[handleChange]event?.target?.checked:", event?.target?.checked)
+        console.log(
+            "[handleChange]event?.target?.checked:",
+            event?.target?.checked
+        );
         dispatch(setShippingOption(event?.target?.checked));
     };
+
+    const toggleCheck = useAppSelector(
+        (state) => state.withShippingOption.isWithShipping
+    );
+
     return (
-        <div className="top-2 right-2 absolute ">
+        <div className=" m-2 p-2">
             <Tooltip
                 title="Add"
                 placement="bottom"
@@ -18,10 +26,7 @@ const AddShippingInCreateOrder: FC = () => {
             >
                 <FormControlLabel
                     control={
-                        <Switch
-                            // checked={isUseMoreSpace}
-                            onChange={handleChange}
-                        />
+                        <Switch checked={toggleCheck} onChange={handleChange} />
                     }
                     label="是否在create order中使用物流运输地址参数, 这会导致BCDC按钮的表现不一样"
                 />

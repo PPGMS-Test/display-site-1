@@ -6,7 +6,7 @@ interface WithShipping {
 }
 
 const initialState: WithShipping = {
-    isWithShipping: false,
+    isWithShipping: true,
 } as WithShipping;
 
 export const isShippingOptionSlice = createSlice({

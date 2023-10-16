@@ -22,6 +22,6 @@ const PricingSeparate = ()=>{
       </div>
     </div>
   );
-}
+};
 
 export default PricingSeparate;

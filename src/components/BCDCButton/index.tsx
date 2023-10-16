@@ -1,24 +1,34 @@
 import React, { FC, useEffect } from "react";
 import CreateOrderObject from "../LoadPayPalScript/createOrderObject";
-import PayPal_SPB_JS_SDK_LoadScript from "../LoadPayPalScript/JSSDK";
+// import PayPal_SPB_JS_SDK_LoadScript from "../LoadPayPalScript/JSSDK";
 import { useAppSelector } from "../../typeHooks";
+import UseJSSDK from "../LoadPayPalScript/UseJSSDK";
 
 const BCDCButton: FC = () => {
     const buyerInfo = useAppSelector((state) => state.buyerInfo);
+    const isWithShippingOption = useAppSelector(
+        (state) => state.withShippingOption.isWithShipping
+    ) as boolean;
 
     useEffect(() => {
-        console.log("JS SDK states:", (PayPal_SPB_JS_SDK_LoadScript as any).readyState);
+        (async () => {
+            // console.log(
+            //     "JS SDK states:",
+            //     (PayPal_SPB_JS_SDK_LoadScript as any).readyState
+            // );
 
-        // debugger;
-        if (window.paypal) {
-            let button = window.paypal.Buttons({
-                fundingSource: window.paypal.FUNDING.CARD,
-                ...CreateOrderObject(buyerInfo),
-            });
-            if (button.isEligible()) {
-                button.render("#paypal-button-container");
+            await UseJSSDK();
+            debugger;
+            if (window.paypal) {
+                let button = window.paypal.Buttons({
+                    fundingSource: window.paypal.FUNDING.CARD,
+                    ...CreateOrderObject(buyerInfo, isWithShippingOption),
+                });
+                if (button.isEligible()) {
+                    button.render("#paypal-button-container");
+                }
             }
-        }
+        })();
     });
 
     return (

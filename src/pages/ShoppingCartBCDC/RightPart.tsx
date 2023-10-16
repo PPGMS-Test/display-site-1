@@ -92,8 +92,8 @@ const RightPart: FC = () => {
                         <PricingTotal />
                     </div>
                     <div>
-                        <p>当前的支付方式: {count}</p>
-                        <p>是否带有运输参数: {`${isWithShippingOption}`}</p>
+                        {/* <p>当前的支付方式: {count}</p>
+                        <p>是否带有运输参数: {`${isWithShippingOption}`}</p> */}
 
                         <div>{CurrentPaymentMethod(count)}</div>
                     </div>

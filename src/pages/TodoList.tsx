@@ -3,17 +3,20 @@ import CircleCheckMark from "../components/svgIcon/CircleCheckMark";
 // import DoneIcon from '@material-ui/icons/Done';
 
 export default function TodoList() {
+    const DIV_CLASS =
+        "border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1";
+    const NOTE_CLASS = " ml-8 pr-2 mb-1";
     return (
         <div>
             <FormGroup>
-                <div className=" border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
+                <div className={DIV_CLASS}>
                     <FormControlLabel
                         control={<Checkbox checked={false} />}
                         label="拖拽式侧边栏"
                     />
                 </div>
 
-                <div className="border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
+                <div className={DIV_CLASS}>
                     {/* [2023-10-08 修改"Left right 背景图拿掉] */}
                     <FormControlLabel
                         control={<Checkbox checked={true} />}
@@ -29,14 +32,14 @@ export default function TodoList() {
                     </div>
                 </div>
 
-                <div className=" border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
+                <div className={DIV_CLASS}>
                     <FormControlLabel
                         control={<Checkbox checked={true} />}
                         label="user信息缩小, 放进一个页面 "
                     />
                 </div>
 
-                <div className=" border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
+                <div className={DIV_CLASS}>
                     <FormControlLabel
                         control={<Checkbox checked={true} />}
                         label="radio box点击的更改方式 "
@@ -50,7 +53,7 @@ export default function TodoList() {
                             // deleteIcon={<CircleCheckMark />}
                             // deleteIcon={<DoneIcon />}
                         />
-                        
+
                         <Chip
                             variant="outlined"
                             size="small"
@@ -59,59 +62,59 @@ export default function TodoList() {
                         />
                     </div>
                 </div>
-                <div className=" border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
+                <div className={DIV_CLASS}>
                     <FormControlLabel
-                        control={<Checkbox checked={false} />}
+                        control={<Checkbox checked={true} />}
                         label="BCDB 一定要下拉式的"
                     />
-                    <div className=" ml-8 pr-2 mb-1">
+                    <div className={NOTE_CLASS}>
                         <Chip
                             // variant="outlined"
                             // size="small"
                             color="secondary"
-                            label="BCDC的预填不起作用"
+                            label="BCDC的预填中不能带有shipping option, 添加了toggle来展示这个功能"
                         />
                     </div>
                 </div>
 
-                <div className=" border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
+                <div className={DIV_CLASS}>
                     <FormControlLabel
                         control={<Checkbox checked={true} />}
                         label="Todo list变成checkbox "
                     />
                 </div>
-                <div className=" border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
+                <div className={DIV_CLASS}>
                     <FormControlLabel
                         control={<Checkbox checked={true} />}
                         label="APM拿掉, 变成一个新的tab"
                     />
                 </div>
-                <div className="border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
+                <div className={DIV_CLASS}>
                     <FormControlLabel
                         control={<Checkbox checked={false} />}
                         label="侧边栏小窗口时隐藏"
                     />
                 </div>
-                <div className=" border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
+                <div className={DIV_CLASS}>
                     <FormControlLabel
                         control={<Checkbox checked={false} />}
                         label="PayPal等添加logo"
                     />
                 </div>
 
-                <div className=" border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
+                <div className={DIV_CLASS}>
                     <FormControlLabel
                         control={<Checkbox checked={false} />}
                         label="dashboard为参数提供自定义toggle"
                     />
                 </div>
 
-                <div className=" border-x-indigo-500 border-spacing-0 border-4 rounded-xl p-1">
+                <div className={DIV_CLASS}>
                     <FormControlLabel
                         control={<Checkbox checked={false} />}
                         label="user信息可修改 -- 使用redux实现"
                     />
-                    <div className=" ml-8 pr-2 mb-1">
+                    <div className={NOTE_CLASS}>
                         <Chip
                             variant="outlined"
                             // size="small"
@@ -119,6 +122,13 @@ export default function TodoList() {
                             label="user信息已经放到reducer中"
                         />
                     </div>
+                </div>
+
+                <div className={DIV_CLASS}>
+                    <FormControlLabel
+                        control={<Checkbox checked={false} />}
+                        label="PP按钮的点击事件变成OrderV2"
+                    />
                 </div>
             </FormGroup>
         </div>
