@@ -3,9 +3,10 @@ import CreateOrderObject from "../LoadPayPalScript/createOrderObject";
 // import PayPal_SPB_JS_SDK_LoadScript from "../LoadPayPalScript/JSSDK";
 import { useAppSelector } from "../../typeHooks";
 import UseJSSDK from "../LoadPayPalScript/UseJSSDK";
+import { getBuyerInfo } from "../../reducer/reducers/buyerInfoReducer";
 
 const BCDCButton: FC = () => {
-    const buyerInfo = useAppSelector((state) => state.buyerInfo);
+    const buyerInfo = useAppSelector((state) => getBuyerInfo(state));
     const isWithShippingOption = useAppSelector(
         (state) => state.withShippingOption.isWithShipping
     ) as boolean;

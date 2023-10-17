@@ -3,6 +3,7 @@ import paymentMethodReducer from "./reducers/paymentMethodReducer";
 import moreSpaceReduer from "./reducers/moreSpaceReduer";
 import buyerInfoReducer from "./reducers/buyerInfoReducer";
 import shippingOptionReducer from "./reducers/shippingOptionReducer";
+import productReducer from "./reducers/productReducer";
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         isMoreSpace: moreSpaceReduer,
         buyerInfo: buyerInfoReducer,
         withShippingOption: shippingOptionReducer,
+        productInfo:productReducer
     },
 });
 

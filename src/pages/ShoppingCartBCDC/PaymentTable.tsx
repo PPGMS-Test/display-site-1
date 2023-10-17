@@ -10,15 +10,25 @@ import {
 import React, { useEffect, useState } from "react";
 // import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useAppDispatch, useAppSelector } from "../../typeHooks";
-import { setPaymentMethod } from "../../reducer/reducers/paymentMethodReducer";
+import {
+    get_payment_method,
+    setPaymentMethod,
+} from "../../reducer/reducers/paymentMethodReducer";
 
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
 import classNames from "classnames";
 
 const PaymentTable = () => {
     const dispatch = useAppDispatch();
-    const radio_value_global = useAppSelector(
-        (state) => state.paymentMethod.method
+
+    // const radio_value_global = useAppSelector(
+    //     (state) => state.paymentMethod.method
+    // );
+
+    const [useRadioOnChange] = useState(false);
+
+    const radio_value_global = useAppSelector((state) =>
+        get_payment_method(state)
     );
     const [radio_value, setRadioValue] =
         useState<PAYMENT_METHOD>(radio_value_global);
@@ -58,6 +68,86 @@ const PaymentTable = () => {
     const isUseMoreSpace: boolean = useAppSelector(
         (state) => state.isMoreSpace.useMoreSpace
     );
+
+    const buttonTables = function () {
+        if (useRadioOnChange) {
+            /* [2023-10-09]radio button的点击事件来变动支付方式而不是按钮 */
+            return (
+                <div>
+                    <RadioGroup
+                        value={radio_value}
+                        onChange={handleChange_ChangePaymentMethod}
+                    >
+                        <div className="pl-2 w-full">
+                            <FormControlLabel
+                                value={PAYMENT_METHOD.PAYPAL_STANDARD}
+                                control={<Radio color="primary" />}
+                                label="PayPal"
+                                disabled={radioBtnDisable}
+                            />
+                            *LOGO* &nbsp;
+                        </div>
+
+                        <div className="pl-2 w-full">
+                            <FormControlLabel
+                                value={PAYMENT_METHOD.PAYPAL_BCDC}
+                                control={<Radio color="primary" />}
+                                label="Debit or Credit Card"
+                                disabled={radioBtnDisable}
+                            />
+                            *LOGO* &nbsp;
+                        </div>
+                    </RadioGroup>
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <RadioGroup value={radio_value} onChange={handleChange}>
+                        <div className="pl-2 w-full">
+                            <FormControlLabel
+                                value={PAYMENT_METHOD.PAYPAL_STANDARD}
+                                control={<Radio color="primary" />}
+                                label="PayPal"
+                            />
+                            *LOGO* &nbsp;
+                        </div>
+
+                        <div className="pl-2 w-full">
+                            <FormControlLabel
+                                value={PAYMENT_METHOD.PAYPAL_BCDC}
+                                control={<Radio color="primary" />}
+                                label="Debit or Credit Card"
+                            />
+                            *LOGO* &nbsp;
+                        </div>
+                    </RadioGroup>
+
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        // endIcon={<ArrowForwardIosIcon />}
+                        // endIcon={<Icon>send</Icon>}
+                        onClick={() => {
+                            console.clear();
+                            console.log(
+                                "[OnClick事件]当前radio value:",
+                                radio_value,
+                                "| typeof radio_value:",
+                                typeof radio_value
+                            );
+
+                            dispatch(
+                                setPaymentMethod(radio_value as PAYMENT_METHOD)
+                            );
+                        }}
+                    >
+                        更改支付方式
+                    </Button>
+                </div>
+            );
+        }
+    };
     return (
         <div
             className={classNames({
@@ -151,81 +241,13 @@ const PaymentTable = () => {
             
         */}
 
+            {/* ----------------------------------------------------------------------- */}
+
             {/* [2023-10-09]添加文字头 */}
             <p className="text-gray-400 font-extrabold">Payment Method</p>
 
-            {/* [2023-10-09]radio button的点击事件来变动支付方式而不是按钮 */}
-            <div>
-                <RadioGroup
-                    value={radio_value}
-                    onChange={handleChange_ChangePaymentMethod}
-                >
-                    <div className="pl-2 w-full">
-                        <FormControlLabel
-                            value={PAYMENT_METHOD.PAYPAL_STANDARD}
-                            control={<Radio color="primary" />}
-                            label="PayPal"
-                            disabled={radioBtnDisable}
-                        />
-                        *LOGO* &nbsp;
-                    </div>
-
-                    <div className="pl-2 w-full">
-                        <FormControlLabel
-                            value={PAYMENT_METHOD.PAYPAL_BCDC}
-                            control={<Radio color="primary" />}
-                            label="Debit or Credit Card"
-                            disabled={radioBtnDisable}
-                        />
-                        *LOGO* &nbsp;
-                    </div>
-                </RadioGroup>
-            </div>
-
             {/* [2023-10-09]为了控制台不报 validateDOMNesting(...) 错, 把表格去掉 */}
-            {/* <div>
-                <RadioGroup value={radio_value} onChange={handleChange}>
-                    <div className="pl-2 w-full">
-                        <FormControlLabel
-                            value={PAYMENT_METHOD.PAYPAL_STANDARD}
-                            control={<Radio color="primary" />}
-                            label="PayPal"
-                        />
-                        *LOGO* &nbsp;
-                    </div>
-
-                    <div className="pl-2 w-full">
-                        <FormControlLabel
-                            value={PAYMENT_METHOD.PAYPAL_BCDC}
-                            control={<Radio color="primary" />}
-                            label="Debit or Credit Card"
-                        />
-                        *LOGO* &nbsp;
-                    </div>
-                </RadioGroup>
-
-                <Button
-                    variant="contained"
-                    color="primary"
-                    // endIcon={<ArrowForwardIosIcon />}
-                    // endIcon={<Icon>send</Icon>}
-                    onClick={() => {
-                        console.clear();
-                        console.log(
-                            "[OnClick事件]当前radio value:",
-                            radio_value,
-                            "| typeof radio_value:",
-                            typeof radio_value
-                        );
-
-                        dispatch(
-                            setPaymentMethod(radio_value as PAYMENT_METHOD)
-                        );
-                    }}
-                >
-                    更改支付方式
-                </Button>
-            </div> */}
+            {buttonTables()}
         </div>
     );
 };

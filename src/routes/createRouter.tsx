@@ -9,6 +9,7 @@ import TodoList from "../pages/TodoList";
 import APM from "../pages/APM";
 import HomePage from "../pages/HomePage";
 import SinglePageTest from "../pages/SingleTestPage";
+import Product from "../pages/Product";
 
 import { createBrowserRouter } from "react-router-dom";
 
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/todoList",
         element: <TodoList />,
+      },
+      {
+        path:"/product",
+        element:<Product/>
       },
       {
         path: "/shoppingCartBCDC",
