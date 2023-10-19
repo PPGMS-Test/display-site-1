@@ -1,12 +1,17 @@
 import { BuyerInfo } from "../../reducer/reducers/buyerInfoReducer";
+
+import store from "../../reducer/store";
+
+const state = store.getState();
+const buyerInfo = state.buyerInfo;
+const isWithShippingOption = state.withShippingOption.isWithShipping;
+
 interface ExtendedObj {
     [key: string]: any;
 }
 
-const CreateOrderObjectFn = (
-    buyerInfo: BuyerInfo,
-    isWithShippingOption: boolean = false
-) => {
+const CreateOrderObjectFn = () => {
+    debugger;
     let payer_info;
     if (buyerInfo) {
         payer_info = {

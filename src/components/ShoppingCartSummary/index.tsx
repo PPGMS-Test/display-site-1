@@ -1,6 +1,54 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
+import { useAppSelector, useAppDispatch } from "../../typeHooks";
+import {
+    getPrice,
+    getProductDescription,
+    getProductName,
+} from "../../reducer/reducers/productReducer";
+import GoToCheckOutBtn from "../GoToCheckOutBtn";
+import {
+    ShoppingCartItem,
+    getShoppingCart,
+    updateShoppingCart,
+} from "../../reducer/reducers/shoppingCartReducer";
 
 const ShoppingCartSummary: FC = () => {
+    const dispatch = useAppDispatch();
+    const productName: string = useAppSelector((state) =>
+        getProductName(state)
+    );
+    const productDescription: string = useAppSelector((state) =>
+        getProductDescription(state)
+    );
+    const price: number = useAppSelector((state) => getPrice(state));
+    const shoppingCartList = useAppSelector((state) => getShoppingCart(state));
+
+    let [count, setCount] = useState(
+        shoppingCartList.find((item) => item.ProductName === productName)?.count
+    );
+    // let [totalValue, setTotalValue] = useState(
+    //     shoppingCartList.find((item) => item.ProductName === productName)
+    //         ?.totalValue
+    // );
+
+    const totalValue = shoppingCartList.find(
+        (item) => item.ProductName === productName
+    )?.totalValue;
+
+    const handleChange = (event: any) => {
+        let mValue = event.target.value;
+
+        if (count === undefined) count = 0;
+        setCount(mValue);
+
+        let shoppingItem: ShoppingCartItem = {
+            ProductName: productName,
+            count: mValue,
+            value: price,
+        };
+        dispatch(updateShoppingCart(shoppingItem));
+        // setTotalValue(Math.floor(mValue * price * 100) / 100);
+    };
     return (
         <div>
             <div className="flex justify-between mb-4">
@@ -11,36 +59,41 @@ const ShoppingCartSummary: FC = () => {
                         className="mr-4 w-40 h-40"
                     />
                     <div>
-                        <h2 className="font-bold">Product Name</h2>
-                        <p className="text-gray-700">Product Description</p>
+                        <h2 className="font-bold">{productName}</h2>
+                        <p className="text-gray-700 max-w-xs">
+                            {productDescription}
+                        </p>
                     </div>
                 </div>
                 <div className="flex items-center">
-                    
                     <div className="mx-4">
                         <input
                             type="number"
-                            value="1"
+                            value={count}
                             className="w-16 text-center"
+                            onChange={handleChange}
                         />
                     </div>
-                    <span className="font-bold">$19.99</span>
+                    <span className="font-bold">${price}</span>
                 </div>
             </div>
             <hr className="my-4" />
             <div className="flex justify-between items-center">
                 <span className="font-bold">Subtotal:</span>
-                <span className="font-bold">$19.99</span>
+                <span className="font-bold">${totalValue}</span>
             </div>
-            <div className="flex justify-between items-center mt-4">
+            {/* <div className="flex justify-between items-center mt-4">
                 <span>Taxes:</span>
                 <span>$1.00</span>
-            </div>
+            </div> */}
             <hr className="my-4" />
             <div className="flex justify-between items-center">
                 <span className="font-bold">Total:</span>
-                <span className="font-bold">$20.99</span>
+                <span className="font-bold">${totalValue}</span>
             </div>
+            <hr className="my-4" />
+
+            <GoToCheckOutBtn />
         </div>
     );
 };

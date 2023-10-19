@@ -1,16 +1,17 @@
 import { FC } from "react";
 import { Tooltip, Button, FormControlLabel, Switch } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../typeHooks";
-import { setShippingOption } from "../../reducer/reducers/shippingOptionReducer";
+import { setShippingOptionInCreateOrder } from "../../reducer/reducers/shippingOptionReducer";
 
 const AddShippingInCreateOrder: FC = () => {
     const dispatch = useAppDispatch();
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(
             "[handleChange]event?.target?.checked:",
             event?.target?.checked
         );
-        dispatch(setShippingOption(event?.target?.checked));
+        dispatch(setShippingOptionInCreateOrder(event?.target?.checked));
     };
 
     const toggleCheck = useAppSelector(

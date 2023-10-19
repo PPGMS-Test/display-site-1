@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Tooltip, Button, FormControlLabel, Switch } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../typeHooks";
-import { setIsMoreSpace } from "../../reducer/reducers/moreSpaceReduer";
+import { setIsMoreSpace } from "../../reducer/reducers/moreSpaceReducer";
 
 const UseMoreSpace: FC = () => {
     const dispatch = useAppDispatch();

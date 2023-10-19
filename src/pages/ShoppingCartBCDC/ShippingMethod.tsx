@@ -1,12 +1,46 @@
-import { Button, IconButton, Tooltip } from "@mui/material";
-import { FC } from "react";
-import { useAppSelector } from "../../typeHooks";
+import {
+    Button,
+    FormHelperText,
+    IconButton,
+    MenuItem,
+    Select,
+    Tooltip,
+} from "@mui/material";
+import { FC, useState } from "react";
+import { useAppSelector, useAppDispatch } from "../../typeHooks";
 import classNames from "classnames";
+import { getIsMoreSpace } from "../../reducer/reducers/moreSpaceReducer";
+import {
+    getCurrentShippingOption,
+    getShippingOptionListConst,
+    setCurrentShippingOption,
+} from "../../reducer/reducers/shippingOptionReducer";
+import { Shipping } from "../../interface/Shipping/Shipping";
+import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
+
+// interface childProps {
+//     shippingOption: any;
+//     onShippingOptionChange: Function;
+// }
 
 const ShippingMethod: FC = () => {
-    const isUseMoreSpace: boolean = useAppSelector(
-        (state) => state.isMoreSpace.useMoreSpace
+    const shoppingCartList = useAppSelector((state) => getShoppingCart(state));
+    const dispatch = useAppDispatch();
+
+    const isUseMoreSpace: boolean = useAppSelector((state) =>
+        getIsMoreSpace(state)
     );
+
+    const currentShippingMethod = useAppSelector((state) =>
+        getCurrentShippingOption(state)
+    );
+
+    const ShippingListConst = useAppSelector((state) =>
+        getShippingOptionListConst(state)
+    ) as Shipping[];
+
+    const [isReadOnly, setIsReadOnly] = useState(true);
+
     return (
         <div>
             <div
@@ -20,22 +54,59 @@ const ShippingMethod: FC = () => {
                     <p className="item-center text-gray-400 font-normal">
                         Carrier
                     </p>
-                    <p className="ml-4">
-                        <code className="text-sm font-bold text-gray-900">
-                            sf-express
-                        </code>
-                    </p>
+
+                    <Select
+                        disabled={shoppingCartList.length == 0}
+                        value={currentShippingMethod.Id}
+                        onChange={(event) => {
+                            const id = event.target.value;
+                            const targetItem = ShippingListConst.find(
+                                (item) => item.Id === id
+                            );
+
+                            let obj = {
+                                Id: id,
+                                Price: Number(targetItem?.Value),
+                            };
+                            dispatch(setCurrentShippingOption(obj));
+                        }}
+                        // inputProps={{ readOnly: isReadOnly }}
+                        className=" my-2"
+                    >
+                        <MenuItem value="none" key="-1">
+                            <em>None</em>
+                        </MenuItem>
+                        {ShippingListConst.map((shippingOption, index) => {
+                            return (
+                                <MenuItem value={shippingOption.Id} key={index}>
+                                    {shippingOption.Label}
+                                </MenuItem>
+                            );
+                        })}
+                    </Select>
+                    <FormHelperText>
+                        {shoppingCartList.length == 0? "Please Add your favorite Products!": "Please change default shipping method!"}
+                    </FormHelperText>
                 </div>
 
-                <div className="top-0 right-0 absolute ">
+                {/* <div className="top-1 right-1 absolute ">
                     <Tooltip
-                        title="Add"
+                        title="修改运输方式"
                         placement="bottom"
                         className="text-sky-500 hover:text-sky-600"
                     >
-                        <Button>&rarr; Modify</Button>
+                        
+                        <Button
+                            onClick={() => {
+                                setIsReadOnly(!isReadOnly);
+                            }}
+                        >
+                            Modify
+                        </Button>
                     </Tooltip>
-                </div>
+                </div> */}
+
+                
             </div>
         </div>
     );

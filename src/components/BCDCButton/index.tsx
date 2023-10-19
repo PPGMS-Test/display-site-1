@@ -1,15 +1,29 @@
 import React, { FC, useEffect } from "react";
 import CreateOrderObject from "../LoadPayPalScript/createOrderObject";
 // import PayPal_SPB_JS_SDK_LoadScript from "../LoadPayPalScript/JSSDK";
-import { useAppSelector } from "../../typeHooks";
 import UseJSSDK from "../LoadPayPalScript/UseJSSDK";
-import { getBuyerInfo } from "../../reducer/reducers/buyerInfoReducer";
+
+// import { useAppSelector } from "../../typeHooks";
+// import { getBuyerInfo } from "../../reducer/reducers/buyerInfoReducer";
 
 const BCDCButton: FC = () => {
-    const buyerInfo = useAppSelector((state) => getBuyerInfo(state));
-    const isWithShippingOption = useAppSelector(
-        (state) => state.withShippingOption.isWithShipping
-    ) as boolean;
+    // const buyerInfo = useAppSelector((state) => getBuyerInfo(state));
+    // const isWithShippingOption = useAppSelector(
+    //     (state) => state.withShippingOption.isWithShipping
+    // ) as boolean;
+
+    const renderBtn = ()=>{
+        debugger;
+        if (window.paypal) {
+            let button = window.paypal.Buttons({
+                fundingSource: window.paypal.FUNDING.CARD,
+                ...CreateOrderObject(),
+            });
+            if (button.isEligible()) {
+                button.render("#paypal-button-container");
+            }
+        }
+    }
 
     useEffect(() => {
         (async () => {
@@ -17,18 +31,9 @@ const BCDCButton: FC = () => {
             //     "JS SDK states:",
             //     (PayPal_SPB_JS_SDK_LoadScript as any).readyState
             // );
-
-            await UseJSSDK();
             debugger;
-            if (window.paypal) {
-                let button = window.paypal.Buttons({
-                    fundingSource: window.paypal.FUNDING.CARD,
-                    ...CreateOrderObject(buyerInfo, isWithShippingOption),
-                });
-                if (button.isEligible()) {
-                    button.render("#paypal-button-container");
-                }
-            }
+            await UseJSSDK().then(renderBtn);
+           
         })();
     });
 

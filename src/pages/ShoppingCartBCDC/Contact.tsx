@@ -73,60 +73,60 @@ const Contact: FC = () => {
                 })}
             >
                 <p className="text-gray-400 font-extrabold">Contact</p>
-                  {/* ------------- Name--------------*/}
+                {/* ------------- Name--------------*/}
                 <div>
                     <p className="item-center text-gray-400 font-normal">
                         Name
                     </p>
                     <div className="flex flex-wrap">
-                    <p className="ml-4">
-                        <TextField
-                            id="FirstName"
-                            value={user.FirstName}
-                            color="secondary"
-                            size="small"
-                            className="w-24"
-                            label="FirstName"
-                            onChange={(event) => {
-                                // const attributeID = event.target.id;
-                                // console.log(attributeID);
-                                const value = event.target.value;
+                        <div className="ml-4">
+                            <TextField
+                                id="FirstName"
+                                value={user.FirstName}
+                                color="secondary"
+                                size="small"
+                                className="w-24"
+                                label="FirstName"
+                                onChange={(event) => {
+                                    // const attributeID = event.target.id;
+                                    // console.log(attributeID);
+                                    const value = event.target.value;
 
-                                // console.log(value);
-                                dispatch(setBuyerInfoContactFirstName(value));
-                            }}
-                        ></TextField>
-                    </p>
-                    <p className="ml-4">
-                        <TextField
-                            id="LastName"
-                            value={user.LastName}
-                            color="secondary"
-                            size="small"
-                            className=" w-28"
-                            label="LastName"
-                            onChange={(event) => {
-                                // const attributeID = event.target.id;
-                                // console.log(attributeID);
-                                const value = event.target.value;
+                                    // console.log(value);
+                                    dispatch(
+                                        setBuyerInfoContactFirstName(value)
+                                    );
+                                }}
+                            ></TextField>
+                        </div>
+                        <div className="ml-4">
+                            <TextField
+                                id="LastName"
+                                value={user.LastName}
+                                color="secondary"
+                                size="small"
+                                className=" w-28"
+                                label="LastName"
+                                onChange={(event) => {
+                                    // const attributeID = event.target.id;
+                                    // console.log(attributeID);
+                                    const value = event.target.value;
 
-                                // console.log(value);
-                                dispatch(setBuyerInfoContactLastName(value));
-                            }}
-                        ></TextField>
-                    </p>
-
+                                    // console.log(value);
+                                    dispatch(
+                                        setBuyerInfoContactLastName(value)
+                                    );
+                                }}
+                            ></TextField>
+                        </div>
                     </div>
-
-
-                    
                 </div>
                 {/* ------------- 电话--------------*/}
                 <div>
                     <p className="item-center text-gray-400 font-normal">
                         Phone Number
                     </p>
-                    <p className="ml-4">
+                    <div className="ml-4">
                         <TextField
                             id="Phone"
                             value={user.Phone}
@@ -142,14 +142,14 @@ const Contact: FC = () => {
                                 dispatch(setBuyerInfoContactPhone(value));
                             }}
                         ></TextField>
-                    </p>
+                    </div>
                 </div>
                 {/* ------------- 邮箱 --------------*/}
                 <div>
                     <p className="item-center text-gray-400 font-normal">
                         Email Address
                     </p>
-                    <p className="ml-4">
+                    <div className="ml-4">
                         <TextField
                             id="EmailAddress"
                             value={user.EmailAddress}
@@ -167,7 +167,7 @@ const Contact: FC = () => {
                                 );
                             }}
                         ></TextField>
-                    </p>
+                    </div>
                 </div>
 
                 <p className="text-gray-400 font-extrabold">Ship To</p>
@@ -182,7 +182,7 @@ const Contact: FC = () => {
                         <p className="item-center text-gray-400 font-normal">
                             Address Line 1
                         </p>
-                        <p className="ml-4">
+                        <div className="ml-4">
                             <TextField
                                 id="Address1"
                                 value={address.Address1}
@@ -200,14 +200,14 @@ const Contact: FC = () => {
                                     );
                                 }}
                             ></TextField>
-                        </p>
+                        </div>
                     </li>
                     {/* ------------- 第二行 --------------*/}
                     <li className="flex flex-col ">
                         <p className="item-center text-gray-400 font-normal">
                             Address Line 2
                         </p>
-                        <p className="ml-4">
+                        <div className="ml-4">
                             <TextField
                                 id="Address2"
                                 value={address.Address2}
@@ -225,7 +225,7 @@ const Contact: FC = () => {
                                     );
                                 }}
                             ></TextField>
-                        </p>
+                        </div>
                     </li>
                     {/* ------------- 第三行 --------------*/}
                     <li className="flex flex-col ">

@@ -13,8 +13,8 @@ const UseJSSDK = function (input: Function = () => {}) {
         // console.clear();
 
         PayPal_SPB_JS_SDK_LoadScript.onload = function () {
-            input.call(this);
             console.log("PayPal SPB JS SDK is loaded!");
+            input.call(this);
             resolve();
         };
     });

@@ -6,6 +6,8 @@ import {
     Icon,
     Radio,
     RadioGroup,
+    Switch,
+    Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 // import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
@@ -25,7 +27,7 @@ const PaymentTable = () => {
     //     (state) => state.paymentMethod.method
     // );
 
-    const [useRadioOnChange] = useState(false);
+    const [useRadioOnChange, setUseRadioOnChange] = useState(true);
 
     const radio_value_global = useAppSelector((state) =>
         get_payment_method(state)
@@ -50,19 +52,6 @@ const PaymentTable = () => {
         setTimeout(() => {
             setRadioBtnDisable(false);
         }, 800);
-    };
-
-    const style_div = {
-        width: "100%",
-        "border-radius": "10px",
-        overflow: "hidden",
-    };
-
-    const style_table = {
-        "border-collapse": "separate",
-        "border-spacing": 0,
-        "border-radius": "10px",
-        border: "solid 2px #dfdfdf",
     };
 
     const isUseMoreSpace: boolean = useAppSelector(
@@ -155,6 +144,25 @@ const PaymentTable = () => {
                 "space-y-6 py-8": isUseMoreSpace,
             })}
         >
+            <div className="top-1 right-1 absolute ">
+                <Tooltip
+                    title="点击这个按钮用以切换支付方式的选择方式"
+                    placement="bottom"
+                    className="text-sky-500 hover:text-sky-600"
+                >
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={useRadioOnChange}
+                                onChange={() => {
+                                    setUseRadioOnChange(!useRadioOnChange);
+                                }}
+                            />
+                        }
+                        label={useRadioOnChange?"选中radio button":"点击按钮"}
+                    />
+                </Tooltip>
+            </div>
             {/* --    radio group sample --
 
     <FormControl component="fieldset">

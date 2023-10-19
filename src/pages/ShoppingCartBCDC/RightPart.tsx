@@ -9,6 +9,8 @@ import SmartPaymentButton from "../../components/StandardSPB/SmartPaymentButton"
 import BCDCButton from "../../components/BCDCButton";
 import APMButton from "../../components/APMButton";
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
+import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
+import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer";
 
 function renderSmartPaymentButtons() {
     return (
@@ -35,17 +37,6 @@ function renderAPMButton() {
 }
 
 function CurrentPaymentMethod(count: PAYMENT_METHOD) {
-    // if (count === PAYMENT_METHOD.PAYPAL_STANDARD) {
-    //     console.log("分支1");
-    //     return <div>111</div>;
-    // } else if (count === PAYMENT_METHOD.PAYPAL_BCDC) {
-    //     console.log("分支2");
-    //     return <div>222</div>;
-    // } else if (count === PAYMENT_METHOD.PAYPAL_APM) {
-    //     console.log("分支3");
-    //     return <div>333</div>;
-    // }
-
     switch (count) {
         case PAYMENT_METHOD.PAYPAL_STANDARD:
             console.log("分支1");
@@ -67,30 +58,30 @@ function CurrentPaymentMethod(count: PAYMENT_METHOD) {
 }
 
 const RightPart: FC = () => {
-    // console.clear();
-    const count = useAppSelector(
-        (state) => state.paymentMethod.method
+    const count = useAppSelector((state) =>
+        get_payment_method(state)
     ) as PAYMENT_METHOD;
+    const shoppingCartList = useAppSelector((state) => getShoppingCart(state));
 
     let [showPaymentMethod, setShowPaymentMethod] = useState(count);
 
-    const isWithShippingOption =  useAppSelector(
+    const isWithShippingOption = useAppSelector(
         (state) => state.withShippingOption.isWithShipping
-    ) as boolean
+    ) as boolean;
 
     // console.log("isWithShippingOption:",isWithShippingOption)
 
-    return (
-        <div className="relative bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 ">
-            <div className="mx-auto max-w-md">
-                <div className="divide-y divide-gray-300/50">
-                    <div>商品缩略图</div>
+    const renderFn = () => {
+        if (shoppingCartList.length > 0) {
+            return (
+                <div>
                     <div>
                         <PricingSeparate />
                     </div>
                     <div>
                         <PricingTotal />
                     </div>
+                    <hr className=" my-2" />
                     <div>
                         {/* <p>当前的支付方式: {count}</p>
                         <p>是否带有运输参数: {`${isWithShippingOption}`}</p> */}
@@ -98,6 +89,23 @@ const RightPart: FC = () => {
                         <div>{CurrentPaymentMethod(count)}</div>
                     </div>
                 </div>
+            );
+        } else {
+            return (
+                <div>
+                    <div>
+                        <em>Empty Cart</em>
+                    </div>
+                    <div>Please Select your favorite products!</div>
+                </div>
+            );
+        }
+    };
+
+    return (
+        <div className="relative bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 ">
+            <div className="mx-auto max-w-md">
+                <div className="divide-y divide-gray-300/50">{renderFn()}</div>
             </div>
         </div>
     );

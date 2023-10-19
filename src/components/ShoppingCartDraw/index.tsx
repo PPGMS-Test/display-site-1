@@ -2,6 +2,7 @@ import React from "react";
 import ShoppingCartSummary from "../ShoppingCartSummary";
 
 import { Button, Drawer } from "@mui/material";
+// import AddIcon from '@material-ui/icons/Add';
 
 export type Anchor = "top" | "left" | "bottom" | "right";
 
@@ -41,10 +42,12 @@ export default function TemporaryDrawer(props: DrawerProps) {
         <div>
             {([mPosition] as Anchor[]).map((anchor) => (
                 <React.Fragment key={anchor}>
-                    <Button onClick={toggleDrawer(anchor, true)}>
-                        {/* {anchor} */}
-                        {mIcon}
-                    </Button>
+                   
+
+                    <div onClick={toggleDrawer(anchor, true)}>
+                    {mIcon}
+
+                    </div>
                     <Drawer
                         anchor={anchor}
                         open={state[anchor]}

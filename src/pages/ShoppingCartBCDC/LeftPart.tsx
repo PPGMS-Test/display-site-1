@@ -1,15 +1,28 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import Contacts from "./Contact";
+import ContactUnEditable from "./ContactUnEditable";
 import ShippingMethod from "./ShippingMethod";
 import PaymentTable from "./PaymentTable";
 import { useAppSelector } from "../../typeHooks";
 import classNames from "classnames";
 
+// interface childProps {
+//     shippingOption: any;
+//     onShippingOptionChange: Function;
+// }
+
+// const LeftPart: FC<childProps> = ({
+//     shippingOption,
+//     onShippingOptionChange,
+// }) => {
+
 const LeftPart: FC = () => {
     const isUseMoreSpace: boolean = useAppSelector(
         (state) => state.isMoreSpace.useMoreSpace
     );
+
+    let [isInfoEditable, setIsInfoEditable] = useState(true);
     return (
         <div
             className={classNames({
@@ -21,7 +34,7 @@ const LeftPart: FC = () => {
             <div className="mx-auto max-w-md">
                 {/* Divide line in each div */}
                 <div className="divide-y divide-gray-300/50">
-                    <Contacts></Contacts>
+                    {isInfoEditable ? <Contacts /> : <ContactUnEditable />}
                     <ShippingMethod></ShippingMethod>
                     <PaymentTable />
                 </div>

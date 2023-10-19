@@ -10,7 +10,7 @@ export interface Product {
 
 const initialState: Product = product_data as Product;
 
-export const useMoreSpaceSlice = createSlice({
+export const productSlice = createSlice({
     name: "product",
     initialState,
     reducers: {
@@ -20,7 +20,7 @@ export const useMoreSpaceSlice = createSlice({
     },
 });
 
-export const { setPrice } = useMoreSpaceSlice.actions;
+export const { setPrice } = productSlice.actions;
 
 export const getPrice = (state: RootState) => state.productInfo.Price;
 export const getProductName = (state: RootState) =>
@@ -28,4 +28,4 @@ export const getProductName = (state: RootState) =>
 export const getProductDescription = (state: RootState) =>
     state.productInfo.ProductDescription;
 
-export default useMoreSpaceSlice.reducer;
+export default productSlice.reducer;
