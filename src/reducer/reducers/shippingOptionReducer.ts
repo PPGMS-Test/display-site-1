@@ -1,12 +1,13 @@
 
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import ShippingListConst from "../../Mock/Shipping/ShippingList.json";
+// import ShippingListConst from "../../Mock/Shipping/ShippingList.json";
+import ShippingListConst from "../../Mock/Shipping/ShippingListWithPrice.json";
 import { Shipping } from "../../interface/Shipping/Shipping";
 
 interface WithShipping {
     isWithShipping: boolean;
-    ShippingOptionList: [];
+    ShippingOptionList: Shipping[];
     CurrentShippingOption: CurrentShippingOption;
 }
 
@@ -16,11 +17,12 @@ export interface CurrentShippingOption {
 }
 
 const initialState: WithShipping = {
-    isWithShipping: true,
-    ShippingOptionList: ShippingListConst,
+    isWithShipping: false,
+    ShippingOptionList: ShippingListConst as unknown as Shipping[],
     CurrentShippingOption: {
         Id: "none",
         Price: 0,
+        
     },
 } as WithShipping;
 

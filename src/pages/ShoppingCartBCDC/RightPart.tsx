@@ -5,8 +5,8 @@ import PricingTotal from "./PricingTotal";
 
 import { useAppSelector, useAppDispatch } from "../../typeHooks";
 
-import SmartPaymentButton from "../../components/StandardSPB/SmartPaymentButton";
-import BCDCButton from "../../components/BCDCButton";
+import SmartPaymentButton from "../../components/SmartPaymentBtn/SmartPaymentButton";
+import BCDCButton from "../../components/BCDCButton/BCDCButton";
 import APMButton from "../../components/APMButton";
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
 import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
@@ -15,15 +15,18 @@ import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer"
 function renderSmartPaymentButtons() {
     return (
         <>
-            <SmartPaymentButton />
+            <SmartPaymentButton buttonType="Stand" />
         </>
     );
 }
 
 function renderBCDCButton() {
     return (
+        // <>
+        //     <BCDCButton />
+        // </>
         <>
-            <BCDCButton />
+            <SmartPaymentButton buttonType="BCDC" />
         </>
     );
 }

@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { Tooltip, Button, FormControlLabel, Switch } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../typeHooks";
-import { setIsMoreSpace } from "../../reducer/reducers/moreSpaceReducer";
+import { getIsMoreSpace, setIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";
 
 const UseMoreSpace: FC = () => {
     const dispatch = useAppDispatch();
     const isUseMoreSpace: boolean = useAppSelector(
-        (state) => state.isMoreSpace.useMoreSpace
+        (state) => getIsMoreSpace(state)
     );
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         // console.log("[handleChange]event?.target?.checked:", event?.target?.checked)

@@ -25,6 +25,7 @@ import {
     getBuyerInfo,
     setBuyerInfo,
 } from "../../reducer/reducers/buyerInfoReducer";
+import { getIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";
 
 //[2023-10-08 BCDB 一定要下拉式的]
 const Contact: FC = () => {
@@ -37,7 +38,7 @@ const Contact: FC = () => {
     ) as Address;
 
     const isUseMoreSpace: boolean = useAppSelector(
-        (state) => state.isMoreSpace.useMoreSpace
+        (state) =>  getIsMoreSpace(state)
     );
 
     const NationCityDivClassName = "w-20 mt-2 mb-1";

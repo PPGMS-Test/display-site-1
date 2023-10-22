@@ -19,6 +19,7 @@ import {
 
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
 import classNames from "classnames";
+import { getIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";
 
 const PaymentTable = () => {
     const dispatch = useAppDispatch();
@@ -27,6 +28,7 @@ const PaymentTable = () => {
     //     (state) => state.paymentMethod.method
     // );
 
+    //用以控制支付方式变化的默认值
     const [useRadioOnChange, setUseRadioOnChange] = useState(true);
 
     const radio_value_global = useAppSelector((state) =>
@@ -35,6 +37,7 @@ const PaymentTable = () => {
     const [radio_value, setRadioValue] =
         useState<PAYMENT_METHOD>(radio_value_global);
 
+    //setTimeOut用的, 以防误触
     const [radioBtnDisable, setRadioBtnDisable] = useState(false);
 
     //radio btn change 事件, 仅仅改变当前页面的value值, 不改变redux中的值
@@ -55,7 +58,7 @@ const PaymentTable = () => {
     };
 
     const isUseMoreSpace: boolean = useAppSelector(
-        (state) => state.isMoreSpace.useMoreSpace
+        (state) =>  getIsMoreSpace(state)
     );
 
     const buttonTables = function () {

@@ -7,10 +7,10 @@ interface MoreCSSSpace {
 
 const initialState: MoreCSSSpace = {
     useMoreSpace: false,
-} as MoreCSSSpace;
+} ;
 
-export const useMoreSpaceSlice = createSlice({
-    name: "moreSpace",
+export const globalToggleSlice = createSlice({
+    name: "globalToggle",
     initialState,
     reducers: {
         setIsMoreSpace: (state, action: PayloadAction<boolean>) => {
@@ -20,9 +20,9 @@ export const useMoreSpaceSlice = createSlice({
     },
 });
 
-export const { setIsMoreSpace } = useMoreSpaceSlice.actions;
+export const { setIsMoreSpace } = globalToggleSlice.actions;
 
 export const getIsMoreSpace = (state: RootState) =>
-    state.isMoreSpace.useMoreSpace;
+    state.globalToggle.useMoreSpace;
 
-export default useMoreSpaceSlice.reducer;
+export default globalToggleSlice.reducer;

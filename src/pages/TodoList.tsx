@@ -111,7 +111,7 @@ export default function TodoList() {
 
                 <div className={DIV_CLASS}>
                     <FormControlLabel
-                        control={<Checkbox checked={false} />}
+                        control={<Checkbox checked={true} />}
                         label="user信息可修改 -- 使用redux实现"
                     />
                     <div className={NOTE_CLASS}>
@@ -126,8 +126,15 @@ export default function TodoList() {
 
                 <div className={DIV_CLASS}>
                     <FormControlLabel
-                        control={<Checkbox checked={false} />}
+                        control={<Checkbox checked={true} />}
                         label="PP按钮的点击事件变成OrderV2"
+                    />
+                </div>
+
+                <div className={DIV_CLASS}>
+                    <FormControlLabel
+                        control={<Checkbox checked={false} />}
+                        label="评估OrderV2 API的调用是否要从Fetch改成Axois"
                     />
                 </div>
             </FormGroup>

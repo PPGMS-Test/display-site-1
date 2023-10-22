@@ -1,4 +1,4 @@
-import Root from "./root";
+import Root from "../root";
 import ErrorPage from "../pages/error-page";
 import ApplePay from "../pages/ApplePay";
 import GooglePay from "../pages/GooglePay";
@@ -10,6 +10,7 @@ import APM from "../pages/APM";
 import HomePage from "../pages/HomePage";
 import SinglePageTest from "../pages/SingleTestPage";
 import Product from "../pages/Product";
+import Thankyou from "../pages/Thankyou";
 
 import { createBrowserRouter } from "react-router-dom";
 
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
       {
         path: "/tooltips",
         element: <Tooltips />,
+      },
+
+      {
+        path: "/thankyou",
+        element: <Thankyou />,
       },
       
       {

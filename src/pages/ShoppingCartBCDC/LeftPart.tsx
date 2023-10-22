@@ -6,6 +6,7 @@ import ShippingMethod from "./ShippingMethod";
 import PaymentTable from "./PaymentTable";
 import { useAppSelector } from "../../typeHooks";
 import classNames from "classnames";
+import { getIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";
 
 // interface childProps {
 //     shippingOption: any;
@@ -19,7 +20,7 @@ import classNames from "classnames";
 
 const LeftPart: FC = () => {
     const isUseMoreSpace: boolean = useAppSelector(
-        (state) => state.isMoreSpace.useMoreSpace
+        (state) =>  getIsMoreSpace(state)
     );
 
     let [isInfoEditable, setIsInfoEditable] = useState(true);

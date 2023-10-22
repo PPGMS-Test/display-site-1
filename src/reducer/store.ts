@@ -1,19 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
 import paymentMethodReducer from "./reducers/paymentMethodReducer";
-import moreSpaceReducer from "./reducers/moreSpaceReducer";
+import globalToggleReducer from "./reducers/globalToggleReducer";
 import buyerInfoReducer from "./reducers/buyerInfoReducer";
 import shippingOptionReducer from "./reducers/shippingOptionReducer";
 import productReducer from "./reducers/productReducer";
 import shoppingCartReducer from "./reducers/shoppingCartReducer";
+import orderReducer from "./reducers/orderReducer";
 
 const store = configureStore({
     reducer: {
         paymentMethod: paymentMethodReducer,
-        isMoreSpace: moreSpaceReducer,
+        globalToggle: globalToggleReducer,
         buyerInfo: buyerInfoReducer,
         withShippingOption: shippingOptionReducer,
         productInfo:productReducer,
-        shoppingCart:shoppingCartReducer
+        shoppingCart:shoppingCartReducer,
+        orderInfo: orderReducer
     },
 });
 

@@ -7,6 +7,7 @@ import { FC } from "react";
 import classNames from "classnames";
 import UseMoreSpace from "../../components/Toggles/UseMoreSpaceToggle";
 import { useAppSelector } from "../../typeHooks";
+import { getIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";
 
 //[2023-10-08 BCDB 一定要下拉式的]
 const Contact: FC = () => {
@@ -19,7 +20,7 @@ const Contact: FC = () => {
 
 
     const isUseMoreSpace: boolean = useAppSelector(
-        (state) => state.isMoreSpace.useMoreSpace
+        (state) =>  getIsMoreSpace(state)
     );
 
     return (

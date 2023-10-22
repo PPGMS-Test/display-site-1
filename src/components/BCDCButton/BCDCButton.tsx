@@ -1,35 +1,43 @@
 import React, { FC, useEffect } from "react";
+import CreateOrderObject from "../../service/LoadPayPalScript/createOrderObject";
 // import PayPal_SPB_JS_SDK_LoadScript from "../LoadPayPalScript/JSSDK";
-import CreateOrderObjectFn from "../LoadPayPalScript/createOrderObject";
-
+import UseJSSDK from "../../service/LoadPayPalScript/UseJSSDK";
+import { useNavigate } from "react-router-dom";
 // import { useAppSelector } from "../../typeHooks";
 // import { getBuyerInfo } from "../../reducer/reducers/buyerInfoReducer";
 
-import UseJSSDK from "../LoadPayPalScript/UseJSSDK";
-
-const SPB: FC = () => {
+const BCDCButton: FC = () => {
     // const buyerInfo = useAppSelector((state) => getBuyerInfo(state));
-    // const buyerInfo = useAppSelector((state) => state.buyerInfo);
-    const renderBtn = () => {
+    // const isWithShippingOption = useAppSelector(
+    //     (state) => state.withShippingOption.isWithShipping
+    // ) as boolean;
+
+    const navigate = useNavigate();
+    const renderBtn = ()=>{
+        debugger;
         if (window.paypal) {
-            let button = window.paypal.Buttons(CreateOrderObjectFn());
+            let button = window.paypal.Buttons({
+                fundingSource: window.paypal.FUNDING.CARD,
+                ...CreateOrderObject({
+                    navigate
+                }),
+            });
             if (button.isEligible()) {
                 button.render("#paypal-button-container");
             }
         }
-    };
+    }
+
     useEffect(() => {
         (async () => {
             // console.log(
             //     "JS SDK states:",
             //     (PayPal_SPB_JS_SDK_LoadScript as any).readyState
             // );
-            debugger;
+            // debugger;
             await UseJSSDK().then(renderBtn);
+           
         })();
-        // console.log("JS SDK states:", PayPal_SPB_JS_SDK_LoadScript.readyState);
-
-        // debugger;
     });
 
     return (
@@ -38,4 +46,4 @@ const SPB: FC = () => {
         </div>
     );
 };
-export default SPB;
+export default BCDCButton;
