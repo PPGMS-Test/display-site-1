@@ -42,8 +42,8 @@ const ProductDetail: FC = () => {
         dispatch(updateShoppingCart(shoppingItem));
     };
 
-    const [selectColor, setSelectColor] = useState(null);
-    const [selectSize, setSelectSize] = useState(null);
+    const [selectColor, setSelectColor] = useState("");
+    const [selectSize, setSelectSize] = useState("");
     const colors = ["gray", "red", "blue", "yellow"];
     const sizes = ["S", "M", "L", "XL", "XXL"];
 
@@ -65,6 +65,30 @@ const ProductDetail: FC = () => {
         // debugger;
         setSelectSize(event.target.value);
         // console.log(event.target.value)
+    }
+
+    function renderColors() {
+        // debugger;
+        // return colors.map((color) => {
+        //     const cl = `w-6 h-6 rounded-full bg-${color}-500 mr-2 hover:bg-${color}-600`;
+        //     return (
+        //         <button
+        //             // className={classNames({
+        //             //     [cl]: true,
+        //             // })}
+        //             className={cl}
+        //             onClick={handleColorClickBtn}
+        //             value={color}
+        //             key={color}
+        //         ></button>
+        //     );
+        // });
+        return (<>
+        <button className="w-6 h-6 rounded-full bg-gray-500 mr-2 hover:bg-gray-600" onClick={handleColorClickBtn} value="gray"></button>
+        <button className="w-6 h-6 rounded-full bg-red-500 mr-2 hover:bg-red-600" onClick={handleColorClickBtn} value="red"></button>
+        <button className="w-6 h-6 rounded-full bg-blue-500 mr-2 hover:bg-blue-600" onClick={handleColorClickBtn} value="blue"></button>
+        <button className="w-6 h-6 rounded-full bg-yellow-500 mr-2 hover:bg-yellow-600" onClick={handleColorClickBtn} value="yellow"></button>
+        </>)
     }
 
     return (
@@ -133,23 +157,10 @@ const ProductDetail: FC = () => {
                             </Select>
                             <FormHelperText>Select Color</FormHelperText>
                         </FormControl>
-                        
                     </div>
                     <div className="flex items-center mt-2">
-                        {colors.map((color) => {
-                            const cl = `w-6 h-6 rounded-full bg-${color}-500 mr-2 hover:bg-${color}-600`;
-                            return (
-                                <button
-                                    className={classNames({
-                                        [cl]: true,
-                                        "shadow-2xl shadow-zinc-500": true,
-                                    })}
-                                    onClick={handleColorClickBtn}
-                                    value={color}
-                                    key={color}
-                                ></button>
-                            );
-                        })}
+                        {/* <button className=" bg-blue-500"> </button> */}
+                        {renderColors()}
                     </div>
                 </div>
                 <div className="mb-4">
