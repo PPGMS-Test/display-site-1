@@ -6,7 +6,7 @@ import CreateOrderObjectFn from "../../service/LoadPayPalScript/createOrderObjec
 // import { getBuyerInfo } from "../../reducer/reducers/buyerInfoReducer";
 
 import UseJSSDK from "../../service/LoadPayPalScript/UseJSSDK";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface ButtonType {
     buttonType: string;
@@ -14,23 +14,36 @@ interface ButtonType {
 
 const SPB: FC<ButtonType> = ({ buttonType }) => {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const pathname = location.pathname;
+
+    const getLink = () => {
+        if (pathname.startsWith("/lab")) {
+            return "/lab/thankyou";
+        } else if (pathname.startsWith("/display")) {
+            return "/display/thankyou";
+        } else {
+            return "";
+        }
+    };
+
     // const buyerInfo = useAppSelector((state) => getBuyerInfo(state));
     // const buyerInfo = useAppSelector((state) => state.buyerInfo);
     const renderBtn = () => {
         if (window.paypal) {
             let button;
+            let obj = CreateOrderObjectFn({
+                navigate,
+                getLink,
+            });
             if (buttonType === "BCDC") {
                 button = window.paypal.Buttons({
                     fundingSource: window.paypal.FUNDING.CARD,
-                    ...CreateOrderObjectFn({
-                        navigate,
-                    }),
+                    ...obj,
                 });
             } else {
-                let obj = CreateOrderObjectFn({
-                    navigate,
-                });
-                 button = window.paypal.Buttons(obj);
+                button = window.paypal.Buttons(obj);
             }
 
             if (button.isEligible()) {

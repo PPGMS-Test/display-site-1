@@ -106,7 +106,9 @@ function assembleCreateOrderOject() {
 }
 
 const CreateOrderObjectFn = (callbackFnSet: any) => {
-    const { navigate } = callbackFnSet;
+    const { navigate, getLink } = callbackFnSet;
+    // debugger;
+
     state = store.getState();
     buyerInfo = state.buyerInfo;
     isWithShipping = state.withShippingOption.isWithShipping;
@@ -125,8 +127,8 @@ const CreateOrderObjectFn = (callbackFnSet: any) => {
         onApprove: async function (data: any, actions: any) {
             await CaptureOrderAPI();
             setTimeout(() => {
-
-                navigate("/thankyou")
+                // debugger;
+                navigate(getLink())
             }, 1800)
         },
         onCancel: function (data: any) {

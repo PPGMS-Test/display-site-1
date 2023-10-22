@@ -5,7 +5,7 @@ const Thankyou = () => {
     const transactionID = useAppSelector((state) => getTransactionID(state));
 
     return (
-        <div id="thank-you-page">
+        <div id="thank-you-page" className=" mt-10 ml-10">
             <h1>Thank You For your purchase!</h1>
 
             <p>

@@ -11,6 +11,15 @@ import {
     ShoppingCartItem,
     updateShoppingCart,
 } from "../../reducer/reducers/shoppingCartReducer";
+import classNames from "classnames";
+import {
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    FormHelperText,
+} from "@mui/material";
+
 const ProductDetail: FC = () => {
     const dispatch = useAppDispatch();
     const productName: string = useAppSelector((state) =>
@@ -32,6 +41,32 @@ const ProductDetail: FC = () => {
         };
         dispatch(updateShoppingCart(shoppingItem));
     };
+
+    const [selectColor, setSelectColor] = useState(null);
+    const [selectSize, setSelectSize] = useState(null);
+    const colors = ["gray", "red", "blue", "yellow"];
+    const sizes = ["S", "M", "L", "XL", "XXL"];
+
+    function handleColorClickItem(event: any) {
+        // (
+        //     document.getElementById("color-select-helper-label") as Element
+        // ).innerHTML = "Color";
+
+        setSelectColor(event.target.value);
+    }
+
+    function handleColorClickBtn(event: any) {
+        // (
+        //     document.getElementById("color-select-helper-label") as Element
+        // ).innerHTML = "";
+        setSelectColor(event.target.value);
+    }
+    function handleSizeClick(event: any) {
+        // debugger;
+        setSelectSize(event.target.value);
+        // console.log(event.target.value)
+    }
+
     return (
         <div className="flex flex-col md:flex-row -mx-4">
             <div className="md:flex-1 px-4">
@@ -48,13 +83,10 @@ const ProductDetail: FC = () => {
                             className="w-full bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800"
                             onClick={handleAddToCart}
                         >
-                            Add to Cart 
+                            Add to Cart
                         </button>
                     </div>
-                    <GoToCheckOutBtn/>
-
-
-
+                    <GoToCheckOutBtn />
                 </div>
             </div>
             <div className="md:flex-1 px-4">
@@ -76,11 +108,48 @@ const ProductDetail: FC = () => {
                     <span className="font-bold text-gray-700">
                         Select Color:
                     </span>
+                    <div>
+                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                            <Select
+                                value={selectColor}
+                                onChange={handleColorClickItem}
+                                displayEmpty
+                                inputProps={{ "aria-label": "Without label" }}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {colors.map((color) => {
+                                    return (
+                                        <MenuItem
+                                            onClick={handleColorClickItem}
+                                            value={color}
+                                            key={color}
+                                        >
+                                            {color}
+                                        </MenuItem>
+                                    );
+                                })}
+                            </Select>
+                            <FormHelperText>Select Color</FormHelperText>
+                        </FormControl>
+                        
+                    </div>
                     <div className="flex items-center mt-2">
-                        <button className="w-6 h-6 rounded-full bg-gray-800 mr-2"></button>
-                        <button className="w-6 h-6 rounded-full bg-red-500 mr-2"></button>
-                        <button className="w-6 h-6 rounded-full bg-blue-500 mr-2"></button>
-                        <button className="w-6 h-6 rounded-full bg-yellow-500 mr-2"></button>
+                        {colors.map((color) => {
+                            const cl = `w-6 h-6 rounded-full bg-${color}-500 mr-2 hover:bg-${color}-600`;
+                            return (
+                                <button
+                                    className={classNames({
+                                        [cl]: true,
+                                        "shadow-2xl shadow-zinc-500": true,
+                                    })}
+                                    onClick={handleColorClickBtn}
+                                    value={color}
+                                    key={color}
+                                ></button>
+                            );
+                        })}
                     </div>
                 </div>
                 <div className="mb-4">
@@ -88,21 +157,23 @@ const ProductDetail: FC = () => {
                         Select Size:
                     </span>
                     <div className="flex items-center mt-2">
-                        <button className="bg-gray-300 text-gray-700 py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400">
-                            S
-                        </button>
-                        <button className="bg-gray-300 text-gray-700 py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400">
-                            M
-                        </button>
-                        <button className="bg-gray-300 text-gray-700 py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400">
-                            L
-                        </button>
-                        <button className="bg-gray-300 text-gray-700 py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400">
-                            XL
-                        </button>
-                        <button className="bg-gray-300 text-gray-700 py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400">
-                            XXL
-                        </button>
+                        {sizes.map((size) => {
+                            const cl =
+                                "bg-gray-300 text-gray-700 py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400";
+                            return (
+                                <button
+                                    className={classNames({
+                                        [cl]: true,
+                                        "bg-gray-400": selectSize == size,
+                                    })}
+                                    onClick={handleSizeClick}
+                                    key={size}
+                                    value={size}
+                                >
+                                    {size}
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
                 <div>

@@ -1,5 +1,5 @@
-import SideBar from "./components/Sidebar/Sidebar";
-import SearchBar from "./components/Searchbar/SearchBar";
+import SideBar from "../components/Sidebar/Sidebar";
+import SearchBar from "../components/Searchbar/SearchBar";
 import { Outlet } from "react-router-dom";
 
 export default function Root() {

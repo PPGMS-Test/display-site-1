@@ -18,54 +18,54 @@ import {
 export const defaultNavItems: NavItem[] = [
     {
         label: "Dashboard",
-        href: "/",
+        href: "/lab",
         icon: <HomeIcon className="w-6 h-6" />,
     },
     {
         label: "TodoList",
-        href: "/todoList",
+        href: "/lab/todoList",
         icon: <ClipboardDocumentIcon className="w-6 h-6" />,
     },
     {
         label: "Products",
-        href: "/product",
+        href: "/lab/product",
         icon: <ShoppingBagIcon className="w-6 h-6" />,
     },
     {
         label: "BCDC Standalone",
-        href: "/shoppingCartBCDC",
+        href: "/lab/shoppingCartBCDC",
         icon: <ShoppingCartIcon className="w-6 h-6" />,
     },
     {
         label: "APM Standalone",
-        href: "/APM",
+        href: "/lab/APM",
         icon: <WalletIcon className="w-6 h-6" />,
     },
     {
         label: "GooglePay",
-        href: "/googlePay",
+        href: "/lab/googlePay",
         icon: <CurrencyDollarIcon className="w-6 h-6" />,
     },
     {
         label: "ApplePay",
-        href: "/applePay",
+        href: "/lab/applePay",
         icon: <CurrencyEuroIcon className="w-6 h-6" />,
     },
 
     {
         label: "Venmo",
-        href: "/venmo",
+        href: "/lab/venmo",
         icon: <CurrencyPoundIcon className="w-6 h-6" />,
     },
 
     {
         label: "SinglePageTest",
-        href: "/singlePageTest",
+        href: "/lab/singlePageTest",
         icon: <BeakerIcon className="w-6 h-6" />,
     },
     {
         label: "Tooltips",
-        href: "/tooltips",
+        href: "/lab/tooltips",
         icon: <QuestionMarkCircleIcon className="w-6 h-6" />,
     },
 ];
