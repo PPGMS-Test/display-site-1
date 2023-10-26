@@ -57,8 +57,22 @@ const PaymentTable = () => {
         }, 800);
     };
 
-    const isUseMoreSpace: boolean = useAppSelector(
-        (state) =>  getIsMoreSpace(state)
+    const isUseMoreSpace: boolean = useAppSelector((state) =>
+        getIsMoreSpace(state)
+    );
+
+    const paypal_logo = (
+        <img
+            className=" w-1/2 h-8 ml-16 object-contain inline-block"
+            src={process.env.PUBLIC_URL + "/image/paypal-logo.svg"}
+        />
+    );
+
+    const paypal_used = (
+        <img
+            className=" w-1/2 h-10 object-contain  inline-block"
+            src={process.env.PUBLIC_URL + "/image/paypal-used.svg"}
+        />
     );
 
     const buttonTables = function () {
@@ -70,14 +84,15 @@ const PaymentTable = () => {
                         value={radio_value}
                         onChange={handleChange_ChangePaymentMethod}
                     >
-                        <div className="pl-2 w-full">
+                        <div className="pl-2 w-full ">
                             <FormControlLabel
                                 value={PAYMENT_METHOD.PAYPAL_STANDARD}
                                 control={<Radio color="primary" />}
                                 label="PayPal"
                                 disabled={radioBtnDisable}
+                                className=" inline-block"
                             />
-                            *LOGO* &nbsp;
+                            {paypal_logo}
                         </div>
 
                         <div className="pl-2 w-full">
@@ -86,8 +101,9 @@ const PaymentTable = () => {
                                 control={<Radio color="primary" />}
                                 label="Debit or Credit Card"
                                 disabled={radioBtnDisable}
+                                className=" inline-block"
                             />
-                            *LOGO* &nbsp;
+                            {paypal_used}
                         </div>
                     </RadioGroup>
                 </div>
@@ -102,7 +118,7 @@ const PaymentTable = () => {
                                 control={<Radio color="primary" />}
                                 label="PayPal"
                             />
-                            *LOGO* &nbsp;
+                            {paypal_logo}
                         </div>
 
                         <div className="pl-2 w-full">
@@ -111,7 +127,7 @@ const PaymentTable = () => {
                                 control={<Radio color="primary" />}
                                 label="Debit or Credit Card"
                             />
-                            *LOGO* &nbsp;
+                            {paypal_used}
                         </div>
                     </RadioGroup>
 
@@ -162,7 +178,9 @@ const PaymentTable = () => {
                                 }}
                             />
                         }
-                        label={useRadioOnChange?"选中radio button":"点击按钮"}
+                        label={
+                            useRadioOnChange ? "选中radio button" : "点击按钮"
+                        }
                     />
                 </Tooltip>
             </div>
