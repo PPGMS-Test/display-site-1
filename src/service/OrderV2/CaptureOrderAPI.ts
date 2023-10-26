@@ -7,6 +7,7 @@ const CaptureOrderAPI = () => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "PayPal-Partner-Attribution-Id": "PP-Test-Petro",
             Authorization: `Basic ${btoa(
                 `${window.clientID}:${window.secretKey}`
             )}`,

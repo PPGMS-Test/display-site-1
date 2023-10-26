@@ -4,14 +4,13 @@ import store from "../../reducer/store";
 
 // const state = store.getState();
 
-
-
 const CreateOrder = (requestBody: any) => {
     // debugger;
     return fetch("https://api.sandbox.paypal.com/v2/checkout/orders", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "PayPal-Partner-Attribution-Id": "PP-Test-Petro",
             Authorization: `Basic ${btoa(
                 `${window.clientID}:${window.secretKey}`
             )}`,
