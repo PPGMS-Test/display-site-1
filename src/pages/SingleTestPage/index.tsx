@@ -1,22 +1,92 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
+import UseJSSDK from "../../service/LoadPayPalScript/UseJSSDK";
 
 const SinglePageTest: FC = () => {
+    const [orderId, setOrderID] = useState("");
     useEffect(() => {
-        let PayPal_SPB_JS_SDK_LoadScript = document.createElement("script");
+        (async () => {
+            await UseJSSDK().then(renderBtn);
+        })();
+    });
 
-        console.log("[JSSDK.ts] PayPal JS SDK load!");
-        const client_id =
-            "AY13GPAAVtyuFAmqUT9FWoLIpTQo2B1u_LXupEn3390NjUnOK6qPZFbeJbMqY2nBnVLLronvqG8uNeIE";
-        const url = `https://www.paypal.com/sdk/js?client-id=${client_id}&buyer-country=US`;
-        PayPal_SPB_JS_SDK_LoadScript.src = url;
-        PayPal_SPB_JS_SDK_LoadScript.async = false;
-        document
-            .getElementById("root")
-            ?.appendChild(PayPal_SPB_JS_SDK_LoadScript);
-        // console.clear();
+    const US_SHIPPING = {
+        options: [
+            {
+                id: "SHIP_123",
+                label: "USD Domestic Standard ",
+                type: "SHIPPING",
+                selected: true,
+                amount: {
+                    value: "3.00",
+                    currency_code: "USD",
+                },
+            },
+            {
+                id: "SHIP_456",
+                label: "Pick up in Store",
+                type: "PICKUP",
+                selected: false,
+                amount: {
+                    value: "0.00",
+                    currency_code: "USD",
+                },
+            },
+            {
+                id: "SHIP_789",
+                label: "USD Domestic Fast",
+                type: "SHIPPING",
+                selected: false,
+                amount: {
+                    value: "4.00",
+                    currency_code: "USD",
+                },
+            },
+        ],
+    };
 
-        PayPal_SPB_JS_SDK_LoadScript.onload = function () {
-            console.log("PayPal SPB JS SDK is loaded!");
+    const AR_SHIPPING = {
+        options: [
+            {
+                id: "SHIP_123",
+                label: "X-border Standard Shipping",
+                type: "SHIPPING",
+                selected: true,
+                amount: {
+                    value: "13.00",
+                    currency_code: "USD",
+                },
+            },
+            {
+                id: "SHIP_456",
+                label: "Pick up in Store",
+                type: "PICKUP",
+                selected: false,
+                amount: {
+                    value: "0.00",
+                    currency_code: "USD",
+                },
+            },
+            {
+                id: "SHIP_789",
+                label: "X-border Fast method",
+                type: "SHIPPING",
+                selected: false,
+                amount: {
+                    value: "14.00",
+                    currency_code: "USD",
+                },
+            },
+        ],
+    };
+
+    const PASS_PAYER_IN_CREATE_ORDER = false;
+    const USE_POSTMAN_ORDER_ID = true;
+
+    // const DONOTHING_BUT_LOG_ONSHIPPINGCHANGE = true;
+    const DONOTHING_BUT_LOG_ONSHIPPINGCHANGE = false;
+
+    const renderBtn = () => {
+        if (window.paypal) {
             window.paypal
                 .Buttons({
                     // enableStandardCardFields: false,
@@ -29,52 +99,84 @@ const SinglePageTest: FC = () => {
                         vault: true,
                     },
 
-                    createOrder: function (data: any, actions: any) {
-                        return actions.order.create({
-                            intent: "CAPTURE",
-                            payer: {
-                                name: {
-                                    given_name: "PayPal",
-                                    surname: "Customer",
-                                },
-                                address: {
-                                    address_line_1: "123 ABC Street",
-                                    address_line_2: "Apt 2",
-                                    admin_area_2: "San Jose",
-                                    admin_area_1: "CA",
-                                    postal_code: "95121",
-                                    country_code: "US",
-                                },
-                                email_address:
-                                    "sb-43bofn8297045@personal.example.com",
-                                password: "$nE+8kLK",
-                                phone: {
-                                    phone_type: "MOBILE",
-                                    phone_number: {
-                                        national_number: "14082508100",
-                                    },
-                                },
-                            },
-                            purchase_units: [
-                                {
-                                    amount: {
-                                        value: "66.12",
-                                        currency_code: "USD",
-                                    },
-                                    shipping: {
-                                        address: {
-                                            address_line_1:
-                                                "2211 N First Street",
-                                            address_line_2: "Building 17",
-                                            admin_area_2: "San Jose",
-                                            admin_area_1: "CA",
-                                            postal_code: "95131",
-                                            country_code: "US",
+                    createOrder: async function (data: any, actions: any) {
+                        if (USE_POSTMAN_ORDER_ID) {
+                            const orderID = "6KN09353BG588480C"
+                            setOrderID(orderID);
+                            return orderID;
+                        } else {
+                            const requestBody = {
+                                intent: "CAPTURE",
+
+                                payer: !PASS_PAYER_IN_CREATE_ORDER
+                                    ? {
+                                          name: {
+                                              given_name: "De Bruyne",
+                                              surname: "Kevin",
+                                          },
+                                      }
+                                    : {
+                                          name: {
+                                              given_name: "De Bruyne",
+                                              surname: "Kevin",
+                                          },
+                                          address: {
+                                              address_line_1:
+                                                  "1100 Congress Ave",
+                                              address_line_2: "Building 1701",
+                                              admin_area_2: "Austin",
+                                              admin_area_1: "TX",
+                                              postal_code: "78710",
+                                              country_code: "US",
+                                          },
+                                          email_address:
+                                              "petro-test01-us@cctest.com",
+                                          password: "$nE+8kLK",
+                                          phone: {
+                                              phone_type: "MOBILE",
+                                              phone_number: {
+                                                  national_number:
+                                                      "16503858068",
+                                              },
+                                          },
+                                      },
+                                purchase_units: [
+                                    {
+                                        amount: {
+                                            value: "66.12",
+                                            currency_code: "USD",
                                         },
+                                        shipping: US_SHIPPING,
                                     },
-                                },
-                            ],
-                        });
+                                ],
+                            };
+                            let orderID;
+                            await fetch(
+                                "https://api.sandbox.paypal.com/v2/checkout/orders",
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "PayPal-Partner-Attribution-Id":
+                                            "PP-Test-Petro",
+                                        Authorization: `Basic ${btoa(
+                                            `${window.clientID}:${window.secretKey}`
+                                        )}`,
+                                    },
+                                    body: JSON.stringify(requestBody),
+                                }
+                            )
+                                .then((res) => {
+                                    return res.json();
+                                })
+                                .then((data) => {
+                                    orderID = data?.id;
+                                    setOrderID(orderID);
+                                    return orderID;
+                                });
+                            debugger;
+                            return orderID;
+                        }
                     },
 
                     onCancel: function (data: any) {
@@ -84,12 +186,42 @@ const SinglePageTest: FC = () => {
 
                     onError: function (err: any) {
                         // For example, redirect to a specific error page
-                        window.location.href = "/your-error-page-here";
+                        // window.location.href = "/your-error-page-here";
+                    },
+
+                    onShippingChange: function (data: any, actions: any) {
+                        if (DONOTHING_BUT_LOG_ONSHIPPINGCHANGE) {
+                            console.log(JSON.stringify(data, null, "    "));
+                        } else {
+                            console.log(JSON.stringify(data, null, "    "));
+                            // if (data.shipping_address.country_code == "US") {
+                            //     return actions.reject();
+                            // }
+                            // debugger;
+                            if (data.shipping_address.country_code == "US") {
+                                return actions.order.patch([
+                                    {
+                                        op: "replace",
+                                        path: "/purchase_units/@reference_id=='default'/shipping/options",
+                                        value: US_SHIPPING,
+                                    },
+                                ]);
+                            }
+                            if (data.shipping_address.country_code == "AR") {
+                                return actions.order.patch([
+                                    {
+                                        op: "replace",
+                                        path: "/purchase_units/@reference_id=='default'/shipping/options",
+                                        value: AR_SHIPPING,
+                                    },
+                                ]);
+                            }
+                        }
                     },
                 })
                 .render("#paypal-button-container");
-        };
-    });
+        }
+    };
     return (
         <div>
             SingleTestPage
