@@ -1,5 +1,8 @@
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { FC, useState } from "react";
+import APMInstructionArea from "./APMInstructionArea";
+import APMDisplayArea from "./APMDisplayArea";
+
 const APM: FC = () => {
     const [APMMethod, setAPMMethod] = useState("Bancontact");
 
@@ -45,6 +48,8 @@ const APM: FC = () => {
             >
                 {children}
             </ToggleButtonGroup>
+            <APMInstructionArea method={APMMethod} />
+            <APMDisplayArea method={APMMethod} />
         </div>
     );
 };

@@ -1,11 +1,13 @@
 import { orderSlice, setOrderID } from './../../reducer/reducers/orderReducer';
 import store from "../../reducer/store";
+import { v4 as uuidv4 } from 'uuid';
 // import { useDispatch } from 'react-redux';
 
 // const state = store.getState();
 
 const CreateOrder = (requestBody: any) => {
     // debugger;
+
     return fetch("https://api.sandbox.paypal.com/v2/checkout/orders", {
         method: "POST",
         headers: {
@@ -14,6 +16,7 @@ const CreateOrder = (requestBody: any) => {
             Authorization: `Basic ${btoa(
                 `${window.clientID}:${window.secretKey}`
             )}`,
+            "PayPal-Request-Id": uuidv4()
         },
         body: JSON.stringify(requestBody),
     }).then(res => {
