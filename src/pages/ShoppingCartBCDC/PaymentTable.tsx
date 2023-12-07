@@ -137,7 +137,7 @@ const PaymentTable = () => {
                         // endIcon={<ArrowForwardIosIcon />}
                         // endIcon={<Icon>send</Icon>}
                         onClick={() => {
-                            console.clear();
+                            // console.clear();
                             console.log(
                                 "[OnClick事件]当前radio value:",
                                 radio_value,

@@ -18,6 +18,9 @@
             // clientID和secretKey是全局变量, 省的从redux里获取了
             var clientID = "clientID";
             var secretKey = "secretKey";
+            window.addEventListener("error", (error) => {
+                console.log("catch error:", error);
+            });
         </script>
     </body>
 </html>

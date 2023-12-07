@@ -1,17 +1,17 @@
 import store from "../../reducer/store";
-import { orderSlice } from './../../reducer/reducers/orderReducer';
+import { orderSlice } from '../../reducer/reducers/orderReducer';
 
 const CaptureOrderAPI = () => {
+    debugger;
     const orderID = store.getState().orderInfo.orderID;
-    return fetch(`https://api.sandbox.paypal.com/v2/checkout/orders/${orderID}/capture`, {
+    return fetch("http://localhost:23009/captureOrder", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "PayPal-Partner-Attribution-Id": "PP-Test-Petro",
-            Authorization: `Basic ${btoa(
-                `${window.clientID}:${window.secretKey}`
-            )}`,
-        }
+        },
+        body: JSON.stringify({
+            orderID: orderID
+        })
     }).then(res => res.json()).then(data => {
         try {
             const transactionID = data["purchase_units"][0]["payments"]["captures"][0].id;

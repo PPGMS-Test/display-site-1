@@ -1,11 +1,14 @@
 import { FC, useEffect } from "react";
-import { APMMethod } from "./APMInstructionArea";
-import APMJSSDKBancontact from "../../service/LoadPayPalScript/APMJSSDKBancontact";
-import CaptureOrderAPI from "../../service/OrderV2/CaptureOrderAPI";
-import CreateOrder from "../../service/OrderV2/CreateOrderAPI";
+import { APMMethod } from "./index";
+import LoadAPMButton from "./JSSDK/LoadAPMButton";
+import { renderBancontactBtn } from "./Bancontact/Bancontact";
 import { useNavigate, useLocation } from "react-router-dom";
+import { renderSOFORTBtn } from "./SOFORT/SOFORT";
+import { renderIDEALBtn } from "./iDEAL/iDEAL";
+import { renderBLIKBtn } from "./BLIK/BLIK";
 
 const APMDisplayArea: FC<APMMethod> = (childrenProp: APMMethod) => {
+    console.log("APMDisplayArea, APM按钮展示区域!")
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -19,58 +22,60 @@ const APMDisplayArea: FC<APMMethod> = (childrenProp: APMMethod) => {
             return "";
         }
     };
-    const renderBtn = () => {
-        const createOrderObject = {
-            intent: "CAPTURE",
-            payment_source: {
-                bancontact: {
-                    country_code: "BE",
-                    name: "John Doe",
-                },
-            },
-            processing_instruction: "ORDER_COMPLETE_ON_PAYMENT_APPROVAL",
-            purchase_units: [
-                {
-            
-                    amount: {
-                        currency_code: "EUR",
-                        value: "1.00",
-                    },
-                },
-            ],
-            application_context: {
-                locale: "en-BE",
-                return_url: "https://example.com/returnUrl",
-                cancel_url: "https://example.com/cancelUrl",
-            },
-        };
-        if (window.paypal) {
-            let button = window.paypal.Buttons({
-                createOrder: function () {
-                    return CreateOrder(createOrderObject);
-                },
-                onApprove: async function (data: any, actions: any) {
-                    await CaptureOrderAPI();
-                    setTimeout(() => {
-                        // debugger;
-                        navigate(getLink());
-                    }, 1800);
-                },
-            });
-            if (button.isEligible()) {
-                button.render("#paypal-button-container");
-            }
-        }
+
+    const getNavFunction = () => {
+        setTimeout(() => {
+            // debugger;
+            navigate(getLink());
+        }, 8000);
     };
+
     useEffect(() => {
-        (async () => {
-        
-            await APMJSSDKBancontact().then(renderBtn);
-        })();
+        if (childrenProp.method === "Bancontact") {
+            (async () => {
+                await LoadAPMButton(
+                    "Bancontact",
+                    "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=bancontact&currency=EUR"
+                ).then(() => {
+                    renderBancontactBtn(getNavFunction);
+                });
+            })();
+        } else if (childrenProp.method === "SOFORT") {
+            (async () => {
+                await LoadAPMButton(
+                    "SOFORT",
+                    "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=sofort&currency=EUR"
+                ).then(() => {
+                    renderSOFORTBtn(getNavFunction);
+                });
+            })();
+        } else if (childrenProp.method === "iDEAL") {
+            (async () => {
+                await LoadAPMButton(
+                    "iDEAL",
+                    "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=ideal&currency=EUR"
+                ).then(() => {
+                    renderIDEALBtn(getNavFunction);
+                });
+            })();
+        } else if (childrenProp.method === "BLIK") {
+            (async () => {
+                await LoadAPMButton(
+                    "BLIK",
+                    "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=blik&currency=PLN"
+                ).then(() => {
+                    renderBLIKBtn(getNavFunction);
+                });
+            })();
+        }
     });
     return (
         <div>
             {childrenProp.method}
+            <div id="mark-container"></div>
+            <div className=" mb-2">
+                <div id="payment-fields-container"></div>
+            </div>
             <div id="paypal-button-container"></div>
         </div>
     );
