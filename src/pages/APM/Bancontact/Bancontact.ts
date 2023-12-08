@@ -39,22 +39,22 @@ export const renderBancontactBtn = (
 
         }).render('#mark-container')
 
-        window.paypal.PaymentFields({
-            fundingSource: window.paypal.FUNDING.BANCONTACT,
-            style: {
-                // style object (optional)
-            },
-            fields: {
-                // fields prefill info (optional)
-                name: {
-                    value: "Test Bancontact buyer",
-                },
-                email: {
-                    value: "jdoe@example.com",
-                }
-            }
-        })
-            .render("#payment-fields-container");
+        // window.paypal.PaymentFields({
+        //     fundingSource: window.paypal.FUNDING.BANCONTACT,
+        //     style: {
+        //         // style object (optional)
+        //     },
+        //     fields: {
+        //         // fields prefill info (optional)
+        //         name: {
+        //             value: "Test Bancontact buyer",
+        //         },
+        //         email: {
+        //             value: "jdoe@example.com",
+        //         }
+        //     }
+        // })
+        //     .render("#payment-fields-container");
 
 
         let button = window.paypal.Buttons({
@@ -69,7 +69,7 @@ export const renderBancontactBtn = (
                 // debugger;
                 await CaptureOrderAPILocal();
                 redirectAfterApprove();
-            },onCancel: function (data: any) {
+            }, onCancel: function (data: any) {
                 // window.alert("Cancel!")
                 // window.close();
                 // Show a cancel page, or return to cart
