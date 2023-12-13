@@ -15,7 +15,8 @@ const APMButtonGroup: FC<APMMethod> = (childrenProp: APMMethod) => {
         "giropay",
         "iDEAL",
         "MyBank",
-        "Pay upon invoice",
+        //Pay upon invoice 的方式先不做
+        // "Pay upon invoice",
         "Przelewy24",
         "SOFORT",
     ];

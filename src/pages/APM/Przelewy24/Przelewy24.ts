@@ -3,17 +3,18 @@ import CreateOrderLocal from "../../../service/OrderV2/CreateOrderAPILocal";
 
 import { toggleAPMButtons } from "../JSSDK/LoadAPMButton";
 
-export const BancontactWord = "Bancontact is the most widely used, accepted and trusted electronic payment method in Belgium, with over 15 million Bancontact cards issued, and 150,000 online transactions processed a day. Bancontact makes it possible to pay directly through the online payment systems of all major Belgian banks and can be used by all customers with a Bancontact branded payment card. Bancontact cards are issued by more than 20 Belgian banks and exists solely in Belgium."
+export const P24Word = "Przelewy24 is a payment method in Poland.";
 
-export const renderBancontactBtn = (
+export const renderP24Btn = (
     redirectAfterApprove: Function
 ): void => {
     const createOrderObject = {
         intent: "CAPTURE",
         payment_source: {
-            bancontact: {
-                country_code: "BE",
+            p24: {
+                country_code: "PL",
                 name: "John Doe",
+                "email": "john.doe@example.com"
             },
             "experience_context": {
                 "return_url": "https://example.com/returnUrl",
@@ -42,12 +43,13 @@ export const renderBancontactBtn = (
         purchase_units: [
             {
                 amount: {
-                    currency_code: "EUR",
+                    currency_code: "PLN",
                     value: "1.00",
                 },
                 "payee": {
                     "merchant_id": "CMHAMMNAXCMGA"
-                },
+                }
+                ,
                 "shipping": {
                     "name": {
                         "full_name": "Jane Doe"
@@ -61,7 +63,6 @@ export const renderBancontactBtn = (
                     }
                 },
             },
-
         ],
         application_context: {
             locale: "en-BE",
@@ -74,19 +75,19 @@ export const renderBancontactBtn = (
         if (mark) mark.innerHTML = "";
 
         window.paypal.Marks({
-            fundingSource: window.paypal.FUNDING.BANCONTACT,
+            fundingSource: window.paypal.FUNDING.P24,
         }).render('#mark-container')
 
 
         window.paypal.PaymentFields({
-            fundingSource: window.paypal.FUNDING.BANCONTACT,
+            fundingSource: window.paypal.FUNDING.P24,
             style: {
                 // style object (optional)
             },
             fields: {
                 // fields prefill info (optional)
                 name: {
-                    value: "Test Bancontact buyer",
+                    value: "Test P24 buyer",
                 },
                 email: {
                     value: "jdoe@example.com",
@@ -97,7 +98,7 @@ export const renderBancontactBtn = (
 
 
         let button = window.paypal.Buttons({
-            fundingSource: window.paypal.FUNDING.BANCONTACT,
+            fundingSource: window.paypal.FUNDING.P24,
             style: {
                 label: "pay",
             },
@@ -137,7 +138,7 @@ export const renderBancontactBtn = (
 
         //渲染多个
         // var FUNDING_SOURCES = [
-        //     window.paypal.FUNDING.BANCONTACT,
+        //     window.paypal.FUNDING.P24,
         //     window.paypal.FUNDING.BLIK,
         //     window.paypal.FUNDING.IDEAL,
         //     window.paypal.FUNDING.SOFORT,

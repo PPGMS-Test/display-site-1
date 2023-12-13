@@ -4,6 +4,10 @@ import { SOFORTWord } from "./SOFORT/SOFORT";
 import { IDEALWord } from "./iDEAL/iDEAL";
 import { BLIKWord } from "./BLIK/BLIK";
 import { APMMethod } from "./index";
+import { epsWord } from "./eps/eps";
+import { giropayWord } from "./giropay/giropay";
+import { MyBankWord } from "./MyBank/MyBank";
+import { P24Word } from "./Przelewy24/Przelewy24";
 
 const APMInstructionArea: FC<APMMethod> = (childrenProp: APMMethod) => {
     console.log("APMInstructionArea, APM文章说明区域!");
@@ -20,6 +24,21 @@ const APMInstructionArea: FC<APMMethod> = (childrenProp: APMMethod) => {
             return <div>{instructionWords}</div>;
         } else if (childrenProp.method === "BLIK") {
             instructionWords = BLIKWord;
+            return <div>{instructionWords}</div>;
+        } else if (childrenProp.method === "eps") {
+            instructionWords = epsWord;
+            return <div>{instructionWords}</div>;
+        } else if (childrenProp.method === "giropay") {
+            instructionWords = giropayWord;
+            return <div>{instructionWords}</div>;
+        } else if (childrenProp.method === "MyBank") {
+            instructionWords = MyBankWord;
+            return <div>{instructionWords}</div>;
+        } else if (childrenProp.method === "Pay upon invoice") {
+            instructionWords = BLIKWord;
+            return <div>{instructionWords}</div>;
+        } else if (childrenProp.method === "Przelewy24") {
+            instructionWords = P24Word;
             return <div>{instructionWords}</div>;
         }
         return <div>{childrenProp.method}</div>;

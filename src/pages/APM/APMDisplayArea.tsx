@@ -6,9 +6,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { renderSOFORTBtn } from "./SOFORT/SOFORT";
 import { renderIDEALBtn } from "./iDEAL/iDEAL";
 import { renderBLIKBtn } from "./BLIK/BLIK";
+import { renderEpsBtn } from "./eps/eps";
+import { renderGiropayBtn } from "./giropay/giropay";
+import { renderMyBankBtn } from "./MyBank/MyBank";
+import { renderP24Btn } from "./Przelewy24/Przelewy24";
 
 const APMDisplayArea: FC<APMMethod> = (childrenProp: APMMethod) => {
-    console.log("APMDisplayArea, APM按钮展示区域!")
+    console.log("APMDisplayArea, APM按钮展示区域!");
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -27,7 +31,7 @@ const APMDisplayArea: FC<APMMethod> = (childrenProp: APMMethod) => {
         setTimeout(() => {
             // debugger;
             navigate(getLink());
-        }, 8000);
+        }, 3000);
     };
 
     useEffect(() => {
@@ -36,6 +40,7 @@ const APMDisplayArea: FC<APMMethod> = (childrenProp: APMMethod) => {
                 await LoadAPMButton(
                     "Bancontact",
                     "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=bancontact&currency=EUR"
+                    // "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=bancontact,sofort,ideal,blik&currency=EUR"
                 ).then(() => {
                     renderBancontactBtn(getNavFunction);
                 });
@@ -65,6 +70,42 @@ const APMDisplayArea: FC<APMMethod> = (childrenProp: APMMethod) => {
                     "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=blik&currency=PLN"
                 ).then(() => {
                     renderBLIKBtn(getNavFunction);
+                });
+            })();
+        } else if (childrenProp.method === "eps") {
+            (async () => {
+                await LoadAPMButton(
+                    "BLIK",
+                    "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=eps&currency=EUR"
+                ).then(() => {
+                    renderEpsBtn(getNavFunction);
+                });
+            })();
+        } else if (childrenProp.method === "giropay") {
+            (async () => {
+                await LoadAPMButton(
+                    "BLIK",
+                    "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=giropay&currency=EUR"
+                ).then(() => {
+                    renderGiropayBtn(getNavFunction);
+                });
+            })();
+        } else if (childrenProp.method === "MyBank") {
+            (async () => {
+                await LoadAPMButton(
+                    "BLIK",
+                    "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=mybank&currency=EUR"
+                ).then(() => {
+                    renderMyBankBtn(getNavFunction);
+                });
+            })();
+        } else if (childrenProp.method === "Przelewy24") {
+            (async () => {
+                await LoadAPMButton(
+                    "BLIK",
+                    "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=p24&currency=PLN"
+                ).then(() => {
+                    renderP24Btn(getNavFunction);
                 });
             })();
         }

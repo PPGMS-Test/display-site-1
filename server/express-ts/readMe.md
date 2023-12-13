@@ -4,3 +4,5 @@
 
 但是这会导致这个问题:
 > https://github.com/natsu0728/blog/issues/22
+
+> https://github.com/wangdoc/typescript-tutorial

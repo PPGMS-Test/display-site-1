@@ -17,14 +17,17 @@ export const renderBLIKBtn = (
                 "email": "buyer@example.com"
             }
         },
-        processing_instruction: "ORDER_COMPLETE_ON_PAYMENT_APPROVAL",
+        // processing_instruction: "ORDER_COMPLETE_ON_PAYMENT_APPROVAL",
         purchase_units: [
             {
 
                 amount: {
-                    currency_code: "EUR",
+                    currency_code: "PLN",
                     value: "1.00",
                 },
+                "payee": {
+                    "merchant_id": "CMHAMMNAXCMGA"
+                }
             },
         ],
         application_context: {
@@ -70,7 +73,7 @@ export const renderBLIKBtn = (
             onApprove: async function (data: any, actions: any) {
                 await CaptureOrderAPILocal();
                 redirectAfterApprove();
-            },onCancel: function (data: any) {
+            }, onCancel: function (data: any) {
                 // window.alert("Cancel!")
                 // window.close();
                 // Show a cancel page, or return to cart

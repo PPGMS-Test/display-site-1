@@ -2,7 +2,7 @@ import store from "../../reducer/store";
 import { orderSlice } from '../../reducer/reducers/orderReducer';
 
 const CaptureOrderAPI = () => {
-    debugger;
+    // debugger;
     const orderID = store.getState().orderInfo.orderID;
     return fetch("http://localhost:23009/captureOrder", {
         method: "POST",
@@ -19,7 +19,7 @@ const CaptureOrderAPI = () => {
             store.dispatch(orderSlice.actions.setTransactionID(transactionID))
             return transactionID
         } catch (error) {
-            debugger;
+            // debugger;
             console.log("发生错误了")
             // throw error
         }

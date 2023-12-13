@@ -1,5 +1,6 @@
 import CaptureOrderAPILocal from "../../../service/OrderV2/CaptureOrderAPILocal";
 import CreateOrderLocal from "../../../service/OrderV2/CreateOrderAPILocal";
+import { toggleAPMButtons } from "../JSSDK/LoadAPMButton";
 
 export const IDEALWord = "iDEAL is a payment method in the Netherlands that allows buyers to select their issuing bank from a list of options. The buyer experience, once they've been handed off to the issuing bank they selected, differs depending on the bank."
 
@@ -15,7 +16,7 @@ export const renderIDEALBtn = (
                 "bic": "INGBNL2A"
             }
         },
-        processing_instruction: "ORDER_COMPLETE_ON_PAYMENT_APPROVAL",
+        // processing_instruction: "ORDER_COMPLETE_ON_PAYMENT_APPROVAL",
         purchase_units: [
             {
 
@@ -23,6 +24,9 @@ export const renderIDEALBtn = (
                     currency_code: "EUR",
                     value: "1.00",
                 },
+                "payee": {
+                    "merchant_id": "CMHAMMNAXCMGA"
+                }
             },
         ],
         application_context: {
@@ -70,14 +74,16 @@ export const renderIDEALBtn = (
             onApprove: async function (data: any, actions: any) {
                 await CaptureOrderAPILocal();
                 redirectAfterApprove();
-            },onCancel: function (data: any) {
+            }, onCancel: function (data: any) {
                 // window.alert("Cancel!")
                 // window.close();
                 // Show a cancel page, or return to cart
             },
         });
         if (button.isEligible()) {
-            button.render("#paypal-button-container");
+            button.render("#paypal-button-container").then(() => {
+                toggleAPMButtons(false)
+            });
         }
 
 
