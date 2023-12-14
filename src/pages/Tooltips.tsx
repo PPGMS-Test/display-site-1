@@ -6,8 +6,20 @@ import Tooltip from "@mui/material/Tooltip";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import Drawer from "../components/ShoppingCartDraw";
 import ShoppingCartSummary from "../components/ShoppingCartSummary";
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Paper, PaperProps } from "@mui/material";
-import Draggable from 'react-draggable';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Divider,
+    Paper,
+    PaperProps,
+} from "@mui/material";
+import Draggable from "react-draggable";
+import SliderCaptcha from "rc-slider-captcha";
+
+import { useCallback, useEffect, useRef } from "react";
 
 export default function PositionedTooltips() {
     //[1]验证抽屉
@@ -92,32 +104,19 @@ export default function PositionedTooltips() {
         );
     };
 
-    function PaperComponent(props: PaperProps) {
+    function PaperComponent(props: any) {
         return (
             <Draggable
-                handle="#draggable-dialog-title"
-                cancel={'[class*="MuiDialogContent-root"]'}
+            // handle="#draggable-dialog-title"
+            // cancel={'[class*="MuiDialogContent-root"]'}
             >
                 <Paper {...props} />
             </Draggable>
         );
     }
 
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    return (
-        <div>
-            {/* [1]验证抽屉 */}
-            {/* <Drawer position={"right"} icon={<Bars3Icon />} content={content} /> */}
-            <Divider className="my-2 py-3" />
+    const renderDraggableDialog = () => {
+        return (
             <React.Fragment>
                 <Button variant="outlined" onClick={handleClickOpen}>
                     Open draggable dialog
@@ -132,13 +131,19 @@ export default function PositionedTooltips() {
                         style={{ cursor: "move" }}
                         id="draggable-dialog-title"
                     >
-                        Subscribe
+                        请输入验证码
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            To subscribe to this website, please enter your
-                            email address here. We will send updates
-                            occasionally.
+                            验证码部分:
+                            <SliderCaptcha
+                                mode="slider"
+                                onVerify={async (data) => {
+                                    console.log(data);
+                                    // verify data
+                                    return Promise.resolve();
+                                }}
+                            />
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -149,6 +154,64 @@ export default function PositionedTooltips() {
                     </DialogActions>
                 </Dialog>
             </React.Fragment>
+        );
+    };
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const verifyCaptcha = async (data: { x: number }) => {
+        if (data?.x && data.x >= 250) {
+            setTimeout(() => {
+                handleClose();
+            }, 500);
+            return Promise.resolve();
+        }
+        return Promise.reject();
+    };
+
+    return (
+        <div>
+            {/* [1]验证抽屉 */}
+            {/* <Drawer position={"right"} icon={<Bars3Icon />} content={content} /> */}
+            <Divider className="my-2 py-3" />
+            <>
+                <Button variant="outlined" onClick={handleClickOpen}>
+                    打开验证码
+                </Button>
+                <Dialog onClose={handleClose} open={open}>
+                    <DialogTitle className=" pb-2">
+                        请把滑块拖到最右端
+                    </DialogTitle>
+                    <DialogContent>
+                        <SliderCaptcha
+                            mode="slider"
+                            tipText={{
+                                default: "向右拖动完成验证",
+                                loading: "载入中...",
+                                moving: "向右拖动至底端",
+                                verifying: "验证中...",
+                                error: "验证失败",
+                            }}
+                            onVerify={async (data) => {
+                                console.log(data);
+                                // verify data
+                                return verifyCaptcha(data);
+                            }}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Close</Button>
+                    </DialogActions>
+                </Dialog>
+            </>
         </div>
     );
 }

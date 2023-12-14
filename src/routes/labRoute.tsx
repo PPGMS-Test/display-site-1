@@ -8,7 +8,10 @@ import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
 import SinglePageTest from "../pages/SingleTestPage";
 import Thankyou from "../pages/Thankyou";
 import TodoList from "../pages/TodoList";
-import Tooltips from "../pages/Tooltips";
+// import Tooltips from "../pages/Tooltips";
+
+import PositionedTooltips from "../pages/Tooltips";
+
 import Venmo from "../pages/Venmo";
 import ErrorPage from "../pages/error-page";
 
@@ -19,7 +22,7 @@ const lab = {
     children: [
         {
             path: "/lab/tooltips",
-            element: <Tooltips />,
+            element: <PositionedTooltips />,
         },
 
         {
