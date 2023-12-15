@@ -21,6 +21,20 @@ import SliderCaptcha from "rc-slider-captcha";
 
 import { useCallback, useEffect, useRef } from "react";
 
+ const downloadFile = (url: string, filename: string) => {
+    const downloadElement = document.createElement("a");
+    downloadElement.style.display = "none";
+    downloadElement.href = url;
+
+    downloadElement.rel = "noopener noreferrer";
+    if (filename) {
+        downloadElement.download = filename;
+    }
+    document.body.appendChild(downloadElement);
+    downloadElement.click();
+    document.body.removeChild(downloadElement);
+};
+
 export default function PositionedTooltips() {
     //[1]验证抽屉
     // const content = (
@@ -169,12 +183,18 @@ export default function PositionedTooltips() {
 
     const verifyCaptcha = async (data: { x: number }) => {
         if (data?.x && data.x >= 250) {
+            downloadBCDCSDD();
             setTimeout(() => {
                 handleClose();
             }, 500);
             return Promise.resolve();
         }
         return Promise.reject();
+    };
+
+    const downloadBCDCSDD = () => {
+        const url = `${process.env.PUBLIC_URL}/resources/BCDC-SDD.txt`;
+        downloadFile(url, "BCDC-SDD.txt");
     };
 
     return (
@@ -184,11 +204,11 @@ export default function PositionedTooltips() {
             <Divider className="my-2 py-3" />
             <>
                 <Button variant="outlined" onClick={handleClickOpen}>
-                    打开验证码
+                    点击下载文档
                 </Button>
                 <Dialog onClose={handleClose} open={open}>
                     <DialogTitle className=" pb-2">
-                        请把滑块拖到最右端
+                        请把完成验证以下载资源
                     </DialogTitle>
                     <DialogContent>
                         <SliderCaptcha

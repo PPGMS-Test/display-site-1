@@ -105,6 +105,16 @@ const PaymentTable = () => {
                             />
                             {paypal_used}
                         </div>
+
+                        <div className="pl-2 w-full">
+                            <FormControlLabel
+                                value={PAYMENT_METHOD.PAYPAL_APM}
+                                control={<Radio color="primary" />}
+                                label="APM"
+                                disabled={radioBtnDisable}
+                                className=" inline-block"
+                            />
+                        </div>
                     </RadioGroup>
                 </div>
             );
@@ -128,6 +138,15 @@ const PaymentTable = () => {
                                 label="Debit or Credit Card"
                             />
                             {paypal_used}
+                        </div>
+
+                        <div className="pl-2 w-full">
+                            <FormControlLabel
+                                value={PAYMENT_METHOD.PAYPAL_APM}
+                                control={<Radio color="primary" />}
+                                label="APM"
+                            />
+                            
                         </div>
                     </RadioGroup>
 

@@ -4,6 +4,7 @@ import { setAPMButtonsDisable } from "../../reducer/reducers/globalToggleReducer
 import { getAPMButtonsDisable } from "../../reducer/reducers/globalToggleReducer";
 import { useAppSelector, useAppDispatch } from "../../typeHooks";
 import { APMMethod } from "./index";
+import { setAPMMethod } from "../../reducer/reducers/APMReducer";
 
 const APMButtonGroup: FC<APMMethod> = (childrenProp: APMMethod) => {
     const { method, setMethod } = childrenProp;
@@ -47,6 +48,7 @@ const APMButtonGroup: FC<APMMethod> = (childrenProp: APMMethod) => {
             dispatch(setAPMButtonsDisable(true));
             console.log("当前的APM方式:", newAPM);
             setMethod(newAPM);
+            dispatch(setAPMMethod(newAPM));
         }
     };
 
