@@ -3,7 +3,7 @@ import ErrorPage from "../pages/error-page";
 import ApplePay from "../pages/ApplePay";
 import GooglePay from "../pages/GooglePay";
 import Venmo from "../pages/Venmo";
-import Tooltips from "../pages/Tooltips";
+
 import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
 import TodoList from "../pages/TodoList";
 import APM from "../pages/APM";
@@ -32,9 +32,9 @@ const router = createBrowserRouter([
                 element: <Product />,
             },
             {
-              path: "/display/product",
-              element: <Product />,
-          },
+                path: "/display/product",
+                element: <Product />,
+            },
             {
                 path: "/display/shoppingCartBCDC",
                 element: <ShoppingCartBCDC />,

@@ -7,10 +7,11 @@ import { useAppSelector, useAppDispatch } from "../../typeHooks";
 
 import SmartPaymentButton from "../../components/SmartPaymentBtn/SmartPaymentButton";
 import BCDCButton from "../../components/BCDCButton/BCDCButton";
-import APMButton from "../../components/APMButton";
+import APMDisplayArea from "../APM/APMDisplayArea";
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
 import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
 import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer";
+import { getAPMMethod } from "../../reducer/reducers/APMReducer";
 
 function renderSmartPaymentButtons() {
     return (
@@ -31,15 +32,16 @@ function renderBCDCButton() {
     );
 }
 
-function renderAPMButton() {
+function renderAPMButton(APMMethod: string) {
+    console.log("APM Method:", APMMethod);
     return (
         <>
-            <APMButton />
+            <APMDisplayArea method={APMMethod} setMethod={() => {}} />
         </>
     );
 }
 
-function CurrentPaymentMethod(count: PAYMENT_METHOD) {
+function CurrentPaymentMethod(count: PAYMENT_METHOD, APMMethod: string) {
     switch (count) {
         case PAYMENT_METHOD.PAYPAL_STANDARD:
             console.log("分支1");
@@ -51,7 +53,7 @@ function CurrentPaymentMethod(count: PAYMENT_METHOD) {
             break;
         case PAYMENT_METHOD.PAYPAL_APM:
             console.log("分支3");
-            return renderAPMButton();
+            return renderAPMButton(APMMethod);
             break;
 
         default:
@@ -65,6 +67,9 @@ const RightPart: FC = () => {
         get_payment_method(state)
     ) as PAYMENT_METHOD;
     const shoppingCartList = useAppSelector((state) => getShoppingCart(state));
+    const APMMethod = useAppSelector((state) => {
+        return getAPMMethod(state);
+    });
 
     let [showPaymentMethod, setShowPaymentMethod] = useState(count);
 
@@ -89,7 +94,7 @@ const RightPart: FC = () => {
                         {/* <p>当前的支付方式: {count}</p>
                         <p>是否带有运输参数: {`${isWithShippingOption}`}</p> */}
 
-                        <div>{CurrentPaymentMethod(count)}</div>
+                        <div>{CurrentPaymentMethod(count, APMMethod)}</div>
                     </div>
                 </div>
             );

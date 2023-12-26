@@ -9,8 +9,8 @@ const Thankyou = () => {
             <h1>Thank You For your purchase!</h1>
 
             <p>
-                Your transaction
-                <i>{transactionID}</i> is Complete!
+                Your transaction [
+                <i>{transactionID}</i> ] is Complete!
             </p>
         </div>
     );

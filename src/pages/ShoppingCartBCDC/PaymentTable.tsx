@@ -105,6 +105,16 @@ const PaymentTable = () => {
                             />
                             {paypal_used}
                         </div>
+
+                        <div className="pl-2 w-full">
+                            <FormControlLabel
+                                value={PAYMENT_METHOD.PAYPAL_APM}
+                                control={<Radio color="primary" />}
+                                label="APM"
+                                disabled={radioBtnDisable}
+                                className=" inline-block"
+                            />
+                        </div>
                     </RadioGroup>
                 </div>
             );
@@ -129,6 +139,15 @@ const PaymentTable = () => {
                             />
                             {paypal_used}
                         </div>
+
+                        <div className="pl-2 w-full">
+                            <FormControlLabel
+                                value={PAYMENT_METHOD.PAYPAL_APM}
+                                control={<Radio color="primary" />}
+                                label="APM"
+                            />
+                            
+                        </div>
                     </RadioGroup>
 
                     <Button
@@ -137,7 +156,7 @@ const PaymentTable = () => {
                         // endIcon={<ArrowForwardIosIcon />}
                         // endIcon={<Icon>send</Icon>}
                         onClick={() => {
-                            console.clear();
+                            // console.clear();
                             console.log(
                                 "[OnClick事件]当前radio value:",
                                 radio_value,

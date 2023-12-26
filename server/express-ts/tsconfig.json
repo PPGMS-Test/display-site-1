@@ -1,0 +1,11 @@
+//https://qiita.com/nyanchu/items/82903e0463fa9d558639
+//解决问题: TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".ts" for
+{
+    "ts-node": {
+        "esm": true,
+        "experimentalSpecifierResolution": "node"
+    },
+    "compilerOptions": {
+        "esModuleInterop": true
+    }
+}

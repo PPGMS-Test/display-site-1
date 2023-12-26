@@ -4,9 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
-/server/node_modules
 /build-folder
-/server/package-lock.json
+/server/*/node_modules
+/server/*/package-lock.json
+/server/express-ts/ts-tutorial
 
 # testing
 /coverage
