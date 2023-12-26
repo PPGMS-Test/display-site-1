@@ -4,14 +4,17 @@ import { RootState } from "../store";
 
 
 //默认的支付方式
-const initialState: string = "Bancontact"
+const initialState = {
+    selectedMethod: "Bancontact"
+}
 
 export const paymentSlice = createSlice({
     name: "APM_Method",
     initialState,
     reducers: {
         setAPMMethod: (state, action: PayloadAction<string>) => {
-            state = action.payload;
+            debugger;
+            state.selectedMethod = action.payload;
         },
     },
 });
@@ -20,6 +23,6 @@ export const { setAPMMethod } = paymentSlice.actions;
 
 //获取当前的支付方式
 export const getAPMMethod = (state: RootState): string =>
-    state.APMMethod;
+    state.APMMethod.selectedMethod;
 
 export default paymentSlice.reducer;
