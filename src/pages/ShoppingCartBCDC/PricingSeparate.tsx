@@ -10,9 +10,9 @@ const PricingSeparate = () => {
 
     const productQuickViews = () => {
         if (shoppingCartList.length > 0) {
-            return shoppingCartList.map((item) => {
+            return shoppingCartList.map((item, index) => {
                 return (
-                    <div className=" py-1">
+                    <div className=" py-1" key={index}>
                         <div className="flex items-center">
                             <img
                                 src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"

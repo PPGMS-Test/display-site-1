@@ -76,45 +76,56 @@ const PaymentTable = () => {
     );
 
     const buttonTables = function () {
+        const lists = [
+            {
+                value: PAYMENT_METHOD.PAYPAL_STANDARD,
+                label: "PayPal",
+                logo: paypal_logo,
+                additionalInfo: null,
+            },
+            {
+                value: PAYMENT_METHOD.PAYPAL_BCDC,
+                label: "Debit or Credit Card",
+                logo: paypal_used,
+                additionalInfo: null,
+            },
+            {
+                value: PAYMENT_METHOD.PAYPAL_APM,
+                label: "APM",
+                logo: null,
+                additionalInfo: null,
+            },
+            {
+                value: PAYMENT_METHOD.PAYPAL_BNPL,
+                label: "Buy now Pay later",
+                logo: null,
+                additionalInfo: null,
+            },
+        ];
         if (useRadioOnChange) {
             /* [2023-10-09]radio button的点击事件来变动支付方式而不是按钮 */
+            // [2023-12-26]代码优化, 把一个一个写死的项目改变为数组遍历渲染
             return (
                 <div>
                     <RadioGroup
                         value={radio_value}
                         onChange={handleChange_ChangePaymentMethod}
                     >
-                        <div className="pl-2 w-full ">
-                            <FormControlLabel
-                                value={PAYMENT_METHOD.PAYPAL_STANDARD}
-                                control={<Radio color="primary" />}
-                                label="PayPal"
-                                disabled={radioBtnDisable}
-                                className=" inline-block"
-                            />
-                            {paypal_logo}
-                        </div>
-
-                        <div className="pl-2 w-full">
-                            <FormControlLabel
-                                value={PAYMENT_METHOD.PAYPAL_BCDC}
-                                control={<Radio color="primary" />}
-                                label="Debit or Credit Card"
-                                disabled={radioBtnDisable}
-                                className=" inline-block"
-                            />
-                            {paypal_used}
-                        </div>
-
-                        <div className="pl-2 w-full">
-                            <FormControlLabel
-                                value={PAYMENT_METHOD.PAYPAL_APM}
-                                control={<Radio color="primary" />}
-                                label="APM"
-                                disabled={radioBtnDisable}
-                                className=" inline-block"
-                            />
-                        </div>
+                        {lists.map((item, index) => {
+                            return (
+                                <div className="pl-2 w-full" key={index}>
+                                    <FormControlLabel
+                                        value={item.value}
+                                        control={<Radio color="primary" />}
+                                        label={item.label}
+                                        disabled={radioBtnDisable}
+                                        className=" inline-block"
+                                    />
+                                    {item.logo && item.logo}
+                                    {item.additionalInfo && item.additionalInfo}
+                                </div>
+                            );
+                        })}
                     </RadioGroup>
                 </div>
             );
@@ -122,32 +133,19 @@ const PaymentTable = () => {
             return (
                 <div>
                     <RadioGroup value={radio_value} onChange={handleChange}>
-                        <div className="pl-2 w-full">
-                            <FormControlLabel
-                                value={PAYMENT_METHOD.PAYPAL_STANDARD}
-                                control={<Radio color="primary" />}
-                                label="PayPal"
-                            />
-                            {paypal_logo}
-                        </div>
-
-                        <div className="pl-2 w-full">
-                            <FormControlLabel
-                                value={PAYMENT_METHOD.PAYPAL_BCDC}
-                                control={<Radio color="primary" />}
-                                label="Debit or Credit Card"
-                            />
-                            {paypal_used}
-                        </div>
-
-                        <div className="pl-2 w-full">
-                            <FormControlLabel
-                                value={PAYMENT_METHOD.PAYPAL_APM}
-                                control={<Radio color="primary" />}
-                                label="APM"
-                            />
-                            
-                        </div>
+                        {lists.map((item, index) => {
+                            return (
+                                <div className="pl-2 w-full" key={index}>
+                                    <FormControlLabel
+                                        value={item.value}
+                                        control={<Radio color="primary" />}
+                                        label={item.label}
+                                    />
+                                    {item.logo && item.logo}
+                                    {item.additionalInfo && item.additionalInfo}
+                                </div>
+                            );
+                        })}
                     </RadioGroup>
 
                     <Button

@@ -117,7 +117,8 @@ const CreateOrderObjectFn = (callbackFnSet: any) => {
     ShoppingCartList = state.shoppingCart.list;
     // debugger;
     const create_order_obj = assembleCreateOrderOject();
-    console.log(JSON.stringify(create_order_obj, null, "  "));
+    //查看请求体
+    // console.log(JSON.stringify(create_order_obj, null, "  "));
     // debugger;
 
     let paypalObject: ExtendedObj = {

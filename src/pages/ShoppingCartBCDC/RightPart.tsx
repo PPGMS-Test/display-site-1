@@ -5,8 +5,9 @@ import PricingTotal from "./PricingTotal";
 
 import { useAppSelector, useAppDispatch } from "../../typeHooks";
 
-import SmartPaymentButton from "../../components/SmartPaymentBtn/SmartPaymentButton";
-import BCDCButton from "../../components/BCDCButton/BCDCButton";
+import SmartPaymentButton from "../../components/PayPalCheckOutButtons/JSSDKRenderedButtons/SmartPaymentBtn/SmartPaymentButton";
+// BCDCButton这个模块已经废弃, 通过SmartPaymentButton的buttonType属性来控制渲染不同的Button类型
+// import BCDCButton from "../../components/PayPalCheckOutButtons/JSSDKRenderedButtons/BCDCButton/BCDCButton";
 import APMDisplayArea from "../APM/APMDisplayArea";
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
 import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
@@ -16,18 +17,19 @@ import { getAPMMethod } from "../../reducer/reducers/APMReducer";
 function renderSmartPaymentButtons() {
     return (
         <>
-            <SmartPaymentButton buttonType="Stand" />
+            <SmartPaymentButton buttonType={PAYMENT_METHOD.PAYPAL_STANDARD} />
         </>
     );
 }
 
 function renderBCDCButton() {
     return (
+        //BCDCButton这个模块已经废弃, 通过SmartPaymentButton的buttonType属性来控制渲染不同的Button类型
         // <>
         //     <BCDCButton />
         // </>
         <>
-            <SmartPaymentButton buttonType="BCDC" />
+            <SmartPaymentButton buttonType={PAYMENT_METHOD.PAYPAL_BCDC} />
         </>
     );
 }
@@ -36,7 +38,20 @@ function renderAPMButton(APMMethod: string) {
     console.log("APM Method:", APMMethod);
     return (
         <>
-            <APMDisplayArea method={APMMethod} setMethod={() => {}} />
+            <APMDisplayArea
+                method={APMMethod}
+                setMethod={() => {
+                    console.log("这是购物车结算页面, 不需要setMethod回调函数");
+                }}
+            />
+        </>
+    );
+}
+
+function renderBNPLButton() {
+    return (
+        <>
+            <SmartPaymentButton buttonType={PAYMENT_METHOD.PAYPAL_BNPL} />
         </>
     );
 }
@@ -44,18 +59,17 @@ function renderAPMButton(APMMethod: string) {
 function CurrentPaymentMethod(count: PAYMENT_METHOD, APMMethod: string) {
     switch (count) {
         case PAYMENT_METHOD.PAYPAL_STANDARD:
-            console.log("分支1");
             return renderSmartPaymentButtons();
             break;
         case PAYMENT_METHOD.PAYPAL_BCDC:
-            console.log("分支2");
             return renderBCDCButton();
             break;
         case PAYMENT_METHOD.PAYPAL_APM:
-            console.log("分支3");
             return renderAPMButton(APMMethod);
             break;
-
+        case PAYMENT_METHOD.PAYPAL_BNPL:
+            return renderBNPLButton();
+            break;
         default:
             break;
     }
@@ -111,8 +125,8 @@ const RightPart: FC = () => {
     };
 
     return (
-        <div className="relative bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 ">
-            <div className="mx-auto max-w-md">
+        <div className="relative bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-2xl sm:rounded-lg sm:px-10 ">
+            <div className="mx-auto max-w-2xl">
                 <div className="divide-y divide-gray-300/50">{renderFn()}</div>
             </div>
         </div>

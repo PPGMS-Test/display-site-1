@@ -14,3 +14,9 @@
 试了很多个第三方的验证码包, 唯一能用的就是这个
 
 > https://github.com/caijf/rc-slider-captcha?tab=readme-ov-file
+
+---
+
+国家和地区以常量的方式存在代码中, 获取源:
+
+> http://country.io/data/

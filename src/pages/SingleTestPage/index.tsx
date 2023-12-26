@@ -5,7 +5,7 @@ const SinglePageTest: FC = () => {
     const [orderId, setOrderID] = useState("");
     useEffect(() => {
         (async () => {
-            await UseJSSDK().then(renderBtn);
+            // await UseJSSDK().then(renderBtn);
         })();
     });
 
