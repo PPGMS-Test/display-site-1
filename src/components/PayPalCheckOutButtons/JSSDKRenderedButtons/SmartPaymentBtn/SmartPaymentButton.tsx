@@ -1,7 +1,9 @@
 import React, { FC, useEffect } from "react";
 import CreateOrderObjectFn from "../../../../service/LoadPayPalScript/createOrderObject";
 
-import UseJSSDK from "../../../../service/LoadPayPalScript/UseJSSDK";
+import UseJSSDK, {
+    JSSDKParams,
+} from "../../../../service/LoadPayPalScript/UseJSSDK";
 import { useNavigate, useLocation } from "react-router-dom";
 import PAYMENT_METHOD from "../../../../enum/PAYMENT_METHOD";
 import {
@@ -90,16 +92,22 @@ const SPB: FC<ButtonType> = ({ buttonType }) => {
     };
     useEffect(() => {
         (async () => {
-            // console.log(
-            //     "JS SDK states:",
-            //     (PayPal_SPB_JS_SDK_LoadScript as any).readyState
-            // );
-            // debugger;
-            await UseJSSDK({ addressCountry }).then(renderBtn);
+            let JSLoadParams: JSSDKParams = {
+                addressCountry: addressCountry,
+            };
+            if (buttonType === PAYMENT_METHOD.PAYPAL_BNPL) {
+                let map = new Map<string, string>();
+                map.set("enable-funding", "paylater");
+                if (["AU", "ES", "DE", "IT", "FR"].includes(addressCountry)) {
+                    map.set("currency", "EUR");
+                }
+                if (["GB"].includes(addressCountry)) {
+                    map.set("currency", "GBP");
+                }
+                JSLoadParams.additionalOptions = map;
+            }
+            await UseJSSDK(JSLoadParams).then(renderBtn);
         })();
-        // console.log("JS SDK states:", PayPal_SPB_JS_SDK_LoadScript.readyState);
-
-        // debugger;
     });
 
     return (

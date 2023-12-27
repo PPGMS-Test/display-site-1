@@ -8,22 +8,29 @@ import { BuyerInfo } from '../../reducer/reducers/buyerInfoReducer';
 window.clientID = "AbdLhKRGmSLshAiaLdfrdePdMhlnq8n4aRM3p7bwFgYL6FewsYiTGdfviIbTULFVvoIKi4hlyTcbat8S"
 window.secretKey = "EI8c5mSYLjn-9JSGYWSODXySJ3YukZCSt8OIR0Qwu4U6rnvpdgmV-7m2xso_zHDGwb1avA25oH7kqjki";
 
-interface ExtendedObj {
+export interface JSSDKParams {
     input?: Function,
-    addressCountry: string
+    addressCountry: string,
+    additionalOptions?: Map<string, string>,
     [key: string]: any;
 }
 
-const UseJSSDK = function (loadParam: ExtendedObj) {
-    let { input, addressCountry } = loadParam;
+const UseJSSDK = function (loadParam: JSSDKParams) {
+    let { input, addressCountry, additionalOptions } = loadParam;
     // debugger;
+    let additionalParams: string[] = new Array<string>();
+    if (additionalOptions) {
+        additionalOptions.forEach((value, key) => {
+            additionalParams.push(`${key}=${value}`)
+        })
+    }
 
     return new Promise<void>((resolve) => {
         let PayPal_SPB_JS_SDK_LoadScript = document.createElement("script");
         console.log("[UseJSSDK.ts] PayPal JS SDK load!");
         const client_id = window.clientID;
 
-        const url = `https://www.paypal.com/sdk/js?client-id=${client_id}&buyer-country=${addressCountry}`;
+        const url = `https://www.paypal.com/sdk/js?client-id=${client_id}&buyer-country=${addressCountry}${additionalParams.length > 0 ? "&" + additionalParams.join("&") : ""}`;
         console.log("[UseJSSDK.ts] Smart Payment button Url:", url)
         PayPal_SPB_JS_SDK_LoadScript.src = url;
         PayPal_SPB_JS_SDK_LoadScript.async = false;
