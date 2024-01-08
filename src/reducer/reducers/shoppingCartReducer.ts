@@ -14,11 +14,30 @@ export interface ShoppingCartList {
     list: ShoppingCartItem[];
 }
 
-const initialState: ShoppingCartList = { list: [] };
+const initialState: Function = (): ShoppingCartList => {
+    console.log("初始化shoppingCartReducer: process.env.REACT_APP_HAS_DEFAULT_ITEM_IN_LAB_ROUTE:", process.env.REACT_APP_HAS_DEFAULT_ITEM_IN_LAB_ROUTE)
+    if (process.env.REACT_APP_HAS_DEFAULT_ITEM_IN_LAB_ROUTE === "TRUE") {
+        let shoppingItem: ShoppingCartItem = {
+            ProductName: "Test Refresh default Product",
+            count: 1,
+            value: 100,
+            totalValue: 100
+        };
+        return {
+            list: [shoppingItem]
+        }
+    } else {
+        return {
+            list: []
+        }
+    }
+}
+
+
 
 export const shoppingCartSlice = createSlice({
     name: "shoppingCart",
-    initialState,
+    initialState: initialState(),
     reducers: {
         updateShoppingCart: (
             state,

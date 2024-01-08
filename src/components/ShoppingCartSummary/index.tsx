@@ -24,7 +24,9 @@ const ShoppingCartSummary: FC = () => {
     const shoppingCartList = useAppSelector((state) => getShoppingCart(state));
 
     let [count, setCount] = useState(
-        shoppingCartList.find((item) => item.ProductName === productName)?.count
+        shoppingCartList.find(
+            (item: ShoppingCartItem) => item.ProductName === productName
+        )?.count
     );
     // let [totalValue, setTotalValue] = useState(
     //     shoppingCartList.find((item) => item.ProductName === productName)
@@ -32,7 +34,7 @@ const ShoppingCartSummary: FC = () => {
     // );
 
     const totalValue = shoppingCartList.find(
-        (item) => item.ProductName === productName
+        (item: ShoppingCartItem) => item.ProductName === productName
     )?.totalValue;
 
     const handleChange = (event: any) => {

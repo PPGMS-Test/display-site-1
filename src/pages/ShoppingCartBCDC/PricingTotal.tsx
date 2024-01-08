@@ -1,6 +1,8 @@
-
 import { useAppSelector } from "../../typeHooks";
-import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
+import {
+    ShoppingCartItem,
+    getShoppingCart,
+} from "../../reducer/reducers/shoppingCartReducer";
 import { getCurrentShippingOption } from "../../reducer/reducers/shippingOptionReducer";
 
 const PricingTotal = () => {
@@ -8,10 +10,12 @@ const PricingTotal = () => {
         getCurrentShippingOption(state)
     );
     const shoppingCartList = useAppSelector((state) => getShoppingCart(state));
-    const totalPrice = shoppingCartList.reduce(
-        (sum, item) => sum + Number(item.totalValue || 0),
-        0
-    ) + currentShippingMethod.Price
+    const totalPrice =
+        shoppingCartList.reduce(
+            (sum: number, item: ShoppingCartItem) =>
+                sum + Number(item.totalValue || 0),
+            0
+        ) + currentShippingMethod.Price;
     return (
         <div>
             <p className="item-center text-gray-400 font-extrabold text-left">

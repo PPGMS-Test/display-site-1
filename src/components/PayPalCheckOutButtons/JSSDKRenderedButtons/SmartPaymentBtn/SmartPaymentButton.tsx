@@ -106,6 +106,17 @@ const SPB: FC<ButtonType> = ({ buttonType }) => {
                 }
                 JSLoadParams.additionalOptions = map;
             }
+            if (buttonType === PAYMENT_METHOD.PAYPAL_STANDARD) {
+                let map = new Map<string, string>();
+                map.set("enable-funding", "paylater");
+                if (["AU", "ES", "DE", "IT", "FR"].includes(addressCountry)) {
+                    map.set("currency", "USD");
+                }
+                if (["GB"].includes(addressCountry)) {
+                    map.set("currency", "USD");
+                }
+                JSLoadParams.additionalOptions = map;
+            }
             await UseJSSDK(JSLoadParams).then(renderBtn);
         })();
     });

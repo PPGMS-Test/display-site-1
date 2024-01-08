@@ -61,18 +61,26 @@ const PaymentTable = () => {
         getIsMoreSpace(state)
     );
 
+    //PayPal wallet Logo
     const paypal_logo = (
         <img
-            className=" w-1/2 h-8 ml-16 object-contain inline-block"
+            className=" w-1/2 h-8 ml-14 object-contain inline-block"
             src={process.env.PUBLIC_URL + "/image/paypal-logo.svg"}
         />
     );
 
+    //Debit or Credit Card Logo
     const paypal_used = (
-        <img
-            className=" w-1/2 h-10 object-contain  inline-block"
-            src={process.env.PUBLIC_URL + "/image/paypal-used.svg"}
-        />
+        <>
+            {/* <img
+                className=" w-1/2 h-10 object-contain  inline-block"
+                src={process.env.PUBLIC_URL + "/image/paypal-used.svg"}
+            /> */}
+            <img
+                className=" w-1/2 h-8 object-contain  inline-block ml-4"
+                src={process.env.PUBLIC_URL + "/image/card.svg"}
+            />
+        </>
     );
 
     const buttonTables = function () {
@@ -173,13 +181,9 @@ const PaymentTable = () => {
             );
         }
     };
-    return (
-        <div
-            className={classNames({
-                "text-base  leading-7 relative": true,
-                "space-y-6 py-8": isUseMoreSpace,
-            })}
-        >
+
+    const changePaymentMethodComponent = () => {
+        return (
             <div className="top-1 right-1 absolute ">
                 <Tooltip
                     title="点击这个按钮用以切换支付方式的选择方式"
@@ -201,6 +205,20 @@ const PaymentTable = () => {
                     />
                 </Tooltip>
             </div>
+        );
+    };
+    return (
+        <div
+            className={classNames({
+                "text-base  leading-7 relative": true,
+                "space-y-6 py-8": isUseMoreSpace,
+            })}
+        >
+            {/* {
+                //显示 点击这个按钮用以切换支付方式的选择方式 的toggle按钮
+                changePaymentMethodComponent()
+            } */}
+
             {/* --    radio group sample --
 
     <FormControl component="fieldset">
