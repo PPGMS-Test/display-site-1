@@ -5,7 +5,7 @@ import { RootState } from "../store";
 
 //默认的支付方式
 const initialState = {
-    selectedMethod: "Bancontact"
+    selectedMethod: "SOFORT"
 }
 
 export const paymentSlice = createSlice({

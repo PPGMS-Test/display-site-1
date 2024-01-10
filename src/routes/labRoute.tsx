@@ -7,7 +7,7 @@ import Product from "../pages/Product";
 import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
 import SinglePageTest from "../pages/SingleTestPage";
 import Thankyou from "../pages/Thankyou";
-import TodoList from "../pages/TodoList";
+import JSSDKParamsPlayground from "../pages/JSSDKParams/JSSDKParams";
 // import Tooltips from "../pages/Tooltips";
 
 import PositionedTooltips from "../pages/Tooltips";
@@ -32,7 +32,7 @@ const lab = {
 
         {
             path: "/lab/todoList",
-            element: <TodoList />,
+            element: <JSSDKParamsPlayground />,
         },
         {
             path: "/lab/product",

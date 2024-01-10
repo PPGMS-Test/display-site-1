@@ -10,7 +10,7 @@ export interface APMMethod {
 }
 
 const APM: FC = () => {
-    const [APMMethod, setAPMMethod] = useState("Bancontact");
+    const [APMMethod, setAPMMethod] = useState("SOFORT");
     console.log("APM页面!");
 
     return (

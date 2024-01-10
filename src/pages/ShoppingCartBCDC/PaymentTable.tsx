@@ -183,29 +183,36 @@ const PaymentTable = () => {
     };
 
     const changePaymentMethodComponent = () => {
-        return (
-            <div className="top-1 right-1 absolute ">
-                <Tooltip
-                    title="点击这个按钮用以切换支付方式的选择方式"
-                    placement="bottom"
-                    className="text-sky-500 hover:text-sky-600"
-                >
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={useRadioOnChange}
-                                onChange={() => {
-                                    setUseRadioOnChange(!useRadioOnChange);
-                                }}
-                            />
-                        }
-                        label={
-                            useRadioOnChange ? "选中radio button" : "点击按钮"
-                        }
-                    />
-                </Tooltip>
-            </div>
-        );
+        if (
+            process.env.REACT_APP_SHOW_PAYMENT_METHOD_TOGGLE &&
+            process.env.REACT_APP_SHOW_PAYMENT_METHOD_TOGGLE === "TRUE"
+        ) {
+            return (
+                <div className="top-1 right-1 absolute ">
+                    <Tooltip
+                        title="点击这个按钮用以切换支付方式的选择方式"
+                        placement="bottom"
+                        className="text-sky-500 hover:text-sky-600"
+                    >
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={useRadioOnChange}
+                                    onChange={() => {
+                                        setUseRadioOnChange(!useRadioOnChange);
+                                    }}
+                                />
+                            }
+                            label={
+                                useRadioOnChange
+                                    ? "选中radio button"
+                                    : "点击按钮"
+                            }
+                        />
+                    </Tooltip>
+                </div>
+            );
+        }
     };
     return (
         <div
@@ -214,96 +221,10 @@ const PaymentTable = () => {
                 "space-y-6 py-8": isUseMoreSpace,
             })}
         >
-            {/* {
+            {
                 //显示 点击这个按钮用以切换支付方式的选择方式 的toggle按钮
                 changePaymentMethodComponent()
-            } */}
-
-            {/* --    radio group sample --
-
-    <FormControl component="fieldset">
-        <FormLabel component="legend">
-          <p className="text-gray-400 font-extrabold">Payment Method</p>
-        </FormLabel>
-        <RadioGroup
-          // row
-          aria-label="position"
-          name="position"
-          defaultValue="top"
-        >
-          <FormControlLabel
-            value="A"
-            control={<Radio color="primary" />}
-            label="A"
-          />
-
-          <FormControlLabel
-            value="B"
-            control={<Radio color="primary" />}
-            label="B"
-          />
-          <FormControlLabel
-            value="C"
-            control={<Radio color="primary" />}
-            label="C"
-          />
-          
-        </RadioGroup>
-    </FormControl> 
-*/}
-
-            {/* 
-            <div>
-                表格式样还需调整, width max属性不起作用
-                <table className=" mx-auto w-full table-auto  rounded-lg border-separate border-spacing-2 border border-slate-400">
-                    <tbody>
-                        <RadioGroup value={radio_value} onChange={handleChange}>
-                            <tr className="w-full">
-                                <td className="w-full border border-slate-300 rounded">
-                                    <div className="pl-2 w-full">
-                                        <FormControlLabel
-                                            value={
-                                                PAYMENT_METHOD.PAYPAL_STANDARD
-                                            }
-                                            control={<Radio color="primary" />}
-                                            label="PayPal"
-                                        />
-                                        *LOGO* &nbsp;
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="border border-slate-300 rounded">
-                                    <div className="pl-2 w-full">
-                                        <FormControlLabel
-                                            value={PAYMENT_METHOD.PAYPAL_BCDC}
-                                            control={<Radio color="primary" />}
-                                            label="Debit or Credit Card"
-                                        />
-                                        *LOGO* &nbsp;
-                                    </div>
-                                </td>
-                            </tr>
-
-                            [2023-10-08 去除支付方式中的APM按钮 ]
-                            <tr>
-                                <td className="border border-slate-300 rounded">
-                                    <div className="pl-2 w-full">
-                                        <FormControlLabel
-                                            value={PAYMENT_METHOD.PAYPAL_APM}
-                                            control={<Radio color="primary" />}
-                                            label="APM"
-                                        />
-                                        *LOGO* &nbsp;
-                                    </div>
-                                </td>
-                            </tr>          
-
-                        </RadioGroup>
-                    </tbody>
-                </table>
-            
-        */}
+            }
 
             {/* ----------------------------------------------------------------------- */}
 

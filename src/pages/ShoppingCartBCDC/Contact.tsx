@@ -41,6 +41,7 @@ import {
 } from "../../reducer/reducers/buyerInfoReducer";
 import { getIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";
 import countryCodeList from "../../service/Geography/GetCountryCode";
+import { setAPMMethod } from "../../reducer/reducers/APMReducer";
 
 //[2023-10-08 BCDB 一定要下拉式的]
 const Contact: FC = () => {
@@ -84,6 +85,40 @@ const Contact: FC = () => {
     const handleCountryAlertClose = () => {
         setAlertStatus(false);
     };
+
+    const setAPMCountry = (countryCode: string) => {
+        if (countryCode === "BE") {
+            dispatch(setAPMMethod("Bancontact"));
+        }
+        if (countryCode === "PL") {
+            dispatch(setAPMMethod("Przelewy24"));
+        }
+
+        if (countryCode === "AT") {
+            dispatch(setAPMMethod("eps"));
+        }
+
+        if (countryCode === "DE") {
+            dispatch(setAPMMethod("giropay"));
+        }
+        if (countryCode === "IT") {
+            dispatch(setAPMMethod("MyBank"));
+        }
+
+        if (countryCode === "NL") {
+            dispatch(setAPMMethod("iDEAL"));
+        }
+    };
+
+    // handle events after country list is change
+    const handleCountryChange = (event: any) => {
+        handleCountryAlertOpen();
+        const value = event.target.value as string;
+        setContactFormCountryValue(value);
+        dispatch(setBuyerInfoAddressCountry(value));
+        setAPMCountry(value);
+    };
+
     return (
         <div>
             <Backdrop
@@ -323,16 +358,7 @@ const Contact: FC = () => {
                                         labelId="country-select-label"
                                         value={contactFormCountryValue}
                                         label="country"
-                                        onChange={(event) => {
-                                            handleCountryAlertOpen();
-                                            const value = event.target.value;
-                                            setContactFormCountryValue(value);
-                                            dispatch(
-                                                setBuyerInfoAddressCountry(
-                                                    value
-                                                )
-                                            );
-                                        }}
+                                        onChange={handleCountryChange}
                                     >
                                         {countryCodeList.map((value) => {
                                             return (
