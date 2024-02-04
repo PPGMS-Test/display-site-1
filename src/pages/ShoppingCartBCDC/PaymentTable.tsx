@@ -20,9 +20,16 @@ import {
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
 import classNames from "classnames";
 import { getIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";
+import { getAPMMethod } from "../../reducer/reducers/APMReducer";
+import APMDisplayArea from "../APM/APMDisplayArea";
+import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
 
 const PaymentTable = () => {
     const dispatch = useAppDispatch();
+
+    const APMMethod = useAppSelector((state) => {
+        return getAPMMethod(state);
+    });
 
     // const radio_value_global = useAppSelector(
     //     (state) => state.paymentMethod.method
@@ -83,6 +90,51 @@ const PaymentTable = () => {
         </>
     );
 
+    const payLater_logo = (
+        <>
+            <img
+                className=" w-1/2 h-8 object-contain  inline-block ml-28"
+                src={process.env.PUBLIC_URL + "/image/pay-later.png"}
+            />
+        </>
+    );
+
+    const APM_logo = () => {
+        let imgUrl;
+        if (APMMethod === APM_METHOD_ENUM.Bancontact) {
+            imgUrl =
+                "https://www.paypalobjects.com/js-sdk-logos/2.2.7/bancontact-black.svg";
+        } else if (APMMethod === APM_METHOD_ENUM.SOFORT) {
+            imgUrl =
+                "https://www.paypalobjects.com/js-sdk-logos/2.2.7/sofort-black.svg";
+        } else if (APMMethod === APM_METHOD_ENUM.iDEAL) {
+            imgUrl =
+                "https://www.paypalobjects.com/js-sdk-logos/2.2.7/ideal-black.svg";
+        } else if (APMMethod === APM_METHOD_ENUM.BLIK) {
+            imgUrl =
+                "https://www.paypalobjects.com/js-sdk-logos/2.2.7/blik-black.svg";
+        } else if (APMMethod === APM_METHOD_ENUM.eps) {
+            imgUrl =
+                "https://www.paypalobjects.com/js-sdk-logos/2.2.7/eps-black.svg";
+        } else if (APMMethod === APM_METHOD_ENUM.giropay) {
+            imgUrl =
+                "https://www.paypalobjects.com/js-sdk-logos/2.2.7/giropay-black.svg";
+        } else if (APMMethod === APM_METHOD_ENUM.MyBank) {
+            imgUrl =
+                "https://www.paypalobjects.com/js-sdk-logos/2.2.7/mybank-black.svg";
+        } else if (APMMethod === APM_METHOD_ENUM.PUI) {
+        } else if (APMMethod === APM_METHOD_ENUM.Przelewy24) {
+            imgUrl =
+                "https://www.paypalobjects.com/js-sdk-logos/2.2.7/p24-black.svg";
+        }
+
+        return (
+            <>
+                <img src={imgUrl} className=" w-1/3 h-8 object-contain  inline-block ml-20"/>
+            </>
+        );
+    };
+
     const buttonTables = function () {
         const lists = [
             {
@@ -99,14 +151,14 @@ const PaymentTable = () => {
             },
             {
                 value: PAYMENT_METHOD.PAYPAL_APM,
-                label: "APM",
-                logo: null,
+                label: `APM - ${APMMethod}`,
+                logo: APM_logo(),
                 additionalInfo: null,
             },
             {
                 value: PAYMENT_METHOD.PAYPAL_BNPL,
-                label: "Buy now Pay later",
-                logo: null,
+                label: "Pay later",
+                logo: payLater_logo,
                 additionalInfo: null,
             },
         ];

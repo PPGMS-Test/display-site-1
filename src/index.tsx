@@ -6,8 +6,7 @@ import router from "./routes/createRouter";
 import store from "./reducer/store";
 import { Provider } from "react-redux";
 
-// import PayPal_SPB_JS_SDK_LoadScript from "./service/LoadPayPalScript/NoPromiseSDK";
-
+console.table(process.env)
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <Provider store={store}>
         <RouterProvider router={router} />

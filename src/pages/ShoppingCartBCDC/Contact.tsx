@@ -42,6 +42,7 @@ import {
 import { getIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";
 import countryCodeList from "../../service/Geography/GetCountryCode";
 import { setAPMMethod } from "../../reducer/reducers/APMReducer";
+import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
 
 //[2023-10-08 BCDB 一定要下拉式的]
 const Contact: FC = () => {
@@ -88,25 +89,25 @@ const Contact: FC = () => {
 
     const setAPMCountry = (countryCode: string) => {
         if (countryCode === "BE") {
-            dispatch(setAPMMethod("Bancontact"));
+            dispatch(setAPMMethod(APM_METHOD_ENUM.Bancontact));
         }
         if (countryCode === "PL") {
-            dispatch(setAPMMethod("Przelewy24"));
+            dispatch(setAPMMethod(APM_METHOD_ENUM.Przelewy24));
         }
 
         if (countryCode === "AT") {
-            dispatch(setAPMMethod("eps"));
+            dispatch(setAPMMethod(APM_METHOD_ENUM.eps));
         }
 
         if (countryCode === "DE") {
-            dispatch(setAPMMethod("giropay"));
+            dispatch(setAPMMethod(APM_METHOD_ENUM.giropay));
         }
         if (countryCode === "IT") {
-            dispatch(setAPMMethod("MyBank"));
+            dispatch(setAPMMethod(APM_METHOD_ENUM.MyBank));
         }
 
         if (countryCode === "NL") {
-            dispatch(setAPMMethod("iDEAL"));
+            dispatch(setAPMMethod(APM_METHOD_ENUM.iDEAL));
         }
     };
 

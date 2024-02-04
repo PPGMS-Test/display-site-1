@@ -10,11 +10,15 @@ import { renderEpsBtn } from "./eps/eps";
 import { renderGiropayBtn } from "./giropay/giropay";
 import { renderMyBankBtn } from "./MyBank/MyBank";
 import { renderP24Btn } from "./Przelewy24/Przelewy24";
+import classNames from "classnames";
+import APM_METHOD_ENUM from "./APM_METHOD_ENUM";
 
 const APMDisplayArea: FC<APMMethod> = (childrenProp: APMMethod) => {
     console.log("APMDisplayArea, APM按钮展示区域!");
     const navigate = useNavigate();
     const location = useLocation();
+
+    console.table(childrenProp);
 
     const pathname = location.pathname;
     const getLink = () => {
@@ -35,74 +39,74 @@ const APMDisplayArea: FC<APMMethod> = (childrenProp: APMMethod) => {
     };
 
     useEffect(() => {
-        if (childrenProp.method === "Bancontact") {
+        if (childrenProp.method === APM_METHOD_ENUM.Bancontact) {
             (async () => {
                 await LoadAPMButton(
-                    "Bancontact",
+                    APM_METHOD_ENUM.Bancontact,
                     "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=bancontact&currency=EUR"
                     // "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=bancontact,sofort,ideal,blik&currency=EUR"
                 ).then(() => {
                     renderBancontactBtn(getNavFunction);
                 });
             })();
-        } else if (childrenProp.method === "SOFORT") {
+        } else if (childrenProp.method === APM_METHOD_ENUM.SOFORT) {
             (async () => {
                 await LoadAPMButton(
-                    "SOFORT",
+                    APM_METHOD_ENUM.SOFORT,
                     "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=sofort&currency=EUR"
                 ).then(() => {
                     renderSOFORTBtn(getNavFunction);
                 });
             })();
-        } else if (childrenProp.method === "iDEAL") {
+        } else if (childrenProp.method === APM_METHOD_ENUM.iDEAL) {
             (async () => {
                 await LoadAPMButton(
-                    "iDEAL",
+                    APM_METHOD_ENUM.iDEAL,
                     "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=ideal&currency=EUR"
                 ).then(() => {
                     renderIDEALBtn(getNavFunction);
                 });
             })();
-        } else if (childrenProp.method === "BLIK") {
+        } else if (childrenProp.method === APM_METHOD_ENUM.BLIK) {
             (async () => {
                 await LoadAPMButton(
-                    "BLIK",
+                    APM_METHOD_ENUM.BLIK,
                     "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=blik&currency=PLN"
                 ).then(() => {
                     renderBLIKBtn(getNavFunction);
                 });
             })();
-        } else if (childrenProp.method === "eps") {
+        } else if (childrenProp.method === APM_METHOD_ENUM.eps) {
             (async () => {
                 await LoadAPMButton(
-                    "BLIK",
+                    APM_METHOD_ENUM.eps,
                     "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=eps&currency=EUR"
                 ).then(() => {
                     renderEpsBtn(getNavFunction);
                 });
             })();
-        } else if (childrenProp.method === "giropay") {
+        } else if (childrenProp.method === APM_METHOD_ENUM.giropay) {
             (async () => {
                 await LoadAPMButton(
-                    "BLIK",
+                    APM_METHOD_ENUM.giropay,
                     "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=giropay&currency=EUR"
                 ).then(() => {
                     renderGiropayBtn(getNavFunction);
                 });
             })();
-        } else if (childrenProp.method === "MyBank") {
+        } else if (childrenProp.method === APM_METHOD_ENUM.MyBank) {
             (async () => {
                 await LoadAPMButton(
-                    "BLIK",
+                    APM_METHOD_ENUM.MyBank,
                     "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=mybank&currency=EUR"
                 ).then(() => {
                     renderMyBankBtn(getNavFunction);
                 });
             })();
-        } else if (childrenProp.method === "Przelewy24") {
+        } else if (childrenProp.method === APM_METHOD_ENUM.Przelewy24) {
             (async () => {
                 await LoadAPMButton(
-                    "BLIK",
+                    APM_METHOD_ENUM.Przelewy24,
                     "components=buttons,payment-fields,marks,funding-eligibility&enable-funding=p24&currency=PLN"
                 ).then(() => {
                     renderP24Btn(getNavFunction);
@@ -112,12 +116,32 @@ const APMDisplayArea: FC<APMMethod> = (childrenProp: APMMethod) => {
     });
     return (
         <div>
-            {childrenProp.method}
-            <div id="mark-container"></div>
-            <div className=" mb-2">
-                <div id="payment-fields-container"></div>
+            {/* {childrenProp.method} */}
+            <div
+                className={classNames({
+                    hidden: !childrenProp.showLabel,
+                })}
+            >
+                <div id="mark-container"></div>
             </div>
-            <div id="paypal-button-container"></div>
+
+            <div
+                className={classNames({
+                    hidden: !childrenProp.showField,
+                })}
+            >
+                <div className=" mb-2">
+                    <div id="payment-fields-container"></div>
+                </div>
+            </div>
+
+            <div
+                className={classNames({
+                    hidden: !childrenProp.showButton,
+                })}
+            >
+                <div id="paypal-button-container"></div>
+            </div>
         </div>
     );
 };

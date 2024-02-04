@@ -30,8 +30,10 @@ const GoToCheckOutBtn: FC = () => {
             return "/lab/shoppingCartBCDC";
         } else if (pathname.startsWith("/display")) {
             return "/display/shoppingCartBCDC";
+        } else if (pathname.startsWith("/")) {
+            return "/shoppingCartBCDC";
         } else {
-            return "/display/shoppingCartBCDC";
+            return "/shoppingCartBCDC";
         }
     };
 

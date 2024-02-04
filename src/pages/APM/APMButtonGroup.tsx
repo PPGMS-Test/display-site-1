@@ -5,21 +5,23 @@ import { getAPMButtonsDisable } from "../../reducer/reducers/globalToggleReducer
 import { useAppSelector, useAppDispatch } from "../../typeHooks";
 import { APMMethod } from "./index";
 import { setAPMMethod } from "../../reducer/reducers/APMReducer";
+import APM_METHOD_ENUM from "./APM_METHOD_ENUM";
 
 const APMButtonGroup: FC<APMMethod> = (childrenProp: APMMethod) => {
     const { method, setMethod } = childrenProp;
 
     const APMMethodList = [
-        "Bancontact",
-        "BLIK",
-        "eps",
-        "giropay",
-        "iDEAL",
-        "MyBank",
+        APM_METHOD_ENUM.Bancontact,
+        APM_METHOD_ENUM.BLIK,
+        APM_METHOD_ENUM.eps,
+        APM_METHOD_ENUM.giropay,
+        APM_METHOD_ENUM.iDEAL,
+        APM_METHOD_ENUM.MyBank,
+
         //Pay upon invoice 的方式先不做
         // "Pay upon invoice",
-        "Przelewy24",
-        "SOFORT",
+        APM_METHOD_ENUM.Przelewy24,
+        APM_METHOD_ENUM.SOFORT,
     ];
 
     const children = APMMethodList.map((APMMethod) => {
@@ -42,7 +44,7 @@ const APMButtonGroup: FC<APMMethod> = (childrenProp: APMMethod) => {
 
     const handleChange = (
         event: React.MouseEvent<HTMLElement>,
-        newAPM: string
+        newAPM: APM_METHOD_ENUM
     ) => {
         if (newAPM) {
             dispatch(setAPMButtonsDisable(true));

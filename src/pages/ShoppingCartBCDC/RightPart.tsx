@@ -13,6 +13,7 @@ import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
 import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
 import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer";
 import { getAPMMethod } from "../../reducer/reducers/APMReducer";
+import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
 
 function renderSmartPaymentButtons() {
     return (
@@ -34,7 +35,7 @@ function renderBCDCButton() {
     );
 }
 
-function renderAPMButton(APMMethod: string) {
+function renderAPMButton(APMMethod: APM_METHOD_ENUM) {
     console.log("APM Method:", APMMethod);
     return (
         <>
@@ -43,6 +44,9 @@ function renderAPMButton(APMMethod: string) {
                 setMethod={() => {
                     console.log("这是购物车结算页面, 不需要setMethod回调函数");
                 }}
+                showLabel={true}
+                showField={true}
+                showButton={true}
             />
         </>
     );
@@ -56,7 +60,7 @@ function renderBNPLButton() {
     );
 }
 
-function CurrentPaymentMethod(count: PAYMENT_METHOD, APMMethod: string) {
+function CurrentPaymentMethod(count: PAYMENT_METHOD, APMMethod: APM_METHOD_ENUM) {
     switch (count) {
         case PAYMENT_METHOD.PAYPAL_STANDARD:
             return renderSmartPaymentButtons();
