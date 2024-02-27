@@ -5,7 +5,7 @@ import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
 import Product from "../pages/Product";
 import Thankyou from "../pages/Thankyou";
 import App from "../App";
-import lab from "./labRoute";
+import lab from "./labRoutes";
 import { createBrowserRouter } from "react-router-dom";
 import DisplayRoot from "../pages/DisplayRoot";
 

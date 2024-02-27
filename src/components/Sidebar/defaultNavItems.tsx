@@ -6,6 +6,7 @@ import {
     BeakerIcon,
     ShoppingBagIcon,
     QuestionMarkCircleIcon,
+    CubeTransparentIcon,
 } from "@heroicons/react/24/outline";
 import { NavItem } from "./Sidebar";
 import {
@@ -13,6 +14,7 @@ import {
     CurrencyPoundIcon,
     ShoppingCartIcon,
     CurrencyDollarIcon,
+    CreditCardIcon,
 } from "@heroicons/react/20/solid";
 
 const productEnvItemList: NavItem[] = [
@@ -59,6 +61,18 @@ const localDevelopmentEnvItemList: NavItem[] = [
         label: "Venmo",
         href: "/lab/venmo",
         icon: <CurrencyPoundIcon className="w-6 h-6" />,
+    },
+
+    {
+        label: "Vault",
+        href: "/lab/vault",
+        icon: <CubeTransparentIcon className="w-6 h-6" />,
+    },
+
+    {
+        label: "ACDC",
+        href: "/lab/ACDC",
+        icon: <CreditCardIcon className="w-6 h-6" />,
     },
 
     {

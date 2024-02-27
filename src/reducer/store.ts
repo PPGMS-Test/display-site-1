@@ -8,6 +8,8 @@ import productReducer from "./reducers/productReducer";
 import shoppingCartReducer from "./reducers/shoppingCartReducer";
 import orderReducer from "./reducers/orderReducer";
 import APMReducer from "./reducers/APMReducer";
+import VaultReducer from './reducers/VaultReducer';
+import ClientSecretReducer from './reducers/ClientSecretReducer';
 
 const store = configureStore({
     reducer: {
@@ -18,7 +20,9 @@ const store = configureStore({
         productInfo: productReducer,
         shoppingCart: shoppingCartReducer,
         orderInfo: orderReducer,
-        APMMethod: APMReducer
+        APMMethod: APMReducer,
+        vault: VaultReducer,
+        JsSDKInfo:ClientSecretReducer
     },
 });
 

@@ -14,6 +14,8 @@ import PositionedTooltips from "../pages/Tooltips";
 
 import Venmo from "../pages/Venmo";
 import ErrorPage from "../pages/error-page";
+import VaultIndex from "../pages/Vault/VaultIndex";
+import ACDCIndex from "../pages/ACDC/ACDCIndex";
 
 const lab = {
     path: "/lab",
@@ -65,6 +67,14 @@ const lab = {
         {
             path: "/lab/singlePageTest",
             element: <SinglePageTest />,
+        },
+        {
+            path: "/lab/vault",
+            element: <VaultIndex />,
+        },
+        {
+            path: "/lab/ACDC",
+            element: <ACDCIndex />,
         },
     ],
 }

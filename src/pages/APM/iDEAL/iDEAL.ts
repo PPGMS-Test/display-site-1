@@ -1,5 +1,5 @@
-import CaptureOrderAPILocal from "../../../service/OrderV2/CaptureOrderAPILocal";
-import CreateOrderLocal from "../../../service/OrderV2/CreateOrderAPILocal";
+import CaptureOrderAPILocal from "../../../service/OrderV2/ByExpressServer/CaptureOrderAPILocal";
+import CreateOrderLocal from "../../../service/OrderV2/ByExpressServer/CreateOrderAPILocal";
 import { toggleAPMButtons } from "../JSSDK/LoadAPMButton";
 
 export const IDEALWord = "iDEAL is a payment method in the Netherlands that allows buyers to select their issuing bank from a list of options. The buyer experience, once they've been handed off to the issuing bank they selected, differs depending on the bank."

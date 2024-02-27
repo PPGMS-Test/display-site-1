@@ -2,11 +2,7 @@ import { Input } from '@mui/material';
 import { BuyerInfo } from '../../reducer/reducers/buyerInfoReducer';
 
 
-// bussiness: paypal-sandbox-us@pptest.com
-// pwd:111222333
-// bncode: PP-Test-Petro
-window.clientID = "AbdLhKRGmSLshAiaLdfrdePdMhlnq8n4aRM3p7bwFgYL6FewsYiTGdfviIbTULFVvoIKi4hlyTcbat8S"
-window.secretKey = "EI8c5mSYLjn-9JSGYWSODXySJ3YukZCSt8OIR0Qwu4U6rnvpdgmV-7m2xso_zHDGwb1avA25oH7kqjki";
+
 
 export interface JSSDKParams {
     input?: Function,

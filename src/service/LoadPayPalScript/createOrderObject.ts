@@ -1,7 +1,7 @@
 import { Shipping } from './../../interface/Shipping/Shipping';
 import store from "../../reducer/store";
-import CreateOrder from '../OrderV2/CreateOrderAPI';
-import CaptureOrderAPI from '../OrderV2/CaptureOrderAPI';
+import CreateOrderFetchAPI from '../OrderV2/ByOnlineFetch/CreateOrderAPI';
+import CaptureOrderFetchAPI from '../OrderV2/ByOnlineFetch/CaptureOrderAPI';
 import { BuyerInfo } from '../../reducer/reducers/buyerInfoReducer';
 import { ShoppingCartItem } from '../../reducer/reducers/shoppingCartReducer';
 import { CurrentShippingOption } from '../../reducer/reducers/shippingOptionReducer';
@@ -29,10 +29,19 @@ function getProductsTotalPrice() {
     return totalPrice
 }
 
+//[2024-02-20 payer这个属性已经不维护了, 要重新组织, 我这里只有shipping address, 没有billing address, billing address要配合页面展示一起修改]
 function assembleCreateOrderOject() {
     const baseOrderAmount = getProductsTotalPrice();
 
     let payer_info;
+
+    //[2024-02-20] 这里payment source应该为动态的, 但是还没空来做
+    let payment_source_item = "paypal"
+    let payment_source={
+        payment_source_item:{
+            
+        }
+    }
     if (buyerInfo) {
         payer_info = {
             name: {
@@ -99,6 +108,57 @@ function assembleCreateOrderOject() {
     if (buyerInfo) {
         //这是不正确的
         // create_order_obj = Object.assign(create_order_obj, payer_info);
+
+        //正确的
+        (create_order_obj as any).payer = payer_info;
+    }
+    return create_order_obj;
+}
+
+function assembleCreateOrderOjectNew(){
+    const baseOrderAmount = getProductsTotalPrice();
+
+    let payer_info;
+    if (buyerInfo) {
+        payer_info = {
+            name: {
+                given_name: buyerInfo.Contact.LastName,
+                surname: buyerInfo.Contact.FirstName,
+            },
+            address: {
+                address_line_1: buyerInfo.Address.Address1,
+                address_line_2: buyerInfo.Address.Address2,
+                admin_area_2: "Austin",
+                admin_area_1: "TX",
+                postal_code: buyerInfo.Address.PostalCode,
+                country_code: buyerInfo.Address.Country,
+            },
+            email_address: "petro-test01-us@cctest.com",
+            password: "Qq111222333",
+            phone: {
+                phone_type: "MOBILE",
+                phone_number: {
+                    national_number: buyerInfo.Contact.Phone,
+                },
+            },
+        };
+    }
+
+    let create_order_obj: ExtendedObj = {
+        intent: "CAPTURE",
+        purchase_units: [
+            {
+                amount: {
+                    value: baseOrderAmount,
+                    // currency_code: "EUR",
+                    currency_code: "USD",
+                },
+            },
+        ],
+    };
+
+    if (buyerInfo) {
+        
         //正确的
         (create_order_obj as any).payer = payer_info;
     }
@@ -116,17 +176,19 @@ const CreateOrderObjectFn = (callbackFnSet: any) => {
     ShippingOptionList = state.withShippingOption.ShippingOptionList;
     ShoppingCartList = state.shoppingCart.list;
     // debugger;
-    const create_order_obj = assembleCreateOrderOject();
+    // const create_order_obj = assembleCreateOrderOject();
+    const create_order_obj = assembleCreateOrderOjectNew();
     //查看请求体
-    // console.log(JSON.stringify(create_order_obj, null, "  "));
+    console.log("%c[Create Order Request Body]:","color:blue");
+    console.log(`%c${JSON.stringify(create_order_obj, null, "  ")}`,"color:blue");
     // debugger;
 
     let paypalObject: ExtendedObj = {
-        createOrder: function () {
-            return CreateOrder(create_order_obj);
+        createOrder: async function () {
+            return (await CreateOrderFetchAPI(create_order_obj)).orderID;
         },
         onApprove: async function (data: any, actions: any) {
-            await CaptureOrderAPI();
+            await CaptureOrderFetchAPI();
             setTimeout(() => {
                 // debugger;
                 navigate(getLink())

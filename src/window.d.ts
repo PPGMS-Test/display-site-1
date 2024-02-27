@@ -2,6 +2,7 @@ interface Window {
     paypal: any;
     clientID: any;
     secretKey: any;
+    sellerID: any;
 }
 
 interface process {

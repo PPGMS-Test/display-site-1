@@ -1,5 +1,5 @@
-import CaptureOrderAPILocal from "../../../service/OrderV2/CaptureOrderAPILocal";
-import CreateOrderLocal from "../../../service/OrderV2/CreateOrderAPILocal";
+import CaptureOrderAPILocal from "../../../service/OrderV2/ByExpressServer/CaptureOrderAPILocal";
+import CreateOrderLocal from "../../../service/OrderV2/ByExpressServer/CreateOrderAPILocal";
 
 import { toggleAPMButtons } from "../JSSDK/LoadAPMButton";
 
