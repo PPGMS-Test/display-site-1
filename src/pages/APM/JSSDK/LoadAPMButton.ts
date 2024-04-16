@@ -8,8 +8,6 @@ window.clientID = "AbdLhKRGmSLshAiaLdfrdePdMhlnq8n4aRM3p7bwFgYL6FewsYiTGdfviIbTU
 window.secretKey = "EI8c5mSYLjn-9JSGYWSODXySJ3YukZCSt8OIR0Qwu4U6rnvpdgmV-7m2xso_zHDGwb1avA25oH7kqjki";
 
 
-
-
 const LoadAPMButton = function (consoleWord: string, urlParam: string, input: Function = () => { }) {
     return new Promise<void>((resolve) => {
         let PayPal_SPB_JS_SDK_LoadScript = document.createElement("script");

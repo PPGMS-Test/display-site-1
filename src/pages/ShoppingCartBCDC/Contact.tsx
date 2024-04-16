@@ -16,29 +16,46 @@ import {
 } from "../../reducer/reducers/buyerInfoReducer";
 // import user_data from "../../Mock/Person/Tom.json";
 // import address_data from "../../Mock/Address/TomAddress.json";
-import { FC } from "react";
+import { FC, useState } from "react";
 import classNames from "classnames";
 import UseMoreSpace from "../../components/Toggles/UseMoreSpaceToggle";
 import { useAppDispatch, useAppSelector } from "../../typeHooks";
-import { Input, TextField } from "@mui/material";
+import {
+    Alert,
+    AlertTitle,
+    Backdrop,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    FormControl,
+    Input,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+} from "@mui/material";
 import {
     getBuyerInfo,
     setBuyerInfo,
 } from "../../reducer/reducers/buyerInfoReducer";
 import { getIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";
+import countryCodeList from "../../service/Geography/GetCountryCode";
+import { setAPMMethod } from "../../reducer/reducers/APMReducer";
+import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
 
 //[2023-10-08 BCDB 一定要下拉式的]
 const Contact: FC = () => {
     const dispatch = useAppDispatch();
-    const user: User = useAppSelector(
-        (state) => getBuyerInfo(state).Contact
-    ) as User;
+    const user: User = useAppSelector((state) => getBuyerInfo(state).Contact);
     const address: Address = useAppSelector(
         (state) => getBuyerInfo(state).Address
-    ) as Address;
-
-    const isUseMoreSpace: boolean = useAppSelector(
-        (state) =>  getIsMoreSpace(state)
+    );
+    const [contactFormCountryValue, setContactFormCountryValue] = useState(
+        address.Country
+    );
+    const isUseMoreSpace: boolean = useAppSelector((state) =>
+        getIsMoreSpace(state)
     );
 
     const NationCityDivClassName = "w-20 mt-2 mb-1";
@@ -62,8 +79,58 @@ const Contact: FC = () => {
         // dispatch(event.target.value);
     };
 
+    const [alertStatus, setAlertStatus] = useState(false);
+    const handleCountryAlertOpen = () => {
+        setAlertStatus(true);
+    };
+    const handleCountryAlertClose = () => {
+        setAlertStatus(false);
+    };
+
+    const setAPMCountry = (countryCode: string) => {
+        if (countryCode === "BE") {
+            dispatch(setAPMMethod(APM_METHOD_ENUM.Bancontact));
+        }
+        if (countryCode === "PL") {
+            dispatch(setAPMMethod(APM_METHOD_ENUM.Przelewy24));
+        }
+
+        if (countryCode === "AT") {
+            dispatch(setAPMMethod(APM_METHOD_ENUM.eps));
+        }
+
+        if (countryCode === "DE") {
+            dispatch(setAPMMethod(APM_METHOD_ENUM.giropay));
+        }
+        if (countryCode === "IT") {
+            dispatch(setAPMMethod(APM_METHOD_ENUM.MyBank));
+        }
+
+        if (countryCode === "NL") {
+            dispatch(setAPMMethod(APM_METHOD_ENUM.iDEAL));
+        }
+    };
+
+    // handle events after country list is change
+    const handleCountryChange = (event: any) => {
+        handleCountryAlertOpen();
+        const value = event.target.value as string;
+        setContactFormCountryValue(value);
+        dispatch(setBuyerInfoAddressCountry(value));
+        setAPMCountry(value);
+    };
+
     return (
         <div>
+            <Backdrop
+                sx={{
+                    color: "#fff",
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+                open={alertStatus}
+                onClick={handleCountryAlertClose}
+            ></Backdrop>
+
             <UseMoreSpace />
             {/* <p>当前的值:{` ${isUseMoreSpace}`}</p> */}
 
@@ -274,26 +341,60 @@ const Contact: FC = () => {
                                 ></TextField>
                             </div>
                             <p className="mt-2 mb-1"> &nbsp; - &nbsp; </p>
-
-                            <div className={NationCityDivClassName}>
-                                <TextField
-                                    id="Country"
-                                    value={address.Country}
-                                    size="small"
-                                    label="Country"
-                                    className="text-sm font-bold text-gray-900 w-20 m-2"
-                                    onChange={(event) => {
-                                        // const attributeID = event.target.id;
-                                        // console.log(attributeID);
-                                        const value = event.target.value;
-
-                                        // console.log(value);
-                                        dispatch(
-                                            setBuyerInfoAddressCountry(value)
-                                        );
-                                    }}
-                                ></TextField>
+                            {/* ------------- 国家 --------------*/}
+                            <div
+                                className={classNames({
+                                    NationCityDivClassName: true,
+                                })}
+                                style={{
+                                    marginTop: "0.5rem",
+                                }}
+                            >
+                                <FormControl size="small">
+                                    <InputLabel id="country-select-label">
+                                        Country
+                                    </InputLabel>
+                                    <Select
+                                        autoFocus
+                                        labelId="country-select-label"
+                                        value={contactFormCountryValue}
+                                        label="country"
+                                        onChange={handleCountryChange}
+                                    >
+                                        {countryCodeList.map((value) => {
+                                            return (
+                                                <MenuItem
+                                                    value={value.countryCode}
+                                                    key={value.countryCode}
+                                                >
+                                                    {value.countryName}
+                                                </MenuItem>
+                                            );
+                                        })}
+                                    </Select>
+                                </FormControl>
+                                <Dialog
+                                    open={alertStatus}
+                                    onClose={handleCountryAlertClose}
+                                >
+                                    <DialogContent>
+                                        <Alert severity="info">
+                                            <AlertTitle>Info</AlertTitle>
+                                            Change Country will rerender PayPal
+                                            Smart Payment Button base on your
+                                            new country or area select.
+                                        </Alert>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button
+                                            onClick={handleCountryAlertClose}
+                                        >
+                                            Close
+                                        </Button>
+                                    </DialogActions>
+                                </Dialog>
                             </div>
+
                             <p className="mt-2 mb-1"> &nbsp; - &nbsp; </p>
                             <div className="mt-2 mb-1 w-24">
                                 <TextField

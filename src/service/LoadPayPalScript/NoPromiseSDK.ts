@@ -13,4 +13,5 @@ PayPal_SPB_JS_SDK_LoadScript.onload = function () {
     console.log("PayPal SPB JS SDK is loaded!")
 };
 
+//[2023-12-26]这个文件是废弃的, 没有任何地方调用了本模块, 只是在一开始没有采用异步promise的时候暂时使用了本模块
 export default PayPal_SPB_JS_SDK_LoadScript;

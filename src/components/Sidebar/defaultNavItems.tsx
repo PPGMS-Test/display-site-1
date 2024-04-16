@@ -6,6 +6,7 @@ import {
     BeakerIcon,
     ShoppingBagIcon,
     QuestionMarkCircleIcon,
+    CubeTransparentIcon,
 } from "@heroicons/react/24/outline";
 import { NavItem } from "./Sidebar";
 import {
@@ -13,16 +14,17 @@ import {
     CurrencyPoundIcon,
     ShoppingCartIcon,
     CurrencyDollarIcon,
+    CreditCardIcon,
 } from "@heroicons/react/20/solid";
 
-export const defaultNavItems: NavItem[] = [
+const productEnvItemList: NavItem[] = [
     {
         label: "Dashboard",
         href: "/lab",
         icon: <HomeIcon className="w-6 h-6" />,
     },
     {
-        label: "TodoList",
+        label: "JS SDK Params",
         href: "/lab/todoList",
         icon: <ClipboardDocumentIcon className="w-6 h-6" />,
     },
@@ -32,15 +34,18 @@ export const defaultNavItems: NavItem[] = [
         icon: <ShoppingBagIcon className="w-6 h-6" />,
     },
     {
-        label: "BCDC Standalone",
+        label: "SPB Payments",
         href: "/lab/shoppingCartBCDC",
         icon: <ShoppingCartIcon className="w-6 h-6" />,
     },
     {
-        label: "APM Standalone",
+        label: "APM",
         href: "/lab/APM",
         icon: <WalletIcon className="w-6 h-6" />,
     },
+];
+
+const localDevelopmentEnvItemList: NavItem[] = [
     {
         label: "GooglePay",
         href: "/lab/googlePay",
@@ -59,6 +64,18 @@ export const defaultNavItems: NavItem[] = [
     },
 
     {
+        label: "Vault",
+        href: "/lab/vault",
+        icon: <CubeTransparentIcon className="w-6 h-6" />,
+    },
+
+    {
+        label: "ACDC",
+        href: "/lab/ACDC",
+        icon: <CreditCardIcon className="w-6 h-6" />,
+    },
+
+    {
         label: "SinglePageTest",
         href: "/lab/singlePageTest",
         icon: <BeakerIcon className="w-6 h-6" />,
@@ -69,3 +86,13 @@ export const defaultNavItems: NavItem[] = [
         icon: <QuestionMarkCircleIcon className="w-6 h-6" />,
     },
 ];
+
+//prod env
+let defaultNavItems: NavItem[] = [...productEnvItemList];
+
+//add local test env
+if( process.env.REACT_APP_SHOW_SIDEBAR_TEST && process.env.REACT_APP_SHOW_SIDEBAR_TEST === "TRUE"){
+    defaultNavItems = [...defaultNavItems,...localDevelopmentEnvItemList]
+}
+
+export default defaultNavItems;

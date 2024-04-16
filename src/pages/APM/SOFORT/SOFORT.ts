@@ -1,5 +1,5 @@
-import CaptureOrderAPILocal from "../../../service/OrderV2/CaptureOrderAPILocal";
-import CreateOrderLocal from "../../../service/OrderV2/CreateOrderAPILocal";
+import CaptureOrderAPILocal from "../../../service/OrderV2/ByExpressServer/CaptureOrderAPILocal";
+import CreateOrderLocal from "../../../service/OrderV2/ByExpressServer/CreateOrderAPILocal";
 import { toggleAPMButtons } from "../JSSDK/LoadAPMButton";
 
 export const SOFORTWord = "SOFORT is a payment method in Europe.The SOFORT payment method will be deprecated by the end of September 2024. New integrations won't be able to accept SOFORT payments starting October 20th, 2023."

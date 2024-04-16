@@ -16,8 +16,17 @@
         <div id="root"></div>
         <script>
             // clientID和secretKey是全局变量, 省的从redux里获取了
-            var clientID = "clientID";
-            var secretKey = "secretKey";
+
+            // bussiness: paypal-sandbox-us@pptest.com
+            // pwd:111222333
+            // bncode: PP-Test-Petro
+            window.clientID =
+                "AbdLhKRGmSLshAiaLdfrdePdMhlnq8n4aRM3p7bwFgYL6FewsYiTGdfviIbTULFVvoIKi4hlyTcbat8S";
+            window.secretKey =
+                "EI8c5mSYLjn-9JSGYWSODXySJ3YukZCSt8OIR0Qwu4U6rnvpdgmV-7m2xso_zHDGwb1avA25oH7kqjki";
+                
+            // var clientID = "clientID";
+            // var secretKey = "secretKey";
             window.addEventListener("error", (error) => {
                 console.log("catch error:", error);
             });

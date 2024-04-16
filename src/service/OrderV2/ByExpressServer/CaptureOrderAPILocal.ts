@@ -1,5 +1,5 @@
-import store from "../../reducer/store";
-import { orderSlice } from '../../reducer/reducers/orderReducer';
+import store from "../../../reducer/store";
+import { orderSlice } from '../../../reducer/reducers/orderReducer';
 
 const CaptureOrderAPI = () => {
     // debugger;

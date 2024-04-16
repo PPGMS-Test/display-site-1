@@ -1,5 +1,5 @@
 import { Checkbox, Chip, FormControlLabel, FormGroup } from "@mui/material";
-import CircleCheckMark from "../components/svgIcon/CircleCheckMark";
+import CircleCheckMark from "../../components/svgIcon/CircleCheckMark";
 // import DoneIcon from '@material-ui/icons/Done';
 
 export default function TodoList() {

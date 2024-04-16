@@ -7,13 +7,15 @@ import Product from "../pages/Product";
 import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
 import SinglePageTest from "../pages/SingleTestPage";
 import Thankyou from "../pages/Thankyou";
-import TodoList from "../pages/TodoList";
+import JSSDKParamsPlayground from "../pages/JSSDKParams/JSSDKParams";
 // import Tooltips from "../pages/Tooltips";
 
 import PositionedTooltips from "../pages/Tooltips";
 
 import Venmo from "../pages/Venmo";
 import ErrorPage from "../pages/error-page";
+import VaultIndex from "../pages/Vault/VaultIndex";
+import ACDCIndex from "../pages/ACDC/ACDCIndex";
 
 const lab = {
     path: "/lab",
@@ -32,7 +34,7 @@ const lab = {
 
         {
             path: "/lab/todoList",
-            element: <TodoList />,
+            element: <JSSDKParamsPlayground />,
         },
         {
             path: "/lab/product",
@@ -65,6 +67,14 @@ const lab = {
         {
             path: "/lab/singlePageTest",
             element: <SinglePageTest />,
+        },
+        {
+            path: "/lab/vault",
+            element: <VaultIndex />,
+        },
+        {
+            path: "/lab/ACDC",
+            element: <ACDCIndex />,
         },
     ],
 }

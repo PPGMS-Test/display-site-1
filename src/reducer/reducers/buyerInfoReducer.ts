@@ -15,7 +15,7 @@ export interface BuyerInfo {
 const initialState: BuyerInfo = {
     Contact: user_data,
     Address: address_data,
-} as BuyerInfo;
+};
 
 export const buyerInfoSlice = createSlice({
     name: "buyerInfo",
