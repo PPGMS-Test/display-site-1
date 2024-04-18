@@ -20,6 +20,8 @@ import {
     FormHelperText,
 } from "@mui/material";
 
+import FakeSPBButton from "../../components/FakeSPBButton/FakeSPBButton";
+
 const ProductDetail: FC = () => {
     const dispatch = useAppDispatch();
     const productName: string = useAppSelector((state) =>
@@ -83,34 +85,57 @@ const ProductDetail: FC = () => {
         //         ></button>
         //     );
         // });
-        return (<>
-        <button className="w-6 h-6 rounded-full bg-gray-500 mr-2 hover:bg-gray-600" onClick={handleColorClickBtn} value="gray"></button>
-        <button className="w-6 h-6 rounded-full bg-red-500 mr-2 hover:bg-red-600" onClick={handleColorClickBtn} value="red"></button>
-        <button className="w-6 h-6 rounded-full bg-blue-500 mr-2 hover:bg-blue-600" onClick={handleColorClickBtn} value="blue"></button>
-        <button className="w-6 h-6 rounded-full bg-yellow-500 mr-2 hover:bg-yellow-600" onClick={handleColorClickBtn} value="yellow"></button>
-        </>)
+        return (
+            <>
+                <button
+                    className="w-6 h-6 rounded-full bg-gray-500 mr-2 hover:bg-gray-600"
+                    onClick={handleColorClickBtn}
+                    value="gray"
+                ></button>
+                <button
+                    className="w-6 h-6 rounded-full bg-red-500 mr-2 hover:bg-red-600"
+                    onClick={handleColorClickBtn}
+                    value="red"
+                ></button>
+                <button
+                    className="w-6 h-6 rounded-full bg-blue-500 mr-2 hover:bg-blue-600"
+                    onClick={handleColorClickBtn}
+                    value="blue"
+                ></button>
+                <button
+                    className="w-6 h-6 rounded-full bg-yellow-500 mr-2 hover:bg-yellow-600"
+                    onClick={handleColorClickBtn}
+                    value="yellow"
+                ></button>
+            </>
+        );
     }
 
     return (
         <div className="flex flex-col md:flex-row -mx-4">
             <div className="md:flex-1 px-4">
-                <div className="h-[460px] rounded-lg bg-gray-300 mb-4">
-                    <img
-                        className="w-full h-full object-cover"
-                        src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
-                        alt="Product Image"
-                    />
-                </div>
-                <div className="flex -mx-2 mb-4">
-                    <div className="w-1/2 px-2">
-                        <button
-                            className="w-full bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800"
-                            onClick={handleAddToCart}
-                        >
-                            Add to Cart
-                        </button>
+                <div>
+                    <div className="h-[460px] rounded-lg bg-gray-300 mb-4">
+                        <img
+                            className="w-full h-full object-cover"
+                            src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
+                            alt="Product Image"
+                        />
                     </div>
-                    <GoToCheckOutBtn />
+                    <div className="flex -mx-2 mb-4">
+                        <div className="w-1/2 px-2">
+                            <button
+                                className="w-full bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800"
+                                onClick={handleAddToCart}
+                            >
+                                Add to Cart
+                            </button>
+                        </div>
+                        <GoToCheckOutBtn />
+                    </div>
+                    <div className="">
+                        <FakeSPBButton />
+                    </div>
                 </div>
             </div>
             <div className="md:flex-1 px-4">

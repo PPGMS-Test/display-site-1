@@ -1,11 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import UseJSSDK from "../../service/LoadPayPalScript/UseJSSDK";
+import FakeSPBButton from "../../components/FakeSPBButton/FakeSPBButton";
 
 const SinglePageTest: FC = () => {
     const [orderId, setOrderID] = useState("");
     useEffect(() => {
         (async () => {
             // await UseJSSDK().then(renderBtn);
+           
         })();
     });
 
@@ -101,7 +103,7 @@ const SinglePageTest: FC = () => {
 
                     createOrder: async function (data: any, actions: any) {
                         if (USE_POSTMAN_ORDER_ID) {
-                            const orderID = "6KN09353BG588480C"
+                            const orderID = "6KN09353BG588480C";
                             setOrderID(orderID);
                             return orderID;
                         } else {
@@ -224,8 +226,9 @@ const SinglePageTest: FC = () => {
     };
     return (
         <div>
-            SingleTestPage
+            SingleTestPage;
             <div id="paypal-button-container"></div>
+            <FakeSPBButton />
         </div>
     );
 };
