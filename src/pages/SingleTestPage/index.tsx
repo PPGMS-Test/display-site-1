@@ -1,13 +1,22 @@
 import { FC, useEffect, useState } from "react";
 import UseJSSDK from "../../service/LoadPayPalScript/UseJSSDK";
 import FakeSPBButton from "../../components/FakeSPBButton/FakeSPBButton";
+import PayPalMarksAndEligible from "../../components/PayPalCheckOutButtons/JSSDKRenderedButtons/SmartPaymentBtn/PayPalMarksAndEligible";
+import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
+
+const payPalMarksAndEligible =  PayPalMarksAndEligible.build(PAYMENT_METHOD.PAYPAL_BNPL);
 
 const SinglePageTest: FC = () => {
     const [orderId, setOrderID] = useState("");
+
+    
     useEffect(() => {
         (async () => {
-            // await UseJSSDK().then(renderBtn);
-           
+          
+            (await payPalMarksAndEligible)?.renderMarks("paylater","paylater-mark-container");
+            (await payPalMarksAndEligible)?.renderMarks("paypal","paypal-mark-container");
+
+            console.log((await payPalMarksAndEligible).getAllEligiblePaymentSource())
         })();
     });
 
@@ -228,6 +237,8 @@ const SinglePageTest: FC = () => {
         <div>
             SingleTestPage;
             <div id="paypal-button-container"></div>
+            <div id="paypal-mark-container"></div>
+            <div id="paylater-mark-container"></div>
             <FakeSPBButton />
         </div>
     );

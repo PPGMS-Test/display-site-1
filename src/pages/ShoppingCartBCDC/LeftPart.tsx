@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import Contacts from "./Contact";
 import ContactUnEditable from "./ContactReadOnly";
 import ShippingMethod from "./ShippingMethod";
-import PaymentTable from "./PaymentTable";
+import PaymentTable from "./PaymentTable/Origin/PaymentTable";
 import { useAppSelector } from "../../typeHooks";
 import classNames from "classnames";
 import { getIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";

@@ -165,7 +165,7 @@ function assembleCreateOrderOjectNew(){
     return create_order_obj;
 }
 
-const CreateOrderObjectFn = (callbackFnSet: any) => {
+const CreateOrderObjectFn = (callbackFnSet?: any) => {
     const { navigate, getLink } = callbackFnSet;
     // debugger;
 
@@ -191,7 +191,10 @@ const CreateOrderObjectFn = (callbackFnSet: any) => {
             await CaptureOrderFetchAPI();
             setTimeout(() => {
                 // debugger;
-                navigate(getLink())
+                if(navigate && getLink){
+
+                    navigate(getLink())
+                }
             }, 1800)
         },
         onCancel: function (data: any) {
