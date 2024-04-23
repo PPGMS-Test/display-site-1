@@ -15,7 +15,7 @@ import store from "../../../../reducer/store";
 
 
 class PayPalMarksAndEligible {
-    buttonType: PAYMENT_METHOD
+    private buttonType: PAYMENT_METHOD
 
     constructor() {
         this.buttonType = PAYMENT_METHOD.PAYPAL_STANDARD;

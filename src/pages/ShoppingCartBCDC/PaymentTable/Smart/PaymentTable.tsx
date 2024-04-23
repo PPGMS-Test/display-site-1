@@ -21,11 +21,12 @@ import PAYMENT_METHOD from "../../../../enum/PAYMENT_METHOD";
 import classNames from "classnames";
 import { getIsMoreSpace } from "../../../../reducer/reducers/globalToggleReducer";
 import { getAPMMethod } from "../../../../reducer/reducers/APMReducer";
-import APMDisplayArea from "../../../APM/APMDisplayArea";
 import APM_METHOD_ENUM from "../../../APM/APM_METHOD_ENUM";
 import PayPalMarksAndEligible from "../../../../components/PayPalCheckOutButtons/JSSDKRenderedButtons/SmartPaymentBtn/PayPalMarksAndEligible";
 
-const payPalMarksAndEligible =  PayPalMarksAndEligible.build(PAYMENT_METHOD.PAYPAL_BNPL);
+const payPalMarksAndEligible = PayPalMarksAndEligible.build(
+    PAYMENT_METHOD.PAYPAL_BNPL
+);
 
 const PaymentTable: FC = () => {
     const dispatch = useAppDispatch();
@@ -34,14 +35,10 @@ const PaymentTable: FC = () => {
         return getAPMMethod(state);
     });
 
-    // const radio_value_global = useAppSelector(
-    //     (state) => state.paymentMethod.method
-    // );
-
     //用以控制支付方式变化的默认值
     const [useRadioOnChange, setUseRadioOnChange] = useState(true);
 
-    const radio_value_global = useAppSelector((state) =>
+    const radio_value_global:PAYMENT_METHOD = useAppSelector((state) =>
         get_payment_method(state)
     );
     const [radio_value, setRadioValue] =
@@ -73,10 +70,9 @@ const PaymentTable: FC = () => {
 
     //PayPal wallet Logo
     const paypal_logo = (
-        <img
-            className=" w-1/2 h-8 ml-14 object-contain inline-block"
-            src={process.env.PUBLIC_URL + "/image/paypal-logo.svg"}
-        />
+        <div className=" w-1/2 h-8 object-contain  inline-block ml-28">
+            <div id="paypal-mark"></div>
+        </div>
     );
 
     //Debit or Credit Card Logo
@@ -94,12 +90,9 @@ const PaymentTable: FC = () => {
     );
 
     const payLater_logo = (
-        <>
-            <img
-                className=" w-1/2 h-8 object-contain  inline-block ml-28"
-                src={process.env.PUBLIC_URL + "/image/pay-later.png"}
-            />
-        </>
+        <div className=" w-1/2 h-8 object-contain  inline-block ml-28">
+            <div id="paylater-mark"></div>
+        </div>
     );
 
     const APM_logo = () => {
@@ -142,32 +135,50 @@ const PaymentTable: FC = () => {
     };
 
     const buttonTables = function () {
-        const lists = [
-            {
-                value: PAYMENT_METHOD.PAYPAL_STANDARD,
-                label: "PayPal",
-                logo: paypal_logo,
-                additionalInfo: null,
-            },
-            {
-                value: PAYMENT_METHOD.PAYPAL_BCDC,
-                label: "Debit or Credit Card",
-                logo: paypal_used,
-                additionalInfo: null,
-            },
-            {
-                value: PAYMENT_METHOD.PAYPAL_APM,
-                label: `APM - ${APMMethod}`,
-                logo: APM_logo(),
-                additionalInfo: null,
-            },
-            {
-                value: PAYMENT_METHOD.PAYPAL_BNPL,
-                label: "Pay later",
-                logo: payLater_logo,
-                additionalInfo: null,
-            },
-        ];
+        payPalMarksAndEligible.then((toolObject) => {
+            const paymentMethodList: any = [];
+
+            paymentMethodList.push(
+                ...[
+                    {
+                        value: PAYMENT_METHOD.PAYPAL_STANDARD,
+                        label: "PayPal",
+                        logo: paypal_logo,
+                        additionalInfo: null,
+                    },
+                    {
+                        value: PAYMENT_METHOD.PAYPAL_BCDC,
+                        label: "Debit or Credit Card",
+                        logo: paypal_used,
+                        additionalInfo: null,
+                    },
+                    {
+                        value: PAYMENT_METHOD.PAYPAL_APM,
+                        label: `APM - ${APMMethod}`,
+                        logo: APM_logo(),
+                        additionalInfo: null,
+                    },
+                ]
+            );
+
+            toolObject
+                .getAllEligiblePaymentSource()
+                .forEach((eligiblePaymentSource) => {
+                    if (eligiblePaymentSource === "paylater") {
+                        paymentMethodList.push({
+                            value: PAYMENT_METHOD.PAYPAL_BNPL,
+                            label: "Pay later",
+                            logo: payLater_logo,
+                            additionalInfo: null,
+                        });
+                    }
+                });
+
+            return renderRadioSet(paymentMethodList);
+        });
+    };
+
+    const renderRadioSet = (lists: any[]) => {
         if (useRadioOnChange) {
             /* [2023-10-09]radio button的点击事件来变动支付方式而不是按钮 */
             // [2023-12-26]代码优化, 把一个一个写死的项目改变为数组遍历渲染
@@ -272,6 +283,8 @@ const PaymentTable: FC = () => {
             );
         }
     };
+
+
     return (
         <div
             className={classNames({
@@ -279,10 +292,13 @@ const PaymentTable: FC = () => {
                 "space-y-6 py-8": isUseMoreSpace,
             })}
         >
+         
             {
                 //显示 点击这个按钮用以切换支付方式的选择方式 的toggle按钮
                 changePaymentMethodComponent()
             }
+           
+           
 
             {/* ----------------------------------------------------------------------- */}
 
@@ -290,7 +306,7 @@ const PaymentTable: FC = () => {
             <p className="text-gray-400 font-extrabold">Payment Method</p>
 
             {/* [2023-10-09]为了控制台不报 validateDOMNesting(...) 错, 把表格去掉 */}
-            {  buttonTables()}
+            {/* {buttonTables()} */}
         </div>
     );
 };
