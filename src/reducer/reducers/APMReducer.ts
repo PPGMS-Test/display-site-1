@@ -4,7 +4,7 @@ import { RootState } from "../store";
 import APM_METHOD_ENUM from '../../pages/APM/APM_METHOD_ENUM';
 
 
-//默认的支付方式
+//默认的APM支付方式
 const initialState = {
     selectedMethod: APM_METHOD_ENUM.iDEAL
 }
