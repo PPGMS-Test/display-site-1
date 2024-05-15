@@ -15,6 +15,11 @@
 
 ---
 ## 更新日志:
+`0.1.3`
+### 2023-05-10
+为了可以满足:"动态展示eligible payment method"这个需求, 发现原有的装载`Smart Payment Button`和`PayPal JS SDK`的方法有些不行了. `<SmartPaymentButton.tsx/>`这个组件,因为是在`<ShoppingCartBCDC.index.tsx/>`右侧的, 而`<PaymentTable.tsx/>`这个组件是在左侧的, 倒不是兄弟组件通讯麻烦(已经试过了ContextProvider和redux的方法, 状态管理不是问题), 而是这2个组件没办法管理同一个promise, 除非在`<ShoppingCartBCDC.index.tsx/>`中, 定义这个promise, 然后传给这2个组件用? 但即使就算是这样. `PayPalMarksAndEligible.ts`也没有办法和`<SmartPaymentBUtton.tsx/>`这2个组件共存. 因为这2个组件分别渲染了2遍`PayPal JS SDK`. 会导致冲突.
+
+~~一个可能的方法是, 重写`UseJSSDK.ts`文件, 让其中可以接受更多的参数? => `UseJSSDK.ts`~~
 
 `0.1.2` 
 ### 2023-02-04

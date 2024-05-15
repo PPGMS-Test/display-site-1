@@ -9,7 +9,7 @@ import {
     Switch,
     Tooltip,
 } from "@mui/material";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useContext } from "react";
 // import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useAppDispatch, useAppSelector } from "../../../../typeHooks";
 import {
@@ -23,22 +23,32 @@ import { getIsMoreSpace } from "../../../../reducer/reducers/globalToggleReducer
 import { getAPMMethod } from "../../../../reducer/reducers/APMReducer";
 import APM_METHOD_ENUM from "../../../APM/APM_METHOD_ENUM";
 import PayPalMarksAndEligible from "../../../../components/PayPalCheckOutButtons/JSSDKRenderedButtons/SmartPaymentBtn/PayPalMarksAndEligible";
-
-const payPalMarksAndEligible = PayPalMarksAndEligible.build(
-    PAYMENT_METHOD.PAYPAL_BNPL
-);
+import { setPendingRenderSPBFlag } from "../../../../reducer/reducers/globalMarkerFlagReducer";
+import ShoppingCartBCDCContentProvider from "../../ShoppingCartBCDCContentProvider";
 
 const PaymentTable: FC = () => {
+    console.log("Smart/PaymentTable.tsx -- payPalMarksAndEligible is builded!");
+    const payPalMarksAndEligible = PayPalMarksAndEligible.build(
+        PAYMENT_METHOD.PAYPAL_BNPL
+    );
+
     const dispatch = useAppDispatch();
 
     const APMMethod = useAppSelector((state) => {
         return getAPMMethod(state);
     });
 
+    //SPBPendingFlag的默认值为true, 意思是不展示SPB显示区域
+    const {SPBPendingFlag,setSPBPendingFlag} = useContext(ShoppingCartBCDCContentProvider)
+
+    const [eligiblePaymentSourceList, setEligiblePaymentSourceList] = useState(
+        []
+    );
+
     //用以控制支付方式变化的默认值
     const [useRadioOnChange, setUseRadioOnChange] = useState(true);
 
-    const radio_value_global:PAYMENT_METHOD = useAppSelector((state) =>
+    const radio_value_global: PAYMENT_METHOD = useAppSelector((state) =>
         get_payment_method(state)
     );
     const [radio_value, setRadioValue] =
@@ -67,6 +77,70 @@ const PaymentTable: FC = () => {
     const isUseMoreSpace: boolean = useAppSelector((state) =>
         getIsMoreSpace(state)
     );
+
+    //销毁的生命周期
+    useEffect(() => {
+        // return () => {
+        //     dispatch(setPendingRenderSPBFlag(false));
+        // };
+    });
+
+    useEffect(() => {
+         payPalMarksAndEligible.then((toolObject) => {
+            const paymentMethodList: any = [];
+
+            paymentMethodList.push(
+                ...[
+                    {
+                        value: PAYMENT_METHOD.PAYPAL_STANDARD,
+                        label: "PayPal",
+                        logo: paypal_logo,
+                        additionalInfo: null,
+                    },
+                    {
+                        value: PAYMENT_METHOD.PAYPAL_BCDC,
+                        label: "Debit or Credit Card",
+                        logo: paypal_used,
+                        additionalInfo: null,
+                    },
+                    {
+                        value: PAYMENT_METHOD.PAYPAL_APM,
+                        label: `APM - ${APMMethod}`,
+                        logo: APM_logo(),
+                        additionalInfo: null,
+                    },
+                ]
+            );
+
+            toolObject
+                .getAllEligiblePaymentSource()
+                .forEach((eligiblePaymentSource) => {
+                    if (eligiblePaymentSource === "paylater") {
+                        paymentMethodList.push({
+                            value: PAYMENT_METHOD.PAYPAL_BNPL,
+                            label: "Pay later",
+                            logo: payLater_logo,
+                            additionalInfo: null,
+                        });
+                    }
+                });
+
+            // debugger;
+
+            setTimeout(()=>{
+                toolObject.renderMarks("paylater","paylater-mark");
+                toolObject.renderMarks("paypal","paypal-mark");
+            },400)
+
+            setTimeout(()=>{
+                setSPBPendingFlag(false)
+            },2000)
+
+            // setSPBPendingFlag(false)
+
+            setEligiblePaymentSourceList(paymentMethodList);
+        });
+    }, []);
 
     //PayPal wallet Logo
     const paypal_logo = (
@@ -134,48 +208,8 @@ const PaymentTable: FC = () => {
         );
     };
 
-    const buttonTables = function () {
-        payPalMarksAndEligible.then((toolObject) => {
-            const paymentMethodList: any = [];
-
-            paymentMethodList.push(
-                ...[
-                    {
-                        value: PAYMENT_METHOD.PAYPAL_STANDARD,
-                        label: "PayPal",
-                        logo: paypal_logo,
-                        additionalInfo: null,
-                    },
-                    {
-                        value: PAYMENT_METHOD.PAYPAL_BCDC,
-                        label: "Debit or Credit Card",
-                        logo: paypal_used,
-                        additionalInfo: null,
-                    },
-                    {
-                        value: PAYMENT_METHOD.PAYPAL_APM,
-                        label: `APM - ${APMMethod}`,
-                        logo: APM_logo(),
-                        additionalInfo: null,
-                    },
-                ]
-            );
-
-            toolObject
-                .getAllEligiblePaymentSource()
-                .forEach((eligiblePaymentSource) => {
-                    if (eligiblePaymentSource === "paylater") {
-                        paymentMethodList.push({
-                            value: PAYMENT_METHOD.PAYPAL_BNPL,
-                            label: "Pay later",
-                            logo: payLater_logo,
-                            additionalInfo: null,
-                        });
-                    }
-                });
-
-            return renderRadioSet(paymentMethodList);
-        });
+    const buttonTables = () => {
+        return renderRadioSet(eligiblePaymentSourceList);
     };
 
     const renderRadioSet = (lists: any[]) => {
@@ -284,7 +318,6 @@ const PaymentTable: FC = () => {
         }
     };
 
-
     return (
         <div
             className={classNames({
@@ -292,13 +325,10 @@ const PaymentTable: FC = () => {
                 "space-y-6 py-8": isUseMoreSpace,
             })}
         >
-         
             {
                 //显示 点击这个按钮用以切换支付方式的选择方式 的toggle按钮
                 changePaymentMethodComponent()
             }
-           
-           
 
             {/* ----------------------------------------------------------------------- */}
 
@@ -306,7 +336,7 @@ const PaymentTable: FC = () => {
             <p className="text-gray-400 font-extrabold">Payment Method</p>
 
             {/* [2023-10-09]为了控制台不报 validateDOMNesting(...) 错, 把表格去掉 */}
-            {/* {buttonTables()} */}
+            {buttonTables()}
         </div>
     );
 };

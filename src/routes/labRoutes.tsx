@@ -4,7 +4,7 @@ import ApplePay from "../pages/ApplePay";
 import GooglePay from "../pages/GooglePay";
 import HomePage from "../pages/HomePage";
 import Product from "../pages/Product";
-import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
+import SPBPayments from "../pages/SPBPayments/SPBPayments";
 import SinglePageTest from "../pages/SingleTestPage";
 import Thankyou from "../pages/Thankyou";
 import JSSDKParamsPlayground from "../pages/JSSDKParams/JSSDKParams";
@@ -42,7 +42,7 @@ const lab = {
         },
         {
             path: "/lab/shoppingCartBCDC",
-            element: <ShoppingCartBCDC />,
+            element: <SPBPayments />,
         },
         {
             path: "/lab/applePay",

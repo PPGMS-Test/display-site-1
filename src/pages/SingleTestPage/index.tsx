@@ -4,9 +4,9 @@ import FakeSPBButton from "../../components/FakeSPBButton/FakeSPBButton";
 import PayPalMarksAndEligible from "../../components/PayPalCheckOutButtons/JSSDKRenderedButtons/SmartPaymentBtn/PayPalMarksAndEligible";
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
 
-const payPalMarksAndEligible =  PayPalMarksAndEligible.build(PAYMENT_METHOD.PAYPAL_BNPL);
 
 const SinglePageTest: FC = () => {
+    const payPalMarksAndEligible =  PayPalMarksAndEligible.build(PAYMENT_METHOD.PAYPAL_BNPL);   
     const [orderId, setOrderID] = useState("");
 
     

@@ -1,5 +1,5 @@
 
-import React, { FC, useEffect } from "react";
+
 import CreateOrderObjectFn from "../../../../service/LoadPayPalScript/createOrderObject";
 
 import UseJSSDK, {
@@ -22,6 +22,8 @@ class PayPalMarksAndEligible {
     }
 
     public static async build(buttonType: PAYMENT_METHOD): Promise<PayPalMarksAndEligible> {
+        console.log("************************** START *******************************")
+        console.log("工具类/ToolObject - PayPalMarksAndEligible is initiating...")
         let thisObject = new PayPalMarksAndEligible()
         thisObject.buttonType = buttonType;
         const buyerInfo: BuyerInfo = store.getState().buyerInfo;
@@ -46,7 +48,8 @@ class PayPalMarksAndEligible {
         map.set("components", "buttons,marks,funding-eligibility")
         JSLoadParams.additionalOptions = map;
         await UseJSSDK(JSLoadParams);
-       
+        console.log("工具类/ToolObject - PayPalMarksAndEligible building Completed!")
+        console.log("************************** END *******************************")
         return thisObject;
     }
 
@@ -93,6 +96,10 @@ class PayPalMarksAndEligible {
             var mark = window.paypal.Marks({
                 fundingSource: fundingSourceName
             });
+
+            let markContainer = document.getElementById(divID);
+            if (markContainer) markContainer.innerHTML = "";
+
             if (mark.isEligible()) {
                 mark.render(`#${divID}`);
             }

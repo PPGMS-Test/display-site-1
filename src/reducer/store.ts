@@ -10,6 +10,7 @@ import orderReducer from "./reducers/orderReducer";
 import APMReducer from "./reducers/APMReducer";
 import VaultReducer from './reducers/VaultReducer';
 import ClientSecretReducer from './reducers/ClientSecretReducer';
+import globalMarkerFlag from './reducers/globalMarkerFlagReducer';
 
 const store = configureStore({
     reducer: {
@@ -22,7 +23,8 @@ const store = configureStore({
         orderInfo: orderReducer,
         APMMethod: APMReducer,
         vault: VaultReducer,
-        JsSDKInfo:ClientSecretReducer
+        JsSDKInfo:ClientSecretReducer,
+        globalMarkerFlag: globalMarkerFlag
     },
 });
 

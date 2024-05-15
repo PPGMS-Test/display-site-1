@@ -1,13 +1,14 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import Contacts from "./Contact";
 import ContactUnEditable from "./ContactReadOnly";
 import ShippingMethod from "./ShippingMethod";
 // import PaymentTable from "./PaymentTable/Origin/PaymentTable";
 import PaymentTable from "./PaymentTable/Smart/PaymentTable";
-import { useAppSelector } from "../../typeHooks";
+import { useAppDispatch, useAppSelector } from "../../typeHooks";
 import classNames from "classnames";
 import { getIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";
+import { setPendingRenderSPBFlag } from "../../reducer/reducers/globalMarkerFlagReducer";
 
 // interface childProps {
 //     shippingOption: any;
@@ -20,11 +21,16 @@ import { getIsMoreSpace } from "../../reducer/reducers/globalToggleReducer";
 // }) => {
 
 const LeftPart: FC = () => {
-    const isUseMoreSpace: boolean = useAppSelector(
-        (state) =>  getIsMoreSpace(state)
+    const isUseMoreSpace: boolean = useAppSelector((state) =>
+        getIsMoreSpace(state)
     );
 
     let [isInfoEditable, setIsInfoEditable] = useState(true);
+
+    const dispatch = useAppDispatch();
+
+    
+
     return (
         <div
             className={classNames({

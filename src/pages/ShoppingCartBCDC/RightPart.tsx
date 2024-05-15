@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 
 import PricingSeparate from "./PricingSeparate";
 import PricingTotal from "./PricingTotal";
@@ -14,6 +14,7 @@ import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
 import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer";
 import { getAPMMethod } from "../../reducer/reducers/APMReducer";
 import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
+import ShoppingCartBCDCContentProvider from "./ShoppingCartBCDCContentProvider";
 
 function renderSmartPaymentButtons() {
     return (
@@ -84,12 +85,18 @@ const RightPart: FC = () => {
     const count = useAppSelector((state) =>
         get_payment_method(state)
     ) as PAYMENT_METHOD;
+    
     const shoppingCartList = useAppSelector((state) => getShoppingCart(state));
     const APMMethod = useAppSelector((state) => {
         return getAPMMethod(state);
     });
 
-    let [showPaymentMethod, setShowPaymentMethod] = useState(count);
+    //展示回显count的值用, 现在展示组件DOM已经被注释, 所以这里的state变量已经没用了
+    // let [showPaymentMethod, setShowPaymentMethod] = useState(count);
+
+
+    //SPBPendingFlag的默认值为true, 意思是不展示SPB显示区域
+    const {SPBPendingFlag,setSPBPendingFlag} = useContext(ShoppingCartBCDCContentProvider)
 
     const isWithShippingOption = useAppSelector(
         (state) => state.withShippingOption.isWithShipping
@@ -112,7 +119,7 @@ const RightPart: FC = () => {
                         {/* <p>当前的支付方式: {count}</p>
                         <p>是否带有运输参数: {`${isWithShippingOption}`}</p> */}
 
-                        <div>{CurrentPaymentMethod(count, APMMethod)}</div>
+                        <div>{ !SPBPendingFlag && CurrentPaymentMethod(count, APMMethod)}</div>
                     </div>
                 </div>
             );

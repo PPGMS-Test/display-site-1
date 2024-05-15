@@ -11,9 +11,10 @@ export interface JSSDKParams {
     [key: string]: any;
 }
 
-const UseJSSDK = function (loadParam: JSSDKParams) {
-    let { input, addressCountry, additionalOptions } = loadParam;
+const UseJSSDK = function (loadParam: JSSDKParams, callFrom?:string) {
     // debugger;
+    if(callFrom) console.log("来自/Caller:",callFrom, "Is Loading PayPal JS SDK.\r\n....Start....")
+    let { input, addressCountry, additionalOptions } = loadParam;
     let additionalParams: string[] = new Array<string>();
     if (additionalOptions) {
         additionalOptions.forEach((value, key) => {
@@ -27,7 +28,7 @@ const UseJSSDK = function (loadParam: JSSDKParams) {
         const client_id = window.clientID;
 
         const url = `https://www.paypal.com/sdk/js?client-id=${client_id}&buyer-country=${addressCountry}${additionalParams.length > 0 ? "&" + additionalParams.join("&") : ""}`;
-        console.log("[UseJSSDK.ts] Smart Payment button Url:", url)
+        console.log("[UseJSSDK.ts] JS SDK Url:", url)
         PayPal_SPB_JS_SDK_LoadScript.src = url;
         PayPal_SPB_JS_SDK_LoadScript.async = false;
         document
@@ -37,9 +38,12 @@ const UseJSSDK = function (loadParam: JSSDKParams) {
 
         PayPal_SPB_JS_SDK_LoadScript.onload = function () {
             console.log("[UseJSSDK.ts] SDK load Complete!");
+            if(callFrom) console.log("来自/Caller:",callFrom, "Is Loading PayPal JS SDK.\r\n....End....")
             input && input.call(this);
             resolve();
         };
     });
 };
+
+
 export default UseJSSDK;
