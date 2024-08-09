@@ -20,6 +20,8 @@ import {
     FormHelperText,
 } from "@mui/material";
 
+import FakeSPBButton from "../../components/FakeSPBButton/FakeSPBButton";
+
 const ProductDetail: FC = () => {
     const dispatch = useAppDispatch();
     const productName: string = useAppSelector((state) =>
@@ -83,12 +85,30 @@ const ProductDetail: FC = () => {
         //         ></button>
         //     );
         // });
-        return (<>
-        <button className="w-6 h-6 rounded-full bg-gray-500 mr-2 hover:bg-gray-600" onClick={handleColorClickBtn} value="gray"></button>
-        <button className="w-6 h-6 rounded-full bg-red-500 mr-2 hover:bg-red-600" onClick={handleColorClickBtn} value="red"></button>
-        <button className="w-6 h-6 rounded-full bg-blue-500 mr-2 hover:bg-blue-600" onClick={handleColorClickBtn} value="blue"></button>
-        <button className="w-6 h-6 rounded-full bg-yellow-500 mr-2 hover:bg-yellow-600" onClick={handleColorClickBtn} value="yellow"></button>
-        </>)
+        return (
+            <>
+                <button
+                    className="w-6 h-6 rounded-full bg-gray-500 mr-2 hover:bg-gray-600"
+                    onClick={handleColorClickBtn}
+                    value="gray"
+                ></button>
+                <button
+                    className="w-6 h-6 rounded-full bg-red-500 mr-2 hover:bg-red-600"
+                    onClick={handleColorClickBtn}
+                    value="red"
+                ></button>
+                <button
+                    className="w-6 h-6 rounded-full bg-blue-500 mr-2 hover:bg-blue-600"
+                    onClick={handleColorClickBtn}
+                    value="blue"
+                ></button>
+                <button
+                    className="w-6 h-6 rounded-full bg-yellow-500 mr-2 hover:bg-yellow-600"
+                    onClick={handleColorClickBtn}
+                    value="yellow"
+                ></button>
+            </>
+        );
     }
 
     return (
@@ -111,6 +131,9 @@ const ProductDetail: FC = () => {
                         </button>
                     </div>
                     <GoToCheckOutBtn />
+                </div>
+                <div className="">
+                    <FakeSPBButton />
                 </div>
             </div>
             <div className="md:flex-1 px-4">

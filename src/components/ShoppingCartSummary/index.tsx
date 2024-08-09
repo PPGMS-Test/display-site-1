@@ -11,6 +11,7 @@ import {
     getShoppingCart,
     updateShoppingCart,
 } from "../../reducer/reducers/shoppingCartReducer";
+import FakeSPBButton from "../FakeSPBButton/FakeSPBButton";
 
 const ShoppingCartSummary: FC = () => {
     const dispatch = useAppDispatch();
@@ -95,7 +96,12 @@ const ShoppingCartSummary: FC = () => {
             </div>
             <hr className="my-4" />
 
-            <GoToCheckOutBtn />
+            <div>
+                <GoToCheckOutBtn />
+                <div className="w-1/2 px-2 mt-4">
+                    <FakeSPBButton styleOptions={{ layout: "vertical" }} />
+                </div>
+            </div>
         </div>
     );
 };
