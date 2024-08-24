@@ -30,13 +30,13 @@ const BCDCShoppingCart: FC = () => {
             {/* <div className="flex flex-col md:flex-row bg-gray-300"> */}
 
             <div className="flex flex-col md:flex-row bg-white">
-                <div className=" basis-1/2  m-2">
+                <div className=" basis-1/4  m-2">
                     <CodeDisplayArea />
                 </div>
-                <div className=" basis-2/3  m-2">
+                <div className=" basis-1/2  m-2">
                     <LeftPart></LeftPart>
                 </div>
-                <div className=" basis-1/2  m-2">
+                <div className=" basis-1/4  m-2">
                     <RightPart />
                     {renderDownloadButtonPart()}
                 </div>
