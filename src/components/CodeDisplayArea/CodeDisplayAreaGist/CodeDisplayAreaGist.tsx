@@ -2,9 +2,9 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import classNames from "classnames";
 import { FC, useState } from "react";
 import ReactEmbedGist from "react-embed-gist";
-import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
+import PAYMENT_METHOD from "../../../enum/PAYMENT_METHOD";
 
-const CodeDisplayArea: FC = () => {
+const CodeDisplayAreaGist: FC = () => {
     const [codeType, setCodeType] = useState(PAYMENT_METHOD.PAYPAL_STANDARD);
 
     const CodeSampleConstantList: PAYMENT_METHOD[] = [
@@ -102,4 +102,4 @@ const CodeDisplayArea: FC = () => {
     );
 };
 
-export default CodeDisplayArea;
+export default CodeDisplayAreaGist;

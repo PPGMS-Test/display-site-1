@@ -6,7 +6,9 @@ import DownloadButtonPart from "./DownloadButtonPart";
 import { useAppSelector } from "../../typeHooks";
 import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer";
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
-import CodeDisplayArea from "../../components/CodeDisplayArea/CodeDisplayArea";
+import CodeDisplayAreaPrism from "@/components/CodeDisplayArea/CodeDisplayAreaPrism/CodeDisplayAreaPrism";
+import { CODE_SNIPPET_NAME, PrismThemeNAME } from "@/components/CodeDisplayArea/CodeDisplayAreaPrism/PrismDisplayContextProvider";
+// import CodeDisplayArea from "../../components/CodeDisplayArea/CodeDisplayAreaGist";
 
 
 const BCDCShoppingCart: FC = () => {
@@ -30,8 +32,13 @@ const BCDCShoppingCart: FC = () => {
             {/* <div className="flex flex-col md:flex-row bg-gray-300"> */}
 
             <div className="flex flex-col md:flex-row bg-white">
-                <div className=" basis-1/4  m-2">
+                {/* <div className=" basis-1/4  m-2">
                     <CodeDisplayArea />
+                </div> */}
+
+                <div className=" basis-1/4  m-2 divide-y divide-gray-300/50">
+                    <CodeDisplayAreaPrism codeSnippetName={CODE_SNIPPET_NAME.SPB_STANDARD} prismTheme={PrismThemeNAME.github}/>
+                    <CodeDisplayAreaPrism codeSnippetName={CODE_SNIPPET_NAME.CREATE_ORDER_REQUEST_1} prismTheme={PrismThemeNAME.nightOwl} languageType="python"/>
                 </div>
                 <div className=" basis-1/2  m-2">
                     <LeftPart></LeftPart>

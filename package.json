@@ -13,6 +13,8 @@
     "@types/react-dom": "^18.2.7",
     "@types/react-redux": "^7.1.26",
     "config": "^3.3.11",
+    "prism-react-renderer": "^2.3.1",
+    "prismjs": "^1.29.0",
     "rc-slider-captcha": "^1.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -25,7 +27,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set PORT=20241 & cross-env NODE_ENV=development react-app-rewired start",
+    "start": "cross-env port=20241 cross-env REACT_APP_ENV=development craco  start",
     "build": "cross-env NODE_ENV=test react-scripts build",
     "build:external": "cross-env NODE_ENV=production react-scripts build"
   },
@@ -48,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.0.18",
@@ -59,7 +62,6 @@
     "classnames": "^2.3.2",
     "cross-env": "^7.0.3",
     "postcss": "^8.4.30",
-    "react-app-rewired": "^2.2.1",
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.16.0",
     "tailwindcss": "^3.3.3",

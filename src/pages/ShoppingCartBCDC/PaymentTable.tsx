@@ -130,7 +130,7 @@ const PaymentTable = () => {
 
         return (
             <>
-                <img src={imgUrl} className=" w-1/3 h-8 object-contain  inline-block ml-20"/>
+                <img src={imgUrl} className=" w-1/3 h-8 object-contain  inline-block ml-32"/>
             </>
         );
     };
@@ -143,15 +143,18 @@ const PaymentTable = () => {
                 logo: paypal_logo,
                 additionalInfo: null,
             },
-            {
-                value: PAYMENT_METHOD.PAYPAL_BCDC,
-                label: "Debit or Credit Card",
-                logo: paypal_used,
-                additionalInfo: null,
-            },
+            // [2024-08-27 金松说不要这个BCDC了, 因为要有ACDC了, 以免混乱]
+            // {
+            //     value: PAYMENT_METHOD.PAYPAL_BCDC,
+            //     label: "Debit or Credit Card",
+            //     logo: paypal_used,
+            //     additionalInfo: null,
+            // },
             {
                 value: PAYMENT_METHOD.PAYPAL_APM,
-                label: `APM - ${APMMethod}`,
+                label: APMMethod,
+                // [2024-08-27 金松说不要这个APM的label了]
+                // label: `APM - ${APMMethod}`,
                 logo: APM_logo(),
                 additionalInfo: null,
             },
