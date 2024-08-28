@@ -1,16 +1,16 @@
 import React, { FC, useEffect } from "react";
-import CreateOrderObjectFn from "../../../../service/LoadPayPalScript/createOrderObject";
+
 
 import UseJSSDK, {
     JSSDKParams,
 } from "../../../../service/LoadPayPalScript/UseJSSDK";
 import { useNavigate, useLocation } from "react-router-dom";
-import PAYMENT_METHOD from "../../../../enum/PAYMENT_METHOD";
-import {
-    BuyerInfo,
-    getBuyerInfo,
-} from "../../../../reducer/reducers/buyerInfoReducer";
+
+
 import { useAppSelector } from "../../../../typeHooks";
+import PAYMENT_METHOD from "@/enum/PAYMENT_METHOD";
+import { BuyerInfo, getBuyerInfo } from "@/reducer/reducers/buyerInfoReducer";
+import CreateOrderObjectFn from "@/service/LoadPayPalScript/createOrderObject";
 
 interface ButtonType {
     buttonType: PAYMENT_METHOD;

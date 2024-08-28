@@ -1,6 +1,6 @@
+import GooglePayButton from "@/components/PayPalCheckOutButtons/GooglePayButton/GooglePayButton";
 import { FC } from "react";
 
-import GooglePayButton from "../components/PayPalCheckOutButtons/GooglePayButton/GooglePayButton";
 
 const ApplePay: FC = () => {
   return (

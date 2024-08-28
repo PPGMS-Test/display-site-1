@@ -14,6 +14,7 @@ import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
 import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer";
 import { getAPMMethod } from "../../reducer/reducers/APMReducer";
 import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
+import ACDCIndex from "../ACDC/ACDCIndex";
 
 function renderSmartPaymentButtons() {
     return (
@@ -60,7 +61,40 @@ function renderBNPLButton() {
     );
 }
 
-function CurrentPaymentMethod(count: PAYMENT_METHOD, APMMethod: APM_METHOD_ENUM) {
+function renderACDC() {
+    return (
+        <>
+            <ACDCIndex />
+        </>
+    );
+}
+
+function renderGooglePay() {
+    return (
+        <>
+            <img
+                className=" w-auto h-20 object-contain  inline-block "
+                src={process.env.PUBLIC_URL + "/image/google-pay-fake-btn.png"}
+            />
+        </>
+    );
+}
+
+function renderApplePay() {
+    return (
+        <>
+            <img
+                className=" w-auto h-20 object-contain  inline-block "
+                src={process.env.PUBLIC_URL + "/image/apple-pay-fake-btn.png"}
+            />
+        </>
+    );
+}
+
+function CurrentPaymentMethod(
+    count: PAYMENT_METHOD,
+    APMMethod: APM_METHOD_ENUM
+) {
     switch (count) {
         case PAYMENT_METHOD.PAYPAL_STANDARD:
             return renderSmartPaymentButtons();
@@ -73,6 +107,15 @@ function CurrentPaymentMethod(count: PAYMENT_METHOD, APMMethod: APM_METHOD_ENUM)
             break;
         case PAYMENT_METHOD.PAYPAL_BNPL:
             return renderBNPLButton();
+            break;
+        case PAYMENT_METHOD.PAYPAL_ACDC:
+            return renderACDC();
+            break;
+        case PAYMENT_METHOD.PAYPAL_APPLEPAY:
+            return renderApplePay();
+            break;
+        case PAYMENT_METHOD.PAYPAL_GOOGLEPAY:
+            return renderGooglePay();
             break;
         default:
             break;

@@ -100,20 +100,7 @@ const ACDCIndex: FC = () => {
 
     return (
         <>
-            <List>
-                <ListItem alignItems="flex-start">
-                    <ListItemText
-                        primary="4032030601156491"
-                        secondary="Card Number"
-                    />
-                </ListItem>
-                <ListItem alignItems="flex-start">
-                    <ListItemText secondary="Expire Date" primary="10/2025" />
-                </ListItem>
-                <ListItem alignItems="flex-start">
-                    <ListItemText secondary="CVV" primary="448" />
-                </ListItem>
-            </List>
+            
             <div
                 id="card-form"
                 className={classNames({

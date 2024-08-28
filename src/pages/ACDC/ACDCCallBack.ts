@@ -18,7 +18,8 @@ export async function createOrderCallback(data: any) {
                 card: {
                     attributes: {
                         verification: {
-                            method: "SCA_ALWAYS",
+                            // method: "SCA_ALWAYS",
+                            method: "SCA_WHEN_REQUIRED",
                         },
                     },
                     experience_context: {
@@ -31,7 +32,7 @@ export async function createOrderCallback(data: any) {
             purchase_units: [
                 {
                     amount: {
-                        currency_code: "EUR",
+                        currency_code: "USD",
                         value: 100,
                     },
                 },

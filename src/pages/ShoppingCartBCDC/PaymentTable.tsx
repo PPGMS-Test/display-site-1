@@ -48,17 +48,20 @@ const PaymentTable = () => {
     const [radioBtnDisable, setRadioBtnDisable] = useState(false);
 
     //radio btn change 事件, 仅仅改变当前页面的value值, 不改变redux中的值
-    const handleChange = (event: any) => {
-        setRadioValue(event?.target?.value);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRadioValue(event?.target?.value as PAYMENT_METHOD);
         // dispatch(setPaymentMethod(event?.target?.value));
     };
 
     //radio btn change 事件, 不仅仅改变当前页面的value值, 也改变redux中的值
-    const handleChange_ChangePaymentMethod = (event: any) => {
+    const handleChange_ChangePaymentMethod = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         setRadioBtnDisable(true);
-        setRadioValue(event?.target?.value);
+        setRadioValue(event?.target?.value as PAYMENT_METHOD);
         dispatch(setPaymentMethod(event?.target?.value as PAYMENT_METHOD));
 
+        //相当于防抖
         setTimeout(() => {
             setRadioBtnDisable(false);
         }, 800);
@@ -71,20 +74,20 @@ const PaymentTable = () => {
     //PayPal wallet Logo
     const paypal_logo = (
         <img
-            className=" w-1/2 h-8 ml-14 object-contain inline-block"
+            className="  h-8  object-contain inline-block"
             src={process.env.PUBLIC_URL + "/image/paypal-logo.svg"}
         />
     );
 
     //Debit or Credit Card Logo
-    const paypal_used = (
+    const paypal_BCDC = (
         <>
             {/* <img
                 className=" w-1/2 h-10 object-contain  inline-block"
                 src={process.env.PUBLIC_URL + "/image/paypal-used.svg"}
             /> */}
             <img
-                className=" w-1/2 h-8 object-contain  inline-block ml-4"
+                className="  h-8 object-contain  inline-block "
                 src={process.env.PUBLIC_URL + "/image/card.svg"}
             />
         </>
@@ -93,8 +96,41 @@ const PaymentTable = () => {
     const payLater_logo = (
         <>
             <img
-                className=" w-1/2 h-8 object-contain  inline-block ml-28"
+                className="  h-8 object-contain  inline-block justify-start ml-2"
                 src={process.env.PUBLIC_URL + "/image/pay-later.png"}
+            />
+        </>
+    );
+
+    const ACDC_logo = (
+        <>
+            <div className="  h-10 object-contain  inline-block justify-start">
+                <img
+                    className="h-10 object-contain  inline-block "
+                    src={process.env.PUBLIC_URL + "/image/visa.svg"}
+                />
+                <img
+                    className="h-10 object-contain  inline-block ml-2"
+                    src={process.env.PUBLIC_URL + "/image/mastercard.svg"}
+                />
+            </div>
+        </>
+    );
+
+    const GOOGLE_PAY_logo = (
+        <>
+            <img
+                className="  h-12 object-contain  inline-block "
+                src={process.env.PUBLIC_URL + "/image/google-pay.svg"}
+            />
+        </>
+    );
+
+    const APPLE_PAY_logo = (
+        <>
+            <img
+                className="  h-12 object-contain  inline-block"
+                src={process.env.PUBLIC_URL + "/image/apple-pay.svg"}
             />
         </>
     );
@@ -130,7 +166,10 @@ const PaymentTable = () => {
 
         return (
             <>
-                <img src={imgUrl} className=" w-1/3 h-8 object-contain  inline-block ml-32"/>
+                <img
+                    src={imgUrl}
+                    className=" w-1/3 h-8 object-contain  inline-block "
+                />
             </>
         );
     };
@@ -143,25 +182,47 @@ const PaymentTable = () => {
                 logo: paypal_logo,
                 additionalInfo: null,
             },
+            {
+                value: PAYMENT_METHOD.PAYPAL_ACDC,
+                label: "Credit and Debit Card",
+                logo: ACDC_logo,
+                additionalInfo: null,
+            },
             // [2024-08-27 金松说不要这个BCDC了, 因为要有ACDC了, 以免混乱]
             // {
             //     value: PAYMENT_METHOD.PAYPAL_BCDC,
             //     label: "Debit or Credit Card",
-            //     logo: paypal_used,
+            //     logo: paypal_BCDC,
             //     additionalInfo: null,
             // },
+           
+           
+           
             {
-                value: PAYMENT_METHOD.PAYPAL_APM,
-                label: APMMethod,
-                // [2024-08-27 金松说不要这个APM的label了]
-                // label: `APM - ${APMMethod}`,
-                logo: APM_logo(),
+                value: PAYMENT_METHOD.PAYPAL_GOOGLEPAY,
+                label: "Google Pay",
+                logo: GOOGLE_PAY_logo,
+                additionalInfo: null,
+            },
+            {
+                value: PAYMENT_METHOD.PAYPAL_APPLEPAY,
+                label: "Apple Pay",
+                logo: APPLE_PAY_logo,
                 additionalInfo: null,
             },
             {
                 value: PAYMENT_METHOD.PAYPAL_BNPL,
                 label: "Pay later",
                 logo: payLater_logo,
+                additionalInfo: null,
+            },
+
+            {
+                value: PAYMENT_METHOD.PAYPAL_APM,
+                label: APMMethod,
+                // [2024-08-27 金松说不要这个APM的label了]
+                // label: `APM - ${APMMethod}`,
+                logo: APM_logo(),
                 additionalInfo: null,
             },
         ];
@@ -180,7 +241,9 @@ const PaymentTable = () => {
                                     <FormControlLabel
                                         value={item.value}
                                         control={<Radio color="primary" />}
-                                        label={item.label}
+                                        //2024-08-28 不要Label了 只要图标
+                                        // label={item.label}
+                                        label={""}
                                         disabled={radioBtnDisable}
                                         className=" inline-block"
                                     />
@@ -278,7 +341,8 @@ const PaymentTable = () => {
         >
             {
                 //显示 点击这个按钮用以切换支付方式的选择方式 的toggle按钮
-                changePaymentMethodComponent()
+                //[文字 选中radio button]方便搜索
+                // changePaymentMethodComponent()
             }
 
             {/* ----------------------------------------------------------------------- */}

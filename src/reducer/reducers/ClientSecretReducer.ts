@@ -3,8 +3,8 @@ import { RootState } from "../store";
 
 
 const initialState = {
-    JsSDKClientID: "AaupPo8G66AlZPSMxOMUtvQx2oSlP_8fMqOpYS-mTW0wsJkeXqfuBAVrvF1jx-gnzkUqGNRLHTD-VR_x",
-    JsSDKSecretKey: "EK8hqlHecd2m5k3tEpppVe6Xj5McpzlL8qVV57dWtxGtjmzC0Pp-fmLMZkdgUixG4Zee6qOUtxbFyCrD",
+    JsSDKClientID: "AfT9T73YOOVSPXNJb8pd9E4WkuwFl1NDM5naClS9HwORvc7mlppOzVHMqzSMAo3oZ7-zyqLgo5SbHPV2",
+    JsSDKSecretKey: "ECFSfdTPHh5qezz-5nTWYSNTtmIxke64jVJkDZINSYVNCp0zOkZ2tQAKDQlQ8WYwm9iHwQ13jrQPHUiQ",
     isCustomizedClient: false
 }
 
