@@ -95,10 +95,42 @@ const PaymentTable = () => {
 
     const payLater_logo = (
         <>
-            <img
+            {/* <img
                 className="  h-8 object-contain  inline-block justify-start ml-2"
                 src={process.env.PUBLIC_URL + "/image/pay-later.png"}
-            />
+            /> */}
+
+            <div
+                style={{
+                    display: "inline-block",
+                    padding: "5px",
+                    borderRadius: "3px",
+                    position: "relative",
+                    border: "1px solid #dcdcdc",
+                    // height:"2rem",
+                    objectFit:"contain"
+                }}
+            >
+                <img
+                    src="https://www.paypalobjects.com/js-sdk-logos/2.2.7/pp-default.svg"
+                    style={{
+                       lineHeight:0,
+                       display:"inline-block",
+                       height:"2rem",
+                    }}
+                ></img>
+                <span
+                    style={{
+                        display: "inline-block",
+                        lineHeight: 0,
+                        width:"2px"
+                    }}
+                />
+                <span style={{
+                    fontFamily:"PayPalOpen-Regular, Helvetica, Arial, 'Liberation Sans', sans-serif",
+                    height:"2rem",
+                }}>Pay Later</span>
+            </div>
         </>
     );
 
@@ -168,7 +200,7 @@ const PaymentTable = () => {
             <>
                 <img
                     src={imgUrl}
-                    className=" w-1/3 h-8 object-contain  inline-block "
+                    className=" h-5 object-contain  inline-block "
                 />
             </>
         );
@@ -195,9 +227,7 @@ const PaymentTable = () => {
             //     logo: paypal_BCDC,
             //     additionalInfo: null,
             // },
-           
-           
-           
+
             {
                 value: PAYMENT_METHOD.PAYPAL_GOOGLEPAY,
                 label: "Google Pay",

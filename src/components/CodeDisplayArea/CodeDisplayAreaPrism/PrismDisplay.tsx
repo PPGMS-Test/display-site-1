@@ -34,7 +34,7 @@ const CodeDisplayAreaPrismDisplay: FC = () => {
 
     return (
         <>
-        {languageType}
+        {/* {languageType} */}
             <Highlight
                 theme={getTheme(themes)}
                 code={getCode()}
