@@ -3,6 +3,7 @@ interface Window {
     clientID: any;
     secretKey: any;
     sellerID: any;
+    google:any
 }
 
 interface process {

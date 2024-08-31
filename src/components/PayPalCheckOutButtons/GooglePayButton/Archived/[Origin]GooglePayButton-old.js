@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-export default function GooglePayButton() {
+// export default function GooglePayButtonOld() {
+function GooglePayButtonOld() {
   /*
    * Define the version of the Google Pay API referenced when creating your configuration
    * 指定Google Pay 版本, 是必须的

@@ -28,11 +28,39 @@ const BCDCShoppingCart: FC = () => {
         }
     };
 
-    const renderACDCTestPart = ()=>{
+    const renderACDCTestPart = () => {
         if (currentPaymentMethod === PAYMENT_METHOD.PAYPAL_ACDC) {
             return <ACDCTestCard />;
         }
-    }
+    };
+
+    const paymentMethodRD = useAppSelector((state) =>
+        get_payment_method(state)
+    );
+
+    
+
+    const renderFrontEndCode = () => {
+        let codeSnippetName: CODE_SNIPPET_NAME = CODE_SNIPPET_NAME.SPB_STANDARD;
+        if (paymentMethodRD === PAYMENT_METHOD.PAYPAL_STANDARD) {
+            //default
+        }
+        if (paymentMethodRD === PAYMENT_METHOD.PAYPAL_BNPL) {
+            codeSnippetName = CODE_SNIPPET_NAME.SPB_BNPL;
+        }
+        if (paymentMethodRD === PAYMENT_METHOD.PAYPAL_ACDC) {
+            codeSnippetName = CODE_SNIPPET_NAME.ACDC;
+        }
+        return (
+            <>
+                {paymentMethodRD}
+                <CodeDisplayAreaPrism
+                    codeSnippetName={codeSnippetName}
+                    prismTheme={PrismThemeNAME.github}
+                />
+            </>
+        );
+    };
 
     return (
         <div>
@@ -47,10 +75,7 @@ const BCDCShoppingCart: FC = () => {
                 </div> */}
 
                 <div className=" basis-1/4  m-2 divide-y divide-gray-300/50">
-                    <CodeDisplayAreaPrism
-                        codeSnippetName={CODE_SNIPPET_NAME.SPB_STANDARD}
-                        prismTheme={PrismThemeNAME.github}
-                    />
+                    {renderFrontEndCode()}
                     <CodeDisplayAreaPrism
                         codeSnippetName={
                             CODE_SNIPPET_NAME.CREATE_ORDER_REQUEST_1

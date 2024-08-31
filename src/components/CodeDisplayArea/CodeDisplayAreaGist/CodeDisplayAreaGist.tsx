@@ -50,6 +50,10 @@ const CodeDisplayAreaGist: FC = () => {
             PAYMENT_METHOD.PAYPAL_BNPL,
             "user-q123/36cf7b698b062902393e9a73b535c0ce"
         );
+        mGistMap.set(
+            PAYMENT_METHOD.PAYPAL_ACDC,
+            "PPGMS-Test/b1167d20d8d110ccf8ef78f18b1c631d"
+        );
 
         let gistUrl: `${string}/${string}` =
             mGistMap.get(codeType) ??

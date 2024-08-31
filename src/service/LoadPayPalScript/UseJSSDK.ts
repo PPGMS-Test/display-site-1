@@ -2,8 +2,6 @@ import { Input } from '@mui/material';
 import { BuyerInfo } from '../../reducer/reducers/buyerInfoReducer';
 
 
-
-
 export interface JSSDKParams {
     input?: Function,
     addressCountry: string,
@@ -36,7 +34,7 @@ const UseJSSDK = function (loadParam: JSSDKParams) {
         // console.clear();
 
         PayPal_SPB_JS_SDK_LoadScript.onload = function () {
-            console.log("[UseJSSDK.ts] SDK load Complete!");
+            console.log("--[UseJSSDK.ts] SDK load Complete!");
             input && input.call(this);
             resolve();
         };

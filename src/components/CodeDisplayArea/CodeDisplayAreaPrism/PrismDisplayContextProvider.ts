@@ -3,6 +3,7 @@ import { createContext } from "react"
 export enum CODE_SNIPPET_NAME {
     SPB_STANDARD = "SPB_STANDARD",
     ACDC = "ACDC",
+    SPB_BNPL = "SPB_BNPL",
     CREATE_ORDER_REQUEST_1 = "CREATE_ORDER_REQUEST_1"
 }
 

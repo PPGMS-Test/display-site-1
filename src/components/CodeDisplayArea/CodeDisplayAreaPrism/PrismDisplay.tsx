@@ -7,6 +7,8 @@ import {
     PrismThemeNAME,
 } from "./PrismDisplayContextProvider";
 import { CodeBlockCreateOrderRequest_1 } from "./CodeBlock/CodeBlockCreateOrderRequest_1";
+import { CodeBlockSPBBNPL } from "./CodeBlock/CodeBlockSPBBNPL";
+import { CodeBlockACDC } from "./CodeBlock/CodeBlockACDC";
 
 const CodeDisplayAreaPrismDisplay: FC = () => {
     const { codeSnippetName, prismTheme, languageType } =
@@ -16,6 +18,12 @@ const CodeDisplayAreaPrismDisplay: FC = () => {
         switch (codeSnippetName) {
             case CODE_SNIPPET_NAME.SPB_STANDARD:
                 return CodeBlockSPBStandard;
+                break;
+            case CODE_SNIPPET_NAME.SPB_BNPL:
+                return CodeBlockSPBBNPL;
+                break;
+            case CODE_SNIPPET_NAME.ACDC:
+                return CodeBlockACDC;
                 break;
 
             case CODE_SNIPPET_NAME.CREATE_ORDER_REQUEST_1:
@@ -34,11 +42,11 @@ const CodeDisplayAreaPrismDisplay: FC = () => {
 
     return (
         <>
-        {/* {languageType} */}
+            {/* {languageType} */}
             <Highlight
                 theme={getTheme(themes)}
                 code={getCode()}
-                language={languageType}
+                language={languageType}                
             >
                 {({
                     className,

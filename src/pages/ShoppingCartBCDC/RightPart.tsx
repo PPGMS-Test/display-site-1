@@ -92,10 +92,10 @@ function renderApplePay() {
 }
 
 function CurrentPaymentMethod(
-    count: PAYMENT_METHOD,
+    selectPaymentMethod: PAYMENT_METHOD,
     APMMethod: APM_METHOD_ENUM
 ) {
-    switch (count) {
+    switch (selectPaymentMethod) {
         case PAYMENT_METHOD.PAYPAL_STANDARD:
             return renderSmartPaymentButtons();
             break;
@@ -124,7 +124,7 @@ function CurrentPaymentMethod(
 }
 
 const RightPart: FC = () => {
-    const count = useAppSelector((state) =>
+    const selectPaymentMethod = useAppSelector((state) =>
         get_payment_method(state)
     ) as PAYMENT_METHOD;
     const shoppingCartList = useAppSelector((state) => getShoppingCart(state));
@@ -132,7 +132,7 @@ const RightPart: FC = () => {
         return getAPMMethod(state);
     });
 
-    let [showPaymentMethod, setShowPaymentMethod] = useState(count);
+    let [showPaymentMethod, setShowPaymentMethod] = useState(selectPaymentMethod);
 
     const isWithShippingOption = useAppSelector(
         (state) => state.withShippingOption.isWithShipping
@@ -152,10 +152,10 @@ const RightPart: FC = () => {
                     </div>
                     <hr className=" my-2" />
                     <div>
-                        {/* <p>当前的支付方式: {count}</p>
-                        <p>是否带有运输参数: {`${isWithShippingOption}`}</p> */}
+                        {/* <p>当前的支付方式: {selectPaymentMethod}</p> */}
+                       {/* <p>是否带有运输参数: {`${isWithShippingOption}`}</p> */}
 
-                        <div>{CurrentPaymentMethod(count, APMMethod)}</div>
+                        <div>{CurrentPaymentMethod(selectPaymentMethod, APMMethod)}</div>
                     </div>
                 </div>
             );

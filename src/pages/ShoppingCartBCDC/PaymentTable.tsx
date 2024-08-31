@@ -31,18 +31,18 @@ const PaymentTable = () => {
         return getAPMMethod(state);
     });
 
-    // const radio_value_global = useAppSelector(
+    // const paymentMethodRD = useAppSelector(
     //     (state) => state.paymentMethod.method
     // );
 
     //用以控制支付方式变化的默认值
     const [useRadioOnChange, setUseRadioOnChange] = useState(true);
 
-    const radio_value_global = useAppSelector((state) =>
+    const paymentMethodRD = useAppSelector((state) =>
         get_payment_method(state)
     );
     const [radio_value, setRadioValue] =
-        useState<PAYMENT_METHOD>(radio_value_global);
+        useState<PAYMENT_METHOD>(paymentMethodRD);
 
     //setTimeOut用的, 以防误触
     const [radioBtnDisable, setRadioBtnDisable] = useState(false);
