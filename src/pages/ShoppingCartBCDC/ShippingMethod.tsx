@@ -86,8 +86,9 @@ const ShippingMethod: FC = () => {
 
     function renderSelectList() {
         if (isFixed) {
+            //In Fixed contact mode, change default shipping carrier to USPS
             const targetItem = ShippingListConst.find(
-                (item) => item.Id === "SF"
+                (item) => item.Id === "USPS"
             );
             toDispatchObj = {
                 Id: targetItem?.Id || "None",

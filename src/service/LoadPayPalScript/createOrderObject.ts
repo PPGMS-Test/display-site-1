@@ -5,6 +5,7 @@ import CaptureOrderFetchAPI from '../OrderV2/ByOnlineFetch/CaptureOrderAPI';
 import { BuyerInfo } from '../../reducer/reducers/buyerInfoReducer';
 import { ShoppingCartItem } from '../../reducer/reducers/shoppingCartReducer';
 import { CurrentShippingOption } from '../../reducer/reducers/shippingOptionReducer';
+import { NavigateFunction } from 'react-router-dom';
 
 
 let state;
@@ -37,9 +38,9 @@ function assembleCreateOrderOject() {
 
     //[2024-02-20] 这里payment source应该为动态的, 但是还没空来做
     let payment_source_item = "paypal"
-    let payment_source={
-        payment_source_item:{
-            
+    let payment_source = {
+        payment_source_item: {
+
         }
     }
     if (buyerInfo) {
@@ -115,7 +116,7 @@ function assembleCreateOrderOject() {
     return create_order_obj;
 }
 
-function assembleCreateOrderOjectNew(){
+function assembleCreateOrderOjectNew() {
     const baseOrderAmount = getProductsTotalPrice();
 
     let payer_info;
@@ -158,15 +159,23 @@ function assembleCreateOrderOjectNew(){
     };
 
     if (buyerInfo) {
-        
+
         //正确的
         (create_order_obj as any).payer = payer_info;
     }
     return create_order_obj;
 }
 
-const CreateOrderObjectFn = (callbackFnSet: any) => {
-    const { navigate, getLink } = callbackFnSet;
+type CreateOrderObjectFnParamType = {
+    navigate: NavigateFunction,
+    getLink: Function,
+    isOpenDialog: boolean,
+    openDialogFn: Function
+}
+
+const CreateOrderObjectFn = (callbackFnSet: CreateOrderObjectFnParamType) => {
+    const { navigate, getLink, isOpenDialog,
+        openDialogFn } = callbackFnSet;
     // debugger;
 
     state = store.getState();
@@ -179,8 +188,8 @@ const CreateOrderObjectFn = (callbackFnSet: any) => {
     // const create_order_obj = assembleCreateOrderOject();
     const create_order_obj = assembleCreateOrderOjectNew();
     //查看请求体
-    console.log("%c[Create Order Request Body]:","color:blue");
-    console.log(`%c${JSON.stringify(create_order_obj, null, "  ")}`,"color:blue");
+    console.log("%c[Create Order Request Body]:", "color:blue");
+    console.log(`%c${JSON.stringify(create_order_obj, null, "  ")}`, "color:blue");
     // debugger;
 
     let paypalObject: ExtendedObj = {
@@ -188,9 +197,13 @@ const CreateOrderObjectFn = (callbackFnSet: any) => {
             return (await CreateOrderFetchAPI(create_order_obj)).orderID;
         },
         onApprove: async function (data: any, actions: any) {
-            await CaptureOrderFetchAPI();
-            setTimeout(() => {
-                // debugger;
+            const { transactionID, jsonResponse, httpStatusCode } = await CaptureOrderFetchAPI();
+             // debugger;
+             if (isOpenDialog) {
+                openDialogFn(transactionID);
+                return;
+            }
+            setTimeout(() => {               
                 navigate(getLink())
             }, 1800)
         },

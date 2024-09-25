@@ -11,13 +11,15 @@ import {
     CODE_SNIPPET_NAME,
     PrismThemeNAME,
 } from "@/components/CodeDisplayArea/CodeDisplayAreaPrism/PrismDisplayContextProvider";
-import ACDCTestCard from "../ACDC/ACDCTestCard";
-// import CodeDisplayArea from "../../components/CodeDisplayArea/CodeDisplayAreaGist";
+import ACDCTestCard from "../../components/ACDC/ACDCTestCard";
+import { CommonToggle } from "@/components/Toggles/CommonToggle";
 
 const BCDCShoppingCart: FC = () => {
     const currentPaymentMethod: PAYMENT_METHOD = useAppSelector((state) =>
         get_payment_method(state)
     );
+
+    const [showCodeDisplayArea, setShowCodeDisplayArea] = useState(false);
 
     const renderDownloadButtonPart = () => {
         if (currentPaymentMethod === PAYMENT_METHOD.PAYPAL_BCDC) {
@@ -38,8 +40,6 @@ const BCDCShoppingCart: FC = () => {
         get_payment_method(state)
     );
 
-    
-
     const renderFrontEndCode = () => {
         let codeSnippetName: CODE_SNIPPET_NAME = CODE_SNIPPET_NAME.SPB_STANDARD;
         if (paymentMethodRD === PAYMENT_METHOD.PAYPAL_STANDARD) {
@@ -51,12 +51,34 @@ const BCDCShoppingCart: FC = () => {
         if (paymentMethodRD === PAYMENT_METHOD.PAYPAL_ACDC) {
             codeSnippetName = CODE_SNIPPET_NAME.ACDC;
         }
+        if (paymentMethodRD === PAYMENT_METHOD.PAYPAL_GOOGLEPAY) {
+            codeSnippetName = CODE_SNIPPET_NAME.GOOGLEPAY;
+        }
+        if (paymentMethodRD === PAYMENT_METHOD.PAYPAL_APPLEPAY) {
+            codeSnippetName = CODE_SNIPPET_NAME.APPLEPAY;
+        }
+        if (paymentMethodRD === PAYMENT_METHOD.PAYPAL_APM) {
+            codeSnippetName = CODE_SNIPPET_NAME.APM_IDEAL;
+        }
         return (
             <>
                 {paymentMethodRD}
                 <CodeDisplayAreaPrism
                     codeSnippetName={codeSnippetName}
                     prismTheme={PrismThemeNAME.github}
+                />
+            </>
+        );
+    };
+
+    const showCode = () => {
+        return (
+            <>
+                {renderFrontEndCode()}
+                <CodeDisplayAreaPrism
+                    codeSnippetName={CODE_SNIPPET_NAME.BackEndAPI}
+                    prismTheme={PrismThemeNAME.nightOwl}
+                    languageType="js"
                 />
             </>
         );
@@ -75,14 +97,14 @@ const BCDCShoppingCart: FC = () => {
                 </div> */}
 
                 <div className=" basis-1/4  m-2 divide-y divide-gray-300/50">
-                    {renderFrontEndCode()}
-                    <CodeDisplayAreaPrism
-                        codeSnippetName={
-                            CODE_SNIPPET_NAME.CREATE_ORDER_REQUEST_1
-                        }
-                        prismTheme={PrismThemeNAME.nightOwl}
-                        languageType="python"
+                    <CommonToggle
+                        handleChange={(event, checked) => {
+                            setShowCodeDisplayArea(checked);
+                        }}
+                        labelContent="显示代码"
+                        tipContent="点击用于切换显示/隐藏代码展示区域"
                     />
+                    {showCodeDisplayArea && showCode()}
                 </div>
 
                 <div className=" basis-1/2  m-2">

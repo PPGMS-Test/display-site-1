@@ -1,22 +1,19 @@
-import React, { FC, useEffect } from "react";
-
-
-import UseJSSDK, {
-    JSSDKParams,
-} from "../../../../service/LoadPayPalScript/UseJSSDK";
+import React, { FC, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-
-
-import { useAppSelector } from "../../../../typeHooks";
 import PAYMENT_METHOD from "@/enum/PAYMENT_METHOD";
 import { BuyerInfo, getBuyerInfo } from "@/reducer/reducers/buyerInfoReducer";
 import CreateOrderObjectFn from "@/service/LoadPayPalScript/createOrderObject";
+import CommonTextDialog, { DialogRef } from "@/components/Dialog/CommonTextDialog";
+import UseJSSDK, { JSSDKParams } from "@/service/LoadPayPalScript/UseJSSDK";
+import { useAppSelector } from "@/typeHooks";
 
 interface ButtonType {
     buttonType: PAYMENT_METHOD;
 }
 
 const SPB: FC<ButtonType> = ({ buttonType }) => {
+    const dialogRef = useRef<DialogRef>(null);
+    
     let infoMessageArea = document.getElementById(
         "smart-payment-button-info-area"
     );
@@ -52,12 +49,26 @@ const SPB: FC<ButtonType> = ({ buttonType }) => {
         return getBuyerInfo(state);
     });
     const addressCountry = buyerInfo.Address.Country;
+
+    const openDialogFn = (transactionID:string)=>{
+        setTimeout(() => {
+            dialogRef.current?.openDialogWithCustomizedContent(
+                "Congratulation!",
+                "success",
+                `Your transaction ${transactionID} is Completed!`
+            );
+        }, 500);
+    };
+
     const renderBtn = () => {
         if (window.paypal) {
             let button;
             let obj = CreateOrderObjectFn({
                 navigate,
                 getLink,
+                isOpenDialog:true,
+                openDialogFn:openDialogFn,
+
             });
             if (buttonType === PAYMENT_METHOD.PAYPAL_BCDC) {
                 button = window.paypal.Buttons({
@@ -125,6 +136,7 @@ const SPB: FC<ButtonType> = ({ buttonType }) => {
         <div>
             <div id="paypal-button-container"></div>
             <div id="smart-payment-button-info-area"></div>
+            <CommonTextDialog ref={dialogRef} />
         </div>
     );
 };

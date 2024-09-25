@@ -9,6 +9,10 @@ import {
 import { CodeBlockCreateOrderRequest_1 } from "./CodeBlock/CodeBlockCreateOrderRequest_1";
 import { CodeBlockSPBBNPL } from "./CodeBlock/CodeBlockSPBBNPL";
 import { CodeBlockACDC } from "./CodeBlock/CodeBlockACDC";
+import { CodeBlockGooglePay } from "./CodeBlock/CodeBlockGooglePay";
+import { CodeBlockApplePay } from "./CodeBlock/CodeBlockApplePay";
+import { CodeBlockAPM_IDEAL } from "./CodeBlock/CodeBlockAPM_IDEAL";
+import { CodeBlockBlackEnd } from "./CodeBlock/CodeBlockBlackEnd";
 
 const CodeDisplayAreaPrismDisplay: FC = () => {
     const { codeSnippetName, prismTheme, languageType } =
@@ -24,6 +28,21 @@ const CodeDisplayAreaPrismDisplay: FC = () => {
                 break;
             case CODE_SNIPPET_NAME.ACDC:
                 return CodeBlockACDC;
+                break;
+
+            case CODE_SNIPPET_NAME.GOOGLEPAY:
+                return CodeBlockGooglePay;
+                break;
+            case CODE_SNIPPET_NAME.APM_IDEAL:
+                return CodeBlockAPM_IDEAL;
+                break;
+
+            case CODE_SNIPPET_NAME.APPLEPAY:
+                return CodeBlockApplePay;
+                break;
+
+            case CODE_SNIPPET_NAME.BackEndAPI:
+                return CodeBlockBlackEnd;
                 break;
 
             case CODE_SNIPPET_NAME.CREATE_ORDER_REQUEST_1:
@@ -46,7 +65,7 @@ const CodeDisplayAreaPrismDisplay: FC = () => {
             <Highlight
                 theme={getTheme(themes)}
                 code={getCode()}
-                language={languageType}                
+                language={languageType}
             >
                 {({
                     className,

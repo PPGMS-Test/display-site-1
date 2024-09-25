@@ -17,7 +17,7 @@ const CodeDisplayAreaPrismWrapper: FC = () => {
                     "code-block-height":true               
                 })}                
             >
-                这是分割线
+                {/* 这是分割线 */}
                 <div className="mx-auto max-w-2xl code-block-max-height">
                     {/* Divide line in each div */}
                     <div className="divide-y divide-gray-300/50">

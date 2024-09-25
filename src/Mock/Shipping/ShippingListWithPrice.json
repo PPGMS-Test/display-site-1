@@ -14,8 +14,8 @@
         "CurrencyCode": "USD"
     },
     {
-        "Id": "UPS",
-        "Label": "UPS",
+        "Id": "USPS",
+        "Label": "USPS",
         "Type": "SHIPPING",
         "Value": "20.00",
         "CurrencyCode": "USD"

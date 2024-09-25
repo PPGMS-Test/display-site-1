@@ -1,6 +1,7 @@
 import CaptureOrderFetchAPI from "../../service/OrderV2/ByOnlineFetch/CaptureOrderAPI";
 import CreateOrderFetchAPI from "../../service/OrderV2/ByOnlineFetch/CreateOrderAPI";
 
+
 export async function createOrderCallback(data: any) {
     console.log("[checkout.js] createOrderCallback #1");
     console.log(
@@ -60,7 +61,7 @@ export async function createOrderCallback(data: any) {
 }
 
 export async function onApproveCallback(data: any, actions: any) {
-    debugger;
+ 
     console.log("[checkout.js] onApproveCallback #1");
     try {
         const { transactionID, jsonResponse, httpStatusCode } = await CaptureOrderFetchAPI();
@@ -108,6 +109,9 @@ export async function onApproveCallback(data: any, actions: any) {
             resultMessage(
                 `Transaction ${transaction.status}: ${transaction.id}<br><br>See console for all available details`
             );
+            return transaction;
+          
+
             console.log(
                 "Capture result",
                 orderData,
@@ -123,6 +127,7 @@ export async function onApproveCallback(data: any, actions: any) {
 }
 
 export function resultMessage(message: string) {
+    
     const container = document.querySelector("#result-message");
     if (container)
         container.innerHTML = message;

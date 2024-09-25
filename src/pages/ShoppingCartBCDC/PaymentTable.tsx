@@ -108,28 +108,33 @@ const PaymentTable = () => {
                     position: "relative",
                     border: "1px solid #dcdcdc",
                     // height:"2rem",
-                    objectFit:"contain"
+                    objectFit: "contain",
                 }}
             >
                 <img
                     src="https://www.paypalobjects.com/js-sdk-logos/2.2.7/pp-default.svg"
                     style={{
-                       lineHeight:0,
-                       display:"inline-block",
-                       height:"2rem",
+                        lineHeight: 0,
+                        display: "inline-block",
+                        height: "1.5rem",
                     }}
                 ></img>
                 <span
                     style={{
                         display: "inline-block",
                         lineHeight: 0,
-                        width:"2px"
+                        width: "2px",
                     }}
                 />
-                <span style={{
-                    fontFamily:"PayPalOpen-Regular, Helvetica, Arial, 'Liberation Sans', sans-serif",
-                    height:"2rem",
-                }}>Pay Later</span>
+                <span
+                    style={{
+                        fontFamily:
+                            "PayPalOpen-Regular, Helvetica, Arial, 'Liberation Sans', sans-serif",
+                        height: "1.25rem",
+                    }}
+                >
+                    Pay Later
+                </span>
             </div>
         </>
     );

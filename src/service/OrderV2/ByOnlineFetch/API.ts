@@ -5,8 +5,8 @@ export const base = "https://api.sandbox.paypal.com";
 
 export const getJsSDKClientIDSecretKey = () => {
     let isCustomizedClient: boolean = store.getState().JsSDKInfo.isCustomizedClient;
-    let clientID = PAYPAL_CLIENT_ID
-    let secretKey = PAYPAL_CLIENT_SECRET
+    let clientID:string = PAYPAL_CLIENT_ID
+    let secretKey:string = PAYPAL_CLIENT_SECRET
     // debugger;
     if (isCustomizedClient) {
         clientID = store.getState().JsSDKInfo.JsSDKClientID;

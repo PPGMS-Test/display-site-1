@@ -1,7 +1,8 @@
-import { orderSlice, setOrderID } from '../../../reducer/reducers/orderReducer';
-import store from "../../../reducer/store";
+
+import store from "@/reducer/store";
 import { v4 as uuidv4 } from 'uuid';
 import { base, getJsSDKClientIDSecretKey, handleResponse } from './API';
+import { orderSlice } from "@/reducer/reducers/orderReducer";
 
 
 const CreateOrderFetchAPI = async (requestBody: any) => {

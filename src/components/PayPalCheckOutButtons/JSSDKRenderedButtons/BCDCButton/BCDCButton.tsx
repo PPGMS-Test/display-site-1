@@ -26,18 +26,18 @@ const BCDCButton: FC = () => {
 
     const navigate = useNavigate();
     const renderBtn = () => {
-        debugger;
-        if (window.paypal) {
-            let button = window.paypal.Buttons({
-                fundingSource: window.paypal.FUNDING.CARD,
-                ...CreateOrderObject({
-                    navigate,
-                }),
-            });
-            if (button.isEligible()) {
-                button.render("#paypal-button-container");
-            }
-        }
+     
+        // if (window.paypal) {
+        //     let button = window.paypal.Buttons({
+        //         fundingSource: window.paypal.FUNDING.CARD,
+        //         ...CreateOrderObject({
+        //             navigate,
+        //         }),
+        //     });
+        //     if (button.isEligible()) {
+        //         button.render("#paypal-button-container");
+        //     }
+        // }
     };
 
     useEffect(() => {

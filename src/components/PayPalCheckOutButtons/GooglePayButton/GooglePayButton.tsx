@@ -1,17 +1,25 @@
 import UseJSSDK, { JSSDKParams } from "@/service/LoadPayPalScript/UseJSSDK";
-import { FC, useEffect } from "react";
-import { onGooglePayLoaded } from "./GooglePayLoad";
+import { FC, useEffect, useRef } from "react";
+import { GooglePayConstructor } from "./GooglePayLoad";
+import CommonTextDialog, {
+    DialogRef,
+} from "@/components/Dialog/CommonTextDialog";
+
 
 const GooglePayButton: FC = () => {
+    const dialogRef = useRef<DialogRef>(null);
+
     useEffect(() => {
+        const additionalOptions = new Map<string, string>();
+        additionalOptions.set("components", "googlepay");
         let JSLoadParams: JSSDKParams = {
             addressCountry: "US",
+            additionalOptions: additionalOptions,
         };
 
         const GoogleLoadScriptPromise = new Promise<void>((resolve) => {
             let mScript = document.createElement("script");
             const url = "https://pay.google.com/gp/p/js/pay.js";
-            console.log("[UseJSSDK.ts] Smart Payment button Url:", url);
             mScript.src = url;
             document.getElementById("root")?.appendChild(mScript);
             mScript.onload = function () {
@@ -29,7 +37,27 @@ const GooglePayButton: FC = () => {
                 console.log("Both Promises are resolved!");
                 if (window.google && window.paypal.Googlepay) {
                     console.log("[Google&PayPal Object checked!]");
-                    onGooglePayLoaded().catch(console.log);
+
+                    const googlePayStarter = new GooglePayConstructor(
+                        (captureResponse: any) => {
+                            // debugger;
+                            const transaction =
+                                captureResponse?.purchase_units?.[0]?.payments
+                                    ?.captures?.[0]["id"] 
+                            console.log(
+                                JSON.stringify(captureResponse, null, "  ")
+                            );
+                            setTimeout(() => {
+                                dialogRef.current?.openDialogWithCustomizedContent(
+                                    "Congratulation!",
+                                    "success",
+                                    `Your transaction ${transaction} is Completed!`
+                                );
+                            }, 1500);
+                        },
+                        "ShowSuccess"
+                    );
+                    googlePayStarter.onGooglePayLoaded().catch(console.log);
                 }
                 // onGooglePayLoaded().catch(console.log);
             }
@@ -38,7 +66,16 @@ const GooglePayButton: FC = () => {
 
     return (
         <>
-            <div id="google-button-container"></div>
+            <div
+                id="google-button-container"
+                // className=" w-full object-contain  inline-block "
+                // style={{
+                //     width: "403px",
+                //     height: "63px;",
+                // }}
+            >
+                <CommonTextDialog ref={dialogRef} />
+            </div>
         </>
     );
 };

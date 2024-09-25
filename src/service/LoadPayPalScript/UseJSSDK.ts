@@ -1,5 +1,6 @@
 import { Input } from '@mui/material';
 import { BuyerInfo } from '../../reducer/reducers/buyerInfoReducer';
+import { getJsSDKClientIDSecretKey } from '../OrderV2/ByOnlineFetch/API';
 
 
 export interface JSSDKParams {
@@ -22,10 +23,10 @@ const UseJSSDK = function (loadParam: JSSDKParams) {
     return new Promise<void>((resolve) => {
         let PayPal_SPB_JS_SDK_LoadScript = document.createElement("script");
         console.log("[UseJSSDK.ts] PayPal JS SDK load!");
-        const client_id = window.clientID;
+        const { clientID, secretKey } = getJsSDKClientIDSecretKey();
 
-        const url = `https://www.paypal.com/sdk/js?client-id=${client_id}&buyer-country=${addressCountry}${additionalParams.length > 0 ? "&" + additionalParams.join("&") : ""}`;
-        console.log("[UseJSSDK.ts] Smart Payment button Url:", url)
+        const url = `https://www.paypal.com/sdk/js?client-id=${clientID}&buyer-country=${addressCountry}${additionalParams.length > 0 ? "&" + additionalParams.join("&") : ""}`;
+        console.log("[UseJSSDK.ts] Smart Payment button Url:\r\n", `>> ${url}`)
         PayPal_SPB_JS_SDK_LoadScript.src = url;
         PayPal_SPB_JS_SDK_LoadScript.async = false;
         document

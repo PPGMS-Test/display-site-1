@@ -14,7 +14,8 @@ import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
 import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer";
 import { getAPMMethod } from "../../reducer/reducers/APMReducer";
 import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
-import ACDCIndex from "../ACDC/ACDCIndex";
+import ACDCComponents from "../../components/ACDC/ACDCComponents";
+import GooglePayButton from "@/components/PayPalCheckOutButtons/GooglePayButton/GooglePayButton";
 
 function renderSmartPaymentButtons() {
     return (
@@ -64,7 +65,7 @@ function renderBNPLButton() {
 function renderACDC() {
     return (
         <>
-            <ACDCIndex />
+            <ACDCComponents />
         </>
     );
 }
@@ -72,10 +73,18 @@ function renderACDC() {
 function renderGooglePay() {
     return (
         <>
-            <img
+            {/* <img
                 className=" w-auto h-20 object-contain  inline-block "
                 src={process.env.PUBLIC_URL + "/image/google-pay-fake-btn.png"}
             />
+            <div
+                style={{
+                    backgroundColor: "black",
+                    height: "3rem",
+                }}
+            ></div> */}
+
+            <GooglePayButton />
         </>
     );
 }
@@ -132,7 +141,8 @@ const RightPart: FC = () => {
         return getAPMMethod(state);
     });
 
-    let [showPaymentMethod, setShowPaymentMethod] = useState(selectPaymentMethod);
+    let [showPaymentMethod, setShowPaymentMethod] =
+        useState(selectPaymentMethod);
 
     const isWithShippingOption = useAppSelector(
         (state) => state.withShippingOption.isWithShipping
@@ -153,9 +163,14 @@ const RightPart: FC = () => {
                     <hr className=" my-2" />
                     <div>
                         {/* <p>当前的支付方式: {selectPaymentMethod}</p> */}
-                       {/* <p>是否带有运输参数: {`${isWithShippingOption}`}</p> */}
+                        {/* <p>是否带有运输参数: {`${isWithShippingOption}`}</p> */}
 
-                        <div>{CurrentPaymentMethod(selectPaymentMethod, APMMethod)}</div>
+                        <div>
+                            {CurrentPaymentMethod(
+                                selectPaymentMethod,
+                                APMMethod
+                            )}
+                        </div>
                     </div>
                 </div>
             );
