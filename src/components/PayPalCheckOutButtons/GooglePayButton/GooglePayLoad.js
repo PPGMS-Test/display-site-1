@@ -312,6 +312,7 @@ async function processPayment(paymentData,handleCallBackFunction,handleFnType) {
             );
 
             console.log("PayPal_Auth_Assertion:", PayPal_Auth_Assertion);
+            PayPalRequestHeader["PayPal-Auth-Assertion"] = PayPal_Auth_Assertion
         }
 
         /* Create Order */
