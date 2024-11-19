@@ -2,13 +2,18 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 
+
 const initialState = {
-    JsSDKClientID: "AaupPo8G66AlZPSMxOMUtvQx2oSlP_8fMqOpYS-mTW0wsJkeXqfuBAVrvF1jx-gnzkUqGNRLHTD-VR_x",
-    JsSDKSecretKey: "EK8hqlHecd2m5k3tEpppVe6Xj5McpzlL8qVV57dWtxGtjmzC0Pp-fmLMZkdgUixG4Zee6qOUtxbFyCrD",
-    isCustomizedClient: false
+    JsSDKClientID: "AfT9T73YOOVSPXNJb8pd9E4WkuwFl1NDM5naClS9HwORvc7mlppOzVHMqzSMAo3oZ7-zyqLgo5SbHPV2",
+    JsSDKSecretKey: "ECFSfdTPHh5qezz-5nTWYSNTtmIxke64jVJkDZINSYVNCp0zOkZ2tQAKDQlQ8WYwm9iHwQ13jrQPHUiQ",
+
+    // HK
+    // JsSDKClientID: "AeXVkMQsPC_sbV7MD2EfkBllpZcUBurkdHu5covhklTso79p7A8q9ctrk6fSxL_2lFVoZkaCtBrnxsdz",
+    // JsSDKSecretKey: "EP1OPaCj1AGVNGcN5LD1K7RkWocfXoSUNTkZ7wNTzNIW0YTVst60KPH8H-gWwsSr6463nrMFsvXScKT2",
+    isCustomizedClient: true
 }
 
-export const JsSDInfoSlice = createSlice({
+export const JsSDKInfoSlice = createSlice({
     name: "JsSDKInfo",
     initialState,
     reducers: {
@@ -24,7 +29,7 @@ export const JsSDInfoSlice = createSlice({
     },
 });
 
-export const { setJsSDKClientID, setJsSDKSecretKey, setIsCustomizedClient } = JsSDInfoSlice.actions;
+export const { setJsSDKClientID, setJsSDKSecretKey, setIsCustomizedClient } = JsSDKInfoSlice.actions;
 
 export const getJsSDKClientID = (state: RootState) => state.JsSDKInfo.JsSDKClientID;
 export const getVaultSecretKey = (state: RootState) =>
@@ -32,4 +37,4 @@ export const getVaultSecretKey = (state: RootState) =>
 export const getIsCustomizedClient = (state: RootState) =>
     state.JsSDKInfo.isCustomizedClient;
 
-export default JsSDInfoSlice.reducer;
+export default JsSDKInfoSlice.reducer;

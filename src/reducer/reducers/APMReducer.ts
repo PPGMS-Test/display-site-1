@@ -6,7 +6,7 @@ import APM_METHOD_ENUM from '../../pages/APM/APM_METHOD_ENUM';
 
 //默认的支付方式
 const initialState = {
-    selectedMethod: APM_METHOD_ENUM.iDEAL
+    selectedMethod: APM_METHOD_ENUM.Bancontact
 }
 
 export const paymentSlice = createSlice({

@@ -14,6 +14,9 @@ import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
 import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer";
 import { getAPMMethod } from "../../reducer/reducers/APMReducer";
 import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
+import ACDCComponents from "../../components/ACDC/ACDCComponents";
+import GooglePayButton from "@/components/PayPalCheckOutButtons/GooglePayButton/GooglePayButton";
+import ApplePayButton from "@/components/PayPalCheckOutButtons/ApplePayButton/ApplePayButton";
 
 function renderSmartPaymentButtons() {
     return (
@@ -60,8 +63,51 @@ function renderBNPLButton() {
     );
 }
 
-function CurrentPaymentMethod(count: PAYMENT_METHOD, APMMethod: APM_METHOD_ENUM) {
-    switch (count) {
+function renderACDC() {
+    return (
+        <>
+            <ACDCComponents />
+        </>
+    );
+}
+
+function renderGooglePay() {
+    return (
+        <>
+            {/* <img
+                className=" w-auto h-20 object-contain  inline-block "
+                src={process.env.PUBLIC_URL + "/image/google-pay-fake-btn.png"}
+            />
+            <div
+                style={{
+                    backgroundColor: "black",
+                    height: "3rem",
+                }}
+            ></div> */}
+
+            <GooglePayButton />
+        </>
+    );
+}
+
+function renderApplePay() {
+    return (
+        <>
+            {/* <img
+                className=" w-auto h-20 object-contain  inline-block "
+                src={process.env.PUBLIC_URL + "/image/apple-pay-fake-btn.png"}
+            /> */}
+
+            <ApplePayButton />
+        </>
+    );
+}
+
+function CurrentPaymentMethod(
+    selectPaymentMethod: PAYMENT_METHOD,
+    APMMethod: APM_METHOD_ENUM
+) {
+    switch (selectPaymentMethod) {
         case PAYMENT_METHOD.PAYPAL_STANDARD:
             return renderSmartPaymentButtons();
             break;
@@ -74,6 +120,15 @@ function CurrentPaymentMethod(count: PAYMENT_METHOD, APMMethod: APM_METHOD_ENUM)
         case PAYMENT_METHOD.PAYPAL_BNPL:
             return renderBNPLButton();
             break;
+        case PAYMENT_METHOD.PAYPAL_ACDC:
+            return renderACDC();
+            break;
+        case PAYMENT_METHOD.PAYPAL_APPLEPAY:
+            return renderApplePay();
+            break;
+        case PAYMENT_METHOD.PAYPAL_GOOGLEPAY:
+            return renderGooglePay();
+            break;
         default:
             break;
     }
@@ -81,7 +136,7 @@ function CurrentPaymentMethod(count: PAYMENT_METHOD, APMMethod: APM_METHOD_ENUM)
 }
 
 const RightPart: FC = () => {
-    const count = useAppSelector((state) =>
+    const selectPaymentMethod = useAppSelector((state) =>
         get_payment_method(state)
     ) as PAYMENT_METHOD;
     const shoppingCartList = useAppSelector((state) => getShoppingCart(state));
@@ -89,7 +144,8 @@ const RightPart: FC = () => {
         return getAPMMethod(state);
     });
 
-    let [showPaymentMethod, setShowPaymentMethod] = useState(count);
+    let [showPaymentMethod, setShowPaymentMethod] =
+        useState(selectPaymentMethod);
 
     const isWithShippingOption = useAppSelector(
         (state) => state.withShippingOption.isWithShipping
@@ -109,10 +165,15 @@ const RightPart: FC = () => {
                     </div>
                     <hr className=" my-2" />
                     <div>
-                        {/* <p>当前的支付方式: {count}</p>
-                        <p>是否带有运输参数: {`${isWithShippingOption}`}</p> */}
+                        {/* <p>当前的支付方式: {selectPaymentMethod}</p> */}
+                        {/* <p>是否带有运输参数: {`${isWithShippingOption}`}</p> */}
 
-                        <div>{CurrentPaymentMethod(count, APMMethod)}</div>
+                        <div>
+                            {CurrentPaymentMethod(
+                                selectPaymentMethod,
+                                APMMethod
+                            )}
+                        </div>
                     </div>
                 </div>
             );

@@ -3,6 +3,8 @@ interface Window {
     clientID: any;
     secretKey: any;
     sellerID: any;
+    google:any;
+    ApplePaySession:any;
 }
 
 interface process {

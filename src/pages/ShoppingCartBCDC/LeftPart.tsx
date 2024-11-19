@@ -23,7 +23,7 @@ const LeftPart: FC = () => {
         (state) =>  getIsMoreSpace(state)
     );
 
-    let [isInfoEditable, setIsInfoEditable] = useState(true);
+    let [isInfoEditable, setIsInfoEditable] = useState(false);
     return (
         <div
             className={classNames({

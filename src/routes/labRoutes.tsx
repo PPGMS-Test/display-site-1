@@ -15,7 +15,8 @@ import PositionedTooltips from "../pages/Tooltips";
 import Venmo from "../pages/Venmo";
 import ErrorPage from "../pages/error-page";
 import VaultIndex from "../pages/Vault/VaultIndex";
-import ACDCIndex from "../pages/ACDC/ACDCIndex";
+
+import ACDCSingleDisplay from "@/pages/ACDC/ACDCSingleDisplay";
 
 const lab = {
     path: "/lab",
@@ -74,7 +75,7 @@ const lab = {
         },
         {
             path: "/lab/ACDC",
-            element: <ACDCIndex />,
+            element: <ACDCSingleDisplay />,
         },
     ],
 }

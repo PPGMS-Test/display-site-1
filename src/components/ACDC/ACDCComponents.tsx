@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import UseJSSDK, { JSSDKParams } from "../../service/LoadPayPalScript/UseJSSDK";
 import {
     createOrderCallback,
@@ -7,28 +7,37 @@ import {
     resultMessage,
 } from "./ACDCCallBack";
 import classNames from "classnames";
-import {
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-} from "@mui/material";
 
 import { useAppDispatch, useAppSelector } from "../../typeHooks";
 import { setIsCustomizedClient } from "../../reducer/reducers/ClientSecretReducer";
+import CommonTextDialog, { DialogRef } from "../Dialog/CommonTextDialog";
 
-const ACDCIndex: FC = () => {
+const ACDCComponents: FC = () => {
     let [cardFormDisplay, setCardFormDisplay] = useState("inline-block");
     let [submitBtnDisable, setSubmitBtnDisable] = useState(true);
+
+    // const [dialogTransactionID, setDialogTransactionID] = useState(null);
     const dispatch = useAppDispatch();
+    const dialogRef = useRef<DialogRef>(null);
 
     let cardField: any;
+
+    const onApproveCallBackWrap = async (data: any, actions: any) => {
+        const transaction = await onApproveCallback(data, actions);
+        // debugger;
+        setTimeout(() => {
+            dialogRef.current?.openDialogWithCustomizedContent(
+                "Congratulation!",
+                "success",
+                `Your transaction ${transaction?.id} is Completed!`
+            );
+        }, 500);
+    };
 
     const renderCard = () => {
         cardField = window.paypal.CardFields({
             createOrder: createOrderCallback,
-            onApprove: onApproveCallback,
+            onApprove: onApproveCallBackWrap,
         });
         console.log("[2][ACDC.Page.init]:Start to load JS SDK");
         let nameField;
@@ -75,6 +84,7 @@ const ACDCIndex: FC = () => {
             setCardFormDisplay("none");
         }
     };
+
     useEffect(() => {
         dispatch(setIsCustomizedClient(true));
         (async () => {
@@ -100,20 +110,6 @@ const ACDCIndex: FC = () => {
 
     return (
         <>
-            <List>
-                <ListItem alignItems="flex-start">
-                    <ListItemText
-                        primary="4032030601156491"
-                        secondary="Card Number"
-                    />
-                </ListItem>
-                <ListItem alignItems="flex-start">
-                    <ListItemText secondary="Expire Date" primary="10/2025" />
-                </ListItem>
-                <ListItem alignItems="flex-start">
-                    <ListItemText secondary="CVV" primary="448" />
-                </ListItem>
-            </List>
             <div
                 id="card-form"
                 className={classNames({
@@ -134,8 +130,9 @@ const ACDCIndex: FC = () => {
                 </button>
             </div>
             <p id="result-message"></p>
+            <CommonTextDialog ref={dialogRef} />
         </>
     );
 };
 
-export default ACDCIndex;
+export default ACDCComponents;
