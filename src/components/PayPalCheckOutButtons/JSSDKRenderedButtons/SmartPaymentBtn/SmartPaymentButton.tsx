@@ -117,6 +117,7 @@ const SPB: FC<ButtonType> = ({ buttonType }) => {
                 }
                 JSLoadParams.additionalOptions = map;
             }
+            
             // if (buttonType === PAYMENT_METHOD.PAYPAL_STANDARD) {
             //     let map = new Map<string, string>();
             //     map.set("enable-funding", "paylater");

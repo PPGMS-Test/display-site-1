@@ -16,6 +16,7 @@ import { getAPMMethod } from "../../reducer/reducers/APMReducer";
 import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
 import ACDCComponents from "../../components/ACDC/ACDCComponents";
 import GooglePayButton from "@/components/PayPalCheckOutButtons/GooglePayButton/GooglePayButton";
+import ApplePayButton from "@/components/PayPalCheckOutButtons/ApplePayButton/ApplePayButton";
 
 function renderSmartPaymentButtons() {
     return (
@@ -92,10 +93,12 @@ function renderGooglePay() {
 function renderApplePay() {
     return (
         <>
-            <img
+            {/* <img
                 className=" w-auto h-20 object-contain  inline-block "
                 src={process.env.PUBLIC_URL + "/image/apple-pay-fake-btn.png"}
-            />
+            /> */}
+
+            <ApplePayButton />
         </>
     );
 }

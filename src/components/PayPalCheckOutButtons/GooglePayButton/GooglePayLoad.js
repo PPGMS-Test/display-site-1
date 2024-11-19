@@ -97,6 +97,9 @@ export class GooglePayConstructor {
                 this.#addGooglePayButton();
             }
         } catch (err) {
+            const gpError = document.getElementById("google-pay-error-msg");
+            gpError.innerText = ("Google Pay is not supported, please change your browser.")
+
             console.error(err);
         }
     }

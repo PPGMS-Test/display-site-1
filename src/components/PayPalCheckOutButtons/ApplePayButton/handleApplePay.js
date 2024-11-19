@@ -1,7 +1,8 @@
+import { getJsSDKClientIDSecretKey } from "@/service/OrderV2/ByOnlineFetch/API";
 const IS_3rd_Party_F = false;
 
 async function setupApplepay(callbackFunc) {
-    const applepay = paypal.Applepay();
+    const applepay = window.paypal.Applepay();
     const {
         isEligible,
         countryCode,
@@ -45,7 +46,7 @@ async function setupApplepay(callbackFunc) {
             // ],
             total: {
                 label: "Demo (Card is not charged)",
-                amount: amount,
+                amount: 100,
                 type: "final",
             },
         };
@@ -87,10 +88,9 @@ async function setupApplepay(callbackFunc) {
                 event.payment.shippingContact
             );
             try {
-
                 const accessToken = await generateAccessToken();
                 // console.log(accessToken)
-        
+
                 const PayPalRequestHeader = {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
@@ -101,12 +101,80 @@ async function setupApplepay(callbackFunc) {
                         window.clientID,
                         "JASJ9YWJXPAHY"
                     );
-        
-                    console.log("PayPal_Auth_Assertion:", PayPal_Auth_Assertion);
-                    PayPalRequestHeader["PayPal-Auth-Assertion"] = PayPal_Auth_Assertion
+
+                    console.log(
+                        "PayPal_Auth_Assertion:",
+                        PayPal_Auth_Assertion
+                    );
+                    PayPalRequestHeader["PayPal-Auth-Assertion"] =
+                        PayPal_Auth_Assertion;
                 }
-        
+
                 /* Create Order */
+                const order = {
+                    intent: "CAPTURE",
+                    purchase_units: [
+                        {
+                            reference_id: "default",
+                            description: "This a display Product",
+                            // "invoice_id": "24212065573227",
+                            custom_id: "shoppaas_1722304979933",
+                            items: [
+                                {
+                                    name: "3D Surround Open OWS Bluetooth-Kopfhörer",
+                                    description: "",
+                                    sku: "Schwarz-orange",
+                                    quantity: 1,
+                                    unit_amount: {
+                                        currency_code: "USD",
+                                        value: "25.99",
+                                    },
+                                    category: "PHYSICAL_GOODS",
+                                },
+                            ],
+                            amount: {
+                                currency_code: "USD",
+                                value: "33.98",
+                                breakdown: {
+                                    item_total: {
+                                        currency_code: "USD",
+                                        value: "25.99",
+                                    },
+                                    tax_total: {
+                                        currency_code: "USD",
+                                        value: "0.00",
+                                    },
+                                    shipping: {
+                                        currency_code: "USD",
+                                        value: "7.99",
+                                    },
+                                    handling: {
+                                        currency_code: "USD",
+                                        value: 0,
+                                    },
+                                    insurance: {
+                                        currency_code: "USD",
+                                        value: 0,
+                                    },
+                                    discount: {
+                                        currency_code: "USD",
+                                        value: "0.00",
+                                    },
+                                },
+                            },
+                        },
+                    ],
+                    application_context: {
+                        brand_name: "txgsyr",
+                        cancel_url:
+                            "https://local.zuochang.top/checkout/payment/f5a23f70a42c294a5b9178e18c516a9b?step=payment&pay_method=pay",
+                        return_url:
+                            "https://local.zuochang.top/checkout/payment/f5a23f70a42c294a5b9178e18c516a9b?step=payment&pay_method=pay",
+                        // shipping_preference: "SET_PROVIDED_ADDRESS",
+                        user_action: "PAY_NOW",
+                    },
+                    // "processing_instruction": "ORDER_COMPLETE_ON_PAYMENT_APPROVAL"
+                };
                 console.log("[10]Order V2 -- Create Order is called!");
                 const { id } = await fetch(
                     "https://api.sandbox.paypal.com/v2/checkout/orders",
@@ -116,7 +184,6 @@ async function setupApplepay(callbackFunc) {
                         body: JSON.stringify(order),
                     }
                 ).then((res) => res.json());
-
 
                 /**
                  * Confirm Payment
@@ -142,7 +209,6 @@ async function setupApplepay(callbackFunc) {
                 //     event.payment.shippingContact.emailAddress
                 // );
 
-
                 const captureResponse = await fetch(
                     `https://api.sandbox.paypal.com/v2/checkout/orders/${id}/capture`,
                     {
@@ -150,7 +216,7 @@ async function setupApplepay(callbackFunc) {
                         headers: PayPalRequestHeader,
                     }
                 ).then((res) => res.json());
-    
+
                 console.log("Success!");
                 callbackFunc(captureResponse);
 
@@ -174,14 +240,16 @@ async function setupApplepay(callbackFunc) {
 }
 
 export const handleApplePay = (callbackFunc) => {
+    console.log("handle Apple Pay Loaded!");
     if (
-        ApplePaySession?.supportsVersion(4) &&
-        ApplePaySession?.canMakePayments()
+        window.ApplePaySession?.supportsVersion(4) &&
+        window.ApplePaySession?.canMakePayments()
     ) {
         setupApplepay(callbackFunc).catch(console.error);
+    } else {
+        console.log("Apple Pay is not supported.");
     }
 };
-
 
 const generatePayPalAuthAssertion = (clientID, merchantID) => {
     let PayPal_Auth_Assertion;
@@ -195,3 +263,27 @@ const generatePayPalAuthAssertion = (clientID, merchantID) => {
     PayPal_Auth_Assertion = `eyJhbGciOiJub25lIn0=.${encoded_str}.`;
     return PayPal_Auth_Assertion;
 };
+
+async function generateAccessToken() {
+    const url = "https://api.sandbox.paypal.com/v1/oauth2/token";
+    const { clientID, secretKey } = getJsSDKClientIDSecretKey();
+    let accessToken = btoa(`${clientID}:${secretKey}`);
+
+    let params = {
+        grant_type: "client_credentials",
+    };
+    let formData = new URLSearchParams(params);
+
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Basic ${accessToken}`,
+        },
+        body: formData,
+    });
+    const data = await response.json();
+    // console.log(data)
+    console.log(data.access_token);
+    return data.access_token;
+}

@@ -5,7 +5,6 @@ import CommonTextDialog, {
     DialogRef,
 } from "@/components/Dialog/CommonTextDialog";
 
-
 const GooglePayButton: FC = () => {
     const dialogRef = useRef<DialogRef>(null);
 
@@ -18,6 +17,9 @@ const GooglePayButton: FC = () => {
         };
 
         const GoogleLoadScriptPromise = new Promise<void>((resolve) => {
+            const gpError = document.getElementById("google-pay-error-msg");
+            if (gpError) gpError.innerText = "Loading Google Pay...";
+
             let mScript = document.createElement("script");
             const url = "https://pay.google.com/gp/p/js/pay.js";
             mScript.src = url;
@@ -32,9 +34,12 @@ const GooglePayButton: FC = () => {
 
         const PayPalLoadScriptPromise: Promise<void> = UseJSSDK(JSLoadParams);
 
-        Promise.all([GoogleLoadScriptPromise, PayPalLoadScriptPromise]).then(
-            () => {
+        Promise.all([GoogleLoadScriptPromise, PayPalLoadScriptPromise])
+            .then(() => {
                 console.log("Both Promises are resolved!");
+                const gpError = document.getElementById("google-pay-error-msg");
+                if (gpError) gpError.innerText = "";
+
                 if (window.google && window.paypal.Googlepay) {
                     console.log("[Google&PayPal Object checked!]");
 
@@ -43,7 +48,7 @@ const GooglePayButton: FC = () => {
                             // debugger;
                             const transaction =
                                 captureResponse?.purchase_units?.[0]?.payments
-                                    ?.captures?.[0]["id"] 
+                                    ?.captures?.[0]["id"];
                             console.log(
                                 JSON.stringify(captureResponse, null, "  ")
                             );
@@ -60,8 +65,13 @@ const GooglePayButton: FC = () => {
                     googlePayStarter.onGooglePayLoaded().catch(console.log);
                 }
                 // onGooglePayLoaded().catch(console.log);
-            }
-        );
+            })
+            .catch(() => {
+                const gpError = document.getElementById("google-pay-error-msg");
+                if (gpError)
+                    gpError.innerText =
+                        "Google Pay is not supported, please change your browser.";
+            });
     });
 
     return (
@@ -75,6 +85,7 @@ const GooglePayButton: FC = () => {
                 // }}
             >
                 <CommonTextDialog ref={dialogRef} />
+                <div id="google-pay-error-msg"></div>
             </div>
         </>
     );

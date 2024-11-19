@@ -62,7 +62,8 @@ const BCDCShoppingCart: FC = () => {
         }
         return (
             <>
-                {paymentMethodRD}
+                {/* {paymentMethodRD} */}
+                {/* <div className="w-full h-4"></div> */}
                 <CodeDisplayAreaPrism
                     codeSnippetName={codeSnippetName}
                     prismTheme={PrismThemeNAME.github}
@@ -87,7 +88,15 @@ const BCDCShoppingCart: FC = () => {
     return (
         <div>
             {/* 标题: Shipping Cart BCDC */}
-
+            <div className=" w-full h-10">
+                <CommonToggle
+                    handleChange={(event, checked) => {
+                        setShowCodeDisplayArea(checked);
+                    }}
+                    labelContent="显示代码"
+                    tipContent="点击用于切换显示/隐藏代码展示区域"
+                />
+            </div>
             {/* [2023-10-08 修改"Left right 背景图拿掉] */}
             {/* <div className="flex flex-col md:flex-row bg-gray-300"> */}
 
@@ -96,14 +105,7 @@ const BCDCShoppingCart: FC = () => {
                     <CodeDisplayArea />
                 </div> */}
 
-                <div className=" basis-1/4  m-2 divide-y divide-gray-300/50">
-                    <CommonToggle
-                        handleChange={(event, checked) => {
-                            setShowCodeDisplayArea(checked);
-                        }}
-                        labelContent="显示代码"
-                        tipContent="点击用于切换显示/隐藏代码展示区域"
-                    />
+                <div className=" basis-1/4  m-2 divide-gray-300/50">
                     {showCodeDisplayArea && showCode()}
                 </div>
 

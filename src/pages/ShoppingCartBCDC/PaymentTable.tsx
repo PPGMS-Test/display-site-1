@@ -226,12 +226,12 @@ const PaymentTable = () => {
                 additionalInfo: null,
             },
             // [2024-08-27 金松说不要这个BCDC了, 因为要有ACDC了, 以免混乱]
-            // {
-            //     value: PAYMENT_METHOD.PAYPAL_BCDC,
-            //     label: "Debit or Credit Card",
-            //     logo: paypal_BCDC,
-            //     additionalInfo: null,
-            // },
+            {
+                value: PAYMENT_METHOD.PAYPAL_BCDC,
+                label: "Debit or Credit Card",
+                logo: paypal_BCDC,
+                additionalInfo: null,
+            },
 
             {
                 value: PAYMENT_METHOD.PAYPAL_GOOGLEPAY,
@@ -239,12 +239,14 @@ const PaymentTable = () => {
                 logo: GOOGLE_PAY_logo,
                 additionalInfo: null,
             },
-            {
-                value: PAYMENT_METHOD.PAYPAL_APPLEPAY,
-                label: "Apple Pay",
-                logo: APPLE_PAY_logo,
-                additionalInfo: null,
-            },
+
+            // 2024-09-26 为了展示, 去掉apple pay
+            // {
+            //     value: PAYMENT_METHOD.PAYPAL_APPLEPAY,
+            //     label: "Apple Pay",
+            //     logo: APPLE_PAY_logo,
+            //     additionalInfo: null,
+            // },
             {
                 value: PAYMENT_METHOD.PAYPAL_BNPL,
                 label: "Pay later",
