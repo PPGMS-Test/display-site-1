@@ -74,6 +74,8 @@ const SPB: FC<ButtonType> = ({ buttonType }) => {
                 button = window.paypal.Buttons({
                     fundingSource: window.paypal.FUNDING.CARD,
                     ...obj,
+                    //2024-11-19 自动打开 BCDC按钮
+                    expandCardForm:true
                 });
             } else if (buttonType === PAYMENT_METHOD.PAYPAL_STANDARD) {
                 button = window.paypal.Buttons(obj);

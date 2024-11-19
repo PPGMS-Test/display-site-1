@@ -116,7 +116,7 @@ function assembleCreateOrderOject() {
     return create_order_obj;
 }
 
-function assembleCreateOrderOjectNew() {
+function assembleCreateOrderOjectWIthPayerInfoAttr() {
     const baseOrderAmount = getProductsTotalPrice();
 
     let payer_info;
@@ -166,6 +166,53 @@ function assembleCreateOrderOjectNew() {
     return create_order_obj;
 }
 
+//2024-11-19, payer这个字段, 虽然能用, 但是有问题. 把payer信息放到payment_source字段下
+function assembleCreateOrderOject2024Nov() {
+    const baseOrderAmount = getProductsTotalPrice();
+
+    let create_order_obj: ExtendedObj = {
+        intent: "CAPTURE",
+        purchase_units: [
+            {
+                amount: {
+                    value: baseOrderAmount,
+                    // currency_code: "EUR",
+                    currency_code: "USD",
+                },
+            },
+        ],
+    };
+
+    if (buyerInfo) {
+        //正确的
+        (create_order_obj as any).payment_source = {
+            'paypal': {
+                name: {
+                    given_name: buyerInfo.Contact.LastName,
+                    surname: buyerInfo.Contact.FirstName,
+                },
+                address: {
+                    address_line_1: buyerInfo.Address.Address1,
+                    address_line_2: buyerInfo.Address.Address2,
+                    admin_area_2: "Manchester",
+                    admin_area_1: "Kent",
+                    postal_code: buyerInfo.Address.PostalCode,
+                    country_code: buyerInfo.Address.Country,
+                },
+                email_address: "petro-test01-us@cctest.com",
+                password: "Qq111222333",
+                phone: {
+                    phone_type: "MOBILE",
+                    phone_number: {
+                        national_number: buyerInfo.Contact.Phone,
+                    },
+                },
+            }
+        }
+    }
+    return create_order_obj;
+}
+
 type CreateOrderObjectFnParamType = {
     navigate: NavigateFunction,
     getLink: Function,
@@ -184,9 +231,12 @@ const CreateOrderObjectFn = (callbackFnSet: CreateOrderObjectFnParamType) => {
     currentShippingOption = state.withShippingOption.CurrentShippingOption;
     ShippingOptionList = state.withShippingOption.ShippingOptionList;
     ShoppingCartList = state.shoppingCart.list;
+
     // debugger;
     // const create_order_obj = assembleCreateOrderOject();
-    const create_order_obj = assembleCreateOrderOjectNew();
+    // const create_order_obj = assembleCreateOrderOjectWIthPayerInfoAttr();
+    const create_order_obj = assembleCreateOrderOject2024Nov();
+
     //查看请求体
     console.log("%c[Create Order Request Body]:", "color:blue");
     console.log(`%c${JSON.stringify(create_order_obj, null, "  ")}`, "color:blue");
@@ -198,12 +248,12 @@ const CreateOrderObjectFn = (callbackFnSet: CreateOrderObjectFnParamType) => {
         },
         onApprove: async function (data: any, actions: any) {
             const { transactionID, jsonResponse, httpStatusCode } = await CaptureOrderFetchAPI();
-             // debugger;
-             if (isOpenDialog) {
+            // debugger;
+            if (isOpenDialog) {
                 openDialogFn(transactionID);
                 return;
             }
-            setTimeout(() => {               
+            setTimeout(() => {
                 navigate(getLink())
             }, 1800)
         },

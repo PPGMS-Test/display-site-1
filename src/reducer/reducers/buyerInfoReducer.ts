@@ -1,8 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-import user_data from "../../Mock/Person/Tom.json";
-import address_data from "../../Mock/Address/TomAddress.json";
+//GB address
+// import user_data from "../../Mock/Person/Tom.json";
+// import address_data from "../../Mock/Address/TomAddress.json";
+
+//US address
+import user_data from '@/Mock/Person/US_Tom.json'
+import address_data from '@/Mock/Address/USAddress.json'
+
 import { User } from "../../interface/user/User";
 import { Address } from "../../interface/address/Address";
 

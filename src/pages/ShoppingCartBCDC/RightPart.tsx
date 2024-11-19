@@ -17,6 +17,8 @@ import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
 import ACDCComponents from "../../components/ACDC/ACDCComponents";
 import GooglePayButton from "@/components/PayPalCheckOutButtons/GooglePayButton/GooglePayButton";
 import ApplePayButton from "@/components/PayPalCheckOutButtons/ApplePayButton/ApplePayButton";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { Tooltip } from "@mui/material";
 
 function renderSmartPaymentButtons() {
     return (
@@ -74,17 +76,6 @@ function renderACDC() {
 function renderGooglePay() {
     return (
         <>
-            {/* <img
-                className=" w-auto h-20 object-contain  inline-block "
-                src={process.env.PUBLIC_URL + "/image/google-pay-fake-btn.png"}
-            />
-            <div
-                style={{
-                    backgroundColor: "black",
-                    height: "3rem",
-                }}
-            ></div> */}
-
             <GooglePayButton />
         </>
     );
@@ -93,12 +84,21 @@ function renderGooglePay() {
 function renderApplePay() {
     return (
         <>
-            {/* <img
-                className=" w-auto h-20 object-contain  inline-block "
-                src={process.env.PUBLIC_URL + "/image/apple-pay-fake-btn.png"}
-            /> */}
+            <div className=" border-dotted border-2 border-sky-500 hover:border-solid pt-2">
+                <img
+                    className=" w-auto h-20 object-contain  inline-block "
+                    src={
+                        process.env.PUBLIC_URL + "/image/apple-pay-fake-btn.png"
+                    }
+                />
+                <div>
+                    <Tooltip title="This button is a image! (Not actual working) Apple Pay feature is under development" placement="right-end">
+                        <QuestionMarkCircleIcon className="w-6 h-6" />
+                    </Tooltip>
+                </div>
+            </div>
 
-            <ApplePayButton />
+            {/* <ApplePayButton /> */}
         </>
     );
 }

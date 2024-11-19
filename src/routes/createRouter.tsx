@@ -41,7 +41,7 @@ const createMyRouterContent = () => {
     if (process.env.REACT_APP_LAB_ROUTER === "TRUE") {
         rootRoutersList.push(lab);
     }
-    if (process.env.REACT_APP_SHOW_ENTRENCE_PAGE === "TRUE") {
+    if (process.env.REACT_APP_SHOW_ENTRANCE_PAGE === "TRUE") {
         rootRoutersList.push(
             {
                 path: "/",

@@ -241,12 +241,13 @@ const PaymentTable = () => {
             },
 
             // 2024-09-26 为了展示, 去掉apple pay
-            // {
-            //     value: PAYMENT_METHOD.PAYPAL_APPLEPAY,
-            //     label: "Apple Pay",
-            //     logo: APPLE_PAY_logo,
-            //     additionalInfo: null,
-            // },
+            // 2024-11-19 加回来apple pay
+            {
+                value: PAYMENT_METHOD.PAYPAL_APPLEPAY,
+                label: "Apple Pay",
+                logo: APPLE_PAY_logo,
+                additionalInfo: null,
+            },
             {
                 value: PAYMENT_METHOD.PAYPAL_BNPL,
                 label: "Pay later",

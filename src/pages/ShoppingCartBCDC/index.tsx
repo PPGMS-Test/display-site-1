@@ -13,6 +13,8 @@ import {
 } from "@/components/CodeDisplayArea/CodeDisplayAreaPrism/PrismDisplayContextProvider";
 import ACDCTestCard from "../../components/ACDC/ACDCTestCard";
 import { CommonToggle } from "@/components/Toggles/CommonToggle";
+import classNames from "classnames";
+import { useLocation } from "react-router-dom";
 
 const BCDCShoppingCart: FC = () => {
     const currentPaymentMethod: PAYMENT_METHOD = useAppSelector((state) =>
@@ -85,10 +87,23 @@ const BCDCShoppingCart: FC = () => {
         );
     };
 
+    const location = useLocation();
+    const pathname = location.pathname;
+
+    const fitWidth = () => {
+        if (!pathname.startsWith("/lab")) {
+            return true;
+        }
+    };
+
     return (
-        <div>
+        <div
+            className={classNames({
+                "w-screen": fitWidth(),
+            })}
+        >
             {/* 标题: Shipping Cart BCDC */}
-            <div className=" w-full h-10">
+            <div className="w-full h-10">
                 <CommonToggle
                     handleChange={(event, checked) => {
                         setShowCodeDisplayArea(checked);
@@ -100,19 +115,20 @@ const BCDCShoppingCart: FC = () => {
             {/* [2023-10-08 修改"Left right 背景图拿掉] */}
             {/* <div className="flex flex-col md:flex-row bg-gray-300"> */}
 
-            <div className="flex flex-col md:flex-row bg-white">
-                {/* <div className=" basis-1/4  m-2">
-                    <CodeDisplayArea />
-                </div> */}
-
-                <div className=" basis-1/4  m-2 divide-gray-300/50">
+            <div className="flex flex-col md:flex-row bg-white w-full">
+                <div
+                    className={classNames({
+                        " basis-1/4  m-2 divide-gray-300/50":
+                            showCodeDisplayArea,
+                    })}
+                >
                     {showCodeDisplayArea && showCode()}
                 </div>
 
                 <div className=" basis-1/2  m-2">
                     <LeftPart></LeftPart>
                 </div>
-                <div className=" basis-1/3  m-2">
+                <div className=" basis-1/4  m-2">
                     <RightPart />
                     {renderDownloadButtonPart()}
                     {renderACDCTestPart()}
