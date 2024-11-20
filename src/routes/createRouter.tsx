@@ -6,7 +6,7 @@ import Product from "../pages/Product";
 import Thankyou from "../pages/Thankyou";
 import App from "../App";
 import lab from "./labRoutes";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, createHashRouter } from "react-router-dom";
 import DisplayRoot from "../pages/DisplayRoot";
 
 const createDisplayRoot = (displaySubRoot: string) => {
@@ -57,38 +57,7 @@ const createMyRouterContent = () => {
     return rootRoutersList;
 };
 
-// createBrowserRouter([
-//     {
-//         path: "/",
-//         element: <App />,
-//         errorElement: <ErrorPage />,
-//     },
-//     {
-//         path: "/display",
-//         element: <DisplayRoot />,
-//         errorElement: <ErrorPage />,
-//         children: [
-//             {
-//                 path: "/display/",
-//                 element: <Product />,
-//             },
-//             {
-//                 path: "/display/product",
-//                 element: <Product />,
-//             },
-//             {
-//                 path: "/display/shoppingCartBCDC",
-//                 element: <ShoppingCartBCDC />,
-//             },
-//             {
-//                 path: "/display/thankyou",
-//                 element: <Thankyou />,
-//             },
-//         ],
-//     },
-//     lab,
-// ]);
-
-const router = createBrowserRouter(createMyRouterContent());
+// const router = createBrowserRouter(createMyRouterContent());
+const router = createHashRouter(createMyRouterContent());
 
 export default router;

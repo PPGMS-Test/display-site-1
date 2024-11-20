@@ -72,5 +72,6 @@
     "webpack-dev-server": "^4.15.1",
     "webpack-merge": "^5.10.0",
     "webpackbar": "^6.0.1"
-  }
+  },
+  "homepage": "."
 }
