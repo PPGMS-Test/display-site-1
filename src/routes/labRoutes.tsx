@@ -7,7 +7,7 @@ import Product from "../pages/Product";
 import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
 import SinglePageTest from "../pages/SingleTestPage";
 import Thankyou from "../pages/Thankyou";
-import JSSDKParamsPlayground from "../pages/JSSDKParams/JSSDKParams";
+import JSSDKParamsPlayground from "../pages/PaymentSetting/PaymentSetting";
 // import Tooltips from "../pages/Tooltips";
 
 import PositionedTooltips from "../pages/Tooltips";

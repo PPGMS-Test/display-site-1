@@ -7,5 +7,9 @@
         "Googlepay",
         "JSSDK",
         "venmo"
-    ]
+    ],
+    "marscode.codeCompletionPro": {
+        "enableCodeCompletionPro": false
+    },
+    "marscode.enableInlineCommand": true
 }

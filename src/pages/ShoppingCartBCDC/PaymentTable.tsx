@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../typeHooks";
 import {
     get_payment_method,
+    getDisplayMethodsInCheckoutPagePaymentTable,
     setPaymentMethod,
 } from "../../reducer/reducers/paymentMethodReducer";
 
@@ -26,6 +27,10 @@ import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
 
 const PaymentTable = () => {
     const dispatch = useAppDispatch();
+
+    const displayedPaymentMethodList = useAppSelector((store) =>
+        getDisplayMethodsInCheckoutPagePaymentTable(store)
+    );
 
     const APMMethod = useAppSelector((state) => {
         return getAPMMethod(state);
@@ -212,25 +217,19 @@ const PaymentTable = () => {
     };
 
     const buttonTables = function () {
-        const lists = [
+        const rawLists = [
             {
                 value: PAYMENT_METHOD.PAYPAL_STANDARD,
                 label: "PayPal",
                 logo: paypal_logo,
                 additionalInfo: null,
             },
-            {
-                value: PAYMENT_METHOD.PAYPAL_ACDC,
-                label: "Credit and Debit Card",
-                logo: ACDC_logo,
-                additionalInfo: null,
-            },
-            // [2024-08-27 金松说不要这个BCDC了, 因为要有ACDC了, 以免混乱]
+
             {
                 value: PAYMENT_METHOD.PAYPAL_BCDC,
                 label: "Debit or Credit Card",
                 logo: paypal_BCDC,
-                additionalInfo: null,
+                additionalInfo: "Debit or Credit Card",
             },
 
             {
@@ -240,8 +239,6 @@ const PaymentTable = () => {
                 additionalInfo: null,
             },
 
-            // 2024-09-26 为了展示, 去掉apple pay
-            // 2024-11-19 加回来apple pay
             {
                 value: PAYMENT_METHOD.PAYPAL_APPLEPAY,
                 label: "Apple Pay",
@@ -263,7 +260,32 @@ const PaymentTable = () => {
                 logo: APM_logo(),
                 additionalInfo: null,
             },
+
+            {
+                value: PAYMENT_METHOD.PAYPAL_ACDC,
+                label: "Credit and Debit Card",
+                logo: ACDC_logo,
+                additionalInfo: null,
+            },
         ];
+
+        // 2024-11-22
+        // 使用label会导致文字在图标的前面
+        // const handleBCDCLabel = (label: string, index: number) => {
+        //     return index === 1 ? label : "";
+        // };
+
+        const lists = [];
+        for (let index = 0; index < rawLists.length; index++) {
+            const element = rawLists[index];
+            if (
+                displayedPaymentMethodList
+                    .filter((item) => item.isDisplay)
+                    .find((item) => item.paymentMethod === element.value)
+            )
+                lists.push(element);
+        }
+
         if (useRadioOnChange) {
             /* [2023-10-09]radio button的点击事件来变动支付方式而不是按钮 */
             // [2023-12-26]代码优化, 把一个一个写死的项目改变为数组遍历渲染
@@ -279,14 +301,25 @@ const PaymentTable = () => {
                                     <FormControlLabel
                                         value={item.value}
                                         control={<Radio color="primary" />}
-                                        //2024-08-28 不要Label了 只要图标
                                         // label={item.label}
+
+                                        //2024-08-28 不要Label了 只要图标
                                         label={""}
+                                        //2024-11-22
+                                        //BCDC需要label
+                                        // label={handleBCDCLabel(
+                                        //     item.label,
+                                        //     index
+                                        // )}
+
                                         disabled={radioBtnDisable}
                                         className=" inline-block"
                                     />
                                     {item.logo && item.logo}
-                                    {item.additionalInfo && item.additionalInfo}
+                                    <span className=" ml-2">
+                                        {item.additionalInfo &&
+                                            item.additionalInfo}
+                                    </span>
                                 </div>
                             );
                         })}

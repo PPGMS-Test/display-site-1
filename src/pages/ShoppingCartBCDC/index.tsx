@@ -130,7 +130,10 @@ const BCDCShoppingCart: FC = () => {
                 </div>
                 <div className=" basis-1/4  m-2">
                     <RightPart />
-                    {renderDownloadButtonPart()}
+                    {
+                        // 2024-11-25去到下载按钮
+                        // renderDownloadButtonPart()
+                    }
                     {renderACDCTestPart()}
                 </div>
             </div>

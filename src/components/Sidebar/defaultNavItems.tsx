@@ -24,7 +24,7 @@ const productEnvItemList: NavItem[] = [
         icon: <HomeIcon className="w-6 h-6" />,
     },
     {
-        label: "JS SDK Params",
+        label: "Payment Setting",
         href: "/lab/todoList",
         icon: <ClipboardDocumentIcon className="w-6 h-6" />,
     },
@@ -34,7 +34,7 @@ const productEnvItemList: NavItem[] = [
         icon: <ShoppingBagIcon className="w-6 h-6" />,
     },
     {
-        label: "SPB Payments",
+        label: "Checkout",
         href: "/lab/shoppingCartBCDC",
         icon: <ShoppingCartIcon className="w-6 h-6" />,
     },

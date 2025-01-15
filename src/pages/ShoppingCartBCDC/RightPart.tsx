@@ -19,6 +19,7 @@ import GooglePayButton from "@/components/PayPalCheckOutButtons/GooglePayButton/
 import ApplePayButton from "@/components/PayPalCheckOutButtons/ApplePayButton/ApplePayButton";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { Tooltip } from "@mui/material";
+import FakeApplePayButton from "@/components/PayPalCheckOutButtons/ApplePayButton/FakeApplePayButton";
 
 function renderSmartPaymentButtons() {
     return (
@@ -84,20 +85,7 @@ function renderGooglePay() {
 function renderApplePay() {
     return (
         <>
-            <div className=" border-dotted border-2 border-sky-500 hover:border-solid pt-2">
-                <img
-                    className=" w-auto h-20 object-contain  inline-block "
-                    src={
-                        process.env.PUBLIC_URL + "/image/apple-pay-fake-btn.png"
-                    }
-                />
-                <div>
-                    <Tooltip title="This button is a image! (Not actual working) Apple Pay feature is under development" placement="right-end">
-                        <QuestionMarkCircleIcon className="w-6 h-6" />
-                    </Tooltip>
-                </div>
-            </div>
-
+            <FakeApplePayButton />
             {/* <ApplePayButton /> */}
         </>
     );
