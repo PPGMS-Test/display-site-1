@@ -1,16 +1,13 @@
 使用`npm install`命令安装依赖  
 使用`npm start` 命令启动
 
-访问地址:
-
+访问地址: 
 > https://ppgms-test.github.io/
 
 
-## Tips:
-
+## Tips: 
 国家和地区以常量的方式存在代码中, 获取源:
 > http://country.io/data/
-
 
 
 ---

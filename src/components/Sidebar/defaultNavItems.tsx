@@ -25,7 +25,7 @@ const productEnvItemList: NavItem[] = [
     },
     {
         label: "Payment Setting",
-        href: "/lab/todoList",
+        href: "/lab/PaymentSetting",
         icon: <ClipboardDocumentIcon className="w-6 h-6" />,
     },
     {
@@ -35,7 +35,7 @@ const productEnvItemList: NavItem[] = [
     },
     {
         label: "Checkout",
-        href: "/lab/shoppingCartBCDC",
+        href: "/lab/CheckoutPage",
         icon: <ShoppingCartIcon className="w-6 h-6" />,
     },
     {

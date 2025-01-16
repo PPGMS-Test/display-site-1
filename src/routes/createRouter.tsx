@@ -1,6 +1,6 @@
 import ErrorPage from "../pages/error-page";
 
-import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
+import CheckoutPage from "../pages/ShoppingCartBCDC";
 
 import Product from "../pages/Product";
 import Thankyou from "../pages/Thankyou";
@@ -24,8 +24,8 @@ const createDisplayRoot = (displaySubRoot: string) => {
                 element: <Product />,
             },
             {
-                path: `/${displaySubRoot}shoppingCartBCDC`,
-                element: <ShoppingCartBCDC />,
+                path: `/${displaySubRoot}CheckoutPage`,
+                element: <CheckoutPage />,
             },
             {
                 path: `/${displaySubRoot}thankyou`,

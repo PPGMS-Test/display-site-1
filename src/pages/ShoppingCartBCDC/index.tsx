@@ -16,7 +16,7 @@ import { CommonToggle } from "@/components/Toggles/CommonToggle";
 import classNames from "classnames";
 import { useLocation } from "react-router-dom";
 
-const BCDCShoppingCart: FC = () => {
+const CheckoutPage: FC = () => {
     const currentPaymentMethod: PAYMENT_METHOD = useAppSelector((state) =>
         get_payment_method(state)
     );
@@ -141,4 +141,4 @@ const BCDCShoppingCart: FC = () => {
     );
 };
 
-export default BCDCShoppingCart;
+export default CheckoutPage;

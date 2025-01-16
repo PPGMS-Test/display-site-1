@@ -4,17 +4,17 @@ import ApplePay from "../pages/ApplePay";
 import GooglePay from "../pages/GooglePay";
 import HomePage from "../pages/HomePage";
 import Product from "../pages/Product";
-import ShoppingCartBCDC from "../pages/ShoppingCartBCDC";
+import CheckoutPage from "../pages/ShoppingCartBCDC";
 import SinglePageTest from "../pages/SingleTestPage";
 import Thankyou from "../pages/Thankyou";
-import JSSDKParamsPlayground from "../pages/PaymentSetting/PaymentSetting";
+import PaymentSetting from "../pages/PaymentSetting/PaymentSetting";
 // import Tooltips from "../pages/Tooltips";
 
 import PositionedTooltips from "../pages/Tooltips";
 
 import Venmo from "../pages/Venmo";
 import ErrorPage from "../pages/error-page";
-import VaultIndex from "../pages/Vault/VaultIndex";
+
 
 import ACDCSingleDisplay from "@/pages/ACDC/ACDCSingleDisplay";
 
@@ -34,16 +34,16 @@ const lab = {
         },
 
         {
-            path: "/lab/todoList",
-            element: <JSSDKParamsPlayground />,
+            path: "/lab/PaymentSetting",
+            element: <PaymentSetting />,
         },
         {
             path: "/lab/product",
             element: <Product />,
         },
         {
-            path: "/lab/shoppingCartBCDC",
-            element: <ShoppingCartBCDC />,
+            path: "/lab/CheckoutPage",
+            element: <CheckoutPage />,
         },
         {
             path: "/lab/applePay",
@@ -69,10 +69,7 @@ const lab = {
             path: "/lab/singlePageTest",
             element: <SinglePageTest />,
         },
-        {
-            path: "/lab/vault",
-            element: <VaultIndex />,
-        },
+        
         {
             path: "/lab/ACDC",
             element: <ACDCSingleDisplay />,

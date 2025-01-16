@@ -7,6 +7,7 @@ import ProductDetail from "./productDetail";
 import classNames from "classnames";
 import { Tooltip } from "@mui/material";
 
+
 const Product: FC = () => {
     const content = (
         <div>
@@ -35,7 +36,9 @@ const Product: FC = () => {
         <div className={classNames({ " w-full mx-auto": true, " mt-4": true })}>
             <Drawer position={"right"} icon={icon} content={content} />
 
-            <div className="bg-gray-100 py-8">
+           
+
+            <div className="bg-gray-100 py-8 rounded-2xl shadow-xl" >
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <ProductDetail />
                 </div>
