@@ -1,17 +1,17 @@
-使用`npm install`命令安装依赖  
-使用`npm start` 命令启动
+使用`pnpm install`命令安装依赖  
+使用`ppnnpm start` 命令启动
 
 访问地址: 
-> https://ppgms-test.github.io/
-
+> https://ppgms-test.github.io/ 
 
 ## Tips: 
 国家和地区以常量的方式存在代码中, 获取源:
 > http://country.io/data/
 
-
 ---
 ## 更新日志:
+### 2025-01-16
+更新了`redux-persist`, 删除了`package-lock.json`. 以后使用`pnpm`来管理, 也就是说增加了`pnpm-lock.yml`文件. 同时存在`npm`和`pnpm`两个包管理工具的话, 依赖会冲突
 
 `tmp-development-fake-button-2024-08-09 branch -- 0.1.0`   
 ### 2024-08-27

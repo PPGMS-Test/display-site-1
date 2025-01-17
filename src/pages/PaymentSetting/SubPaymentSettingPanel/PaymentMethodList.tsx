@@ -30,11 +30,12 @@ export const PaymentMethodList = () => {
             <p className=" font-extrabold  text-2xl">Make your Payment Lists</p>
             {allPaymentMethods.map((item, index) => {
                 return (
-                    <div>
+                    <div key={index}>
                         <FormControlLabel
                             control={
                                 <Switch
                                     checked={item.isDisplay}
+                                    
                                     name={item.paymentMethod}
                                     onChange={(
                                         event: React.ChangeEvent<HTMLInputElement>

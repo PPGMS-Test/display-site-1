@@ -57,6 +57,15 @@ export const vaultSlice = createSlice({
 
 export const { setOneTimeFlag, setRecurringFlag, setSaveACDCFlag, setSavePayPalWalletFlag, setUseACDCFlag, setUsePayPalWalletFlag, setVaultData, setVaultSetting } = vaultSlice.actions;
 export const getVaultSetting = (state: RootState) => state.vault.vaultSetting;
+export const getVaultData = (state: RootState) => state.vault.vaultData;
+export const getOneTimeFlag = (state: RootState) => state.vault.vaultSetting.oneTime.isOneTime;
+export const getSavePayPalWalletFlag = (state: RootState) => state.vault.vaultSetting.oneTime.oneTimeSetting.isSavePayPalWallet;
+export const getSaveACDCFlag = (state: RootState) => state.vault.vaultSetting.oneTime.oneTimeSetting.isSaveACDC;
+
+export const getRecurringFlag = (state: RootState) => state.vault.vaultSetting.recurring.isRecurring;
+export const getUsePayPalWalletFlag = (state: RootState) => state.vault.vaultSetting.recurring.recurringSetting.isUsePayPalWallet;
+export const getUseACDCFlag = (state: RootState) => state.vault.vaultSetting.recurring.recurringSetting.isUseACDC;
+
 
 
 export default vaultSlice.reducer;
