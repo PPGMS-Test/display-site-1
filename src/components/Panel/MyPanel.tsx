@@ -10,9 +10,10 @@ const MyPanel: FC<MyPanelProps> = (props) => {
     return (
         <div
             className={classNames({
-                "relative bg-white px-6 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-3xl sm:rounded-lg sm:px-10":
+                "relative bg-white px-6 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto  sm:rounded-lg sm:px-10":
                     true,
-                "pt-10": false,
+                "pt-6": true,
+                "sm:max-w-3xl": false,
             })}
         >
             {props.children}

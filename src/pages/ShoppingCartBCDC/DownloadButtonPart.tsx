@@ -8,7 +8,7 @@ import {
 import SliderCaptcha from "rc-slider-captcha";
 import { FC, useState } from "react";
 import { useAppSelector } from "../../typeHooks";
-import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer";
+import { getPaymentMethod } from "../../reducer/reducers/paymentMethodReducer";
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
 
 const downloadFile = (url: string, filename: string) => {
@@ -28,7 +28,7 @@ const downloadFile = (url: string, filename: string) => {
 const DownloadButtonPart: FC = () => {
     const [open, setOpen] = useState(false);
     const paymentMethod: PAYMENT_METHOD = useAppSelector((state) =>
-        get_payment_method(state)
+        getPaymentMethod(state)
     );
 
     const handleClickOpen = () => {

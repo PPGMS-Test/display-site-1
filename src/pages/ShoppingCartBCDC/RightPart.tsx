@@ -11,7 +11,7 @@ import SmartPaymentButton from "../../components/PayPalCheckOutButtons/JSSDKRend
 import APMDisplayArea from "../APM/APMDisplayArea";
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
 import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
-import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer";
+import { getPaymentMethod } from "../../reducer/reducers/paymentMethodReducer";
 import { getAPMMethod } from "../../reducer/reducers/APMReducer";
 import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
 import ACDCComponents from "../../components/ACDC/ACDCComponents";
@@ -125,7 +125,7 @@ function CurrentPaymentMethod(
 
 const RightPart: FC = () => {
     const selectPaymentMethod = useAppSelector((state) =>
-        get_payment_method(state)
+        getPaymentMethod(state)
     ) as PAYMENT_METHOD;
     const shoppingCartList = useAppSelector((state) => getShoppingCart(state));
     const APMMethod = useAppSelector((state) => {

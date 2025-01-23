@@ -1,7 +1,7 @@
 
 import store from "@/reducer/store";
-import { v4 as uuidv4 } from 'uuid';
-import { base, getJsSDKClientIDSecretKey, handleResponse } from './API';
+// import { v4 as uuidv4 } from 'uuid';
+import { base, generatePayPalAuthAssertion, getJsSDKClientIDSecretKey, getBearerAccessToken, handleResponse } from './API';
 import { orderSlice } from "@/reducer/reducers/orderReducer";
 
 
@@ -11,17 +11,17 @@ const CreateOrderFetchAPI = async (requestBody: any) => {
     // debugger;
     console.log("clientID:", clientID)
     console.log("secretKey:", secretKey)
-
+    const bearerToken = getBearerAccessToken()
     console.log(JSON.stringify(requestBody, null, "  "))
     const response = fetch(`${base}/v2/checkout/orders`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "PayPal-Partner-Attribution-Id": "PP-Test-Petro",
-            Authorization: `Basic ${btoa(
-                `${clientID}:${secretKey}`
-            )}`,
-            "PayPal-Request-Id": uuidv4()
+            Authorization: bearerToken,
+            "PayPal-Auth-Assertion": generatePayPalAuthAssertion(clientID, "CMHAMMNAXCMGA"),
+            // "PayPal-Request-Id": uuidv4()
+            "PayPal-Request-Id": generateRandomPayPalRequestID()
         },
 
         body: JSON.stringify(requestBody),
@@ -37,8 +37,15 @@ const CreateOrderFetchAPI = async (requestBody: any) => {
 
     // debugger;
     return { orderID, httpStatusCode }
+};
 
 
+const generateRandomPayPalRequestID = () => {
+    let PayPal_Request_Id = (Math.random() * 100000000).toString(
+        36
+    );
+    PayPal_Request_Id = Date.now().toString(32);
+    return PayPal_Request_Id;
 };
 
 export default CreateOrderFetchAPI;

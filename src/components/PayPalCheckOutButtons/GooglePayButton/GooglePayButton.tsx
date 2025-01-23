@@ -1,4 +1,4 @@
-import UseJSSDK, { JSSDKParams } from "@/service/LoadPayPalScript/UseJSSDK";
+import renderJSSDK, { JSSDKParams } from "@/service/LoadPayPalScript/renderJSSDK";
 import { FC, useEffect, useRef } from "react";
 import { GooglePayConstructor } from "./GooglePayLoad";
 import CommonTextDialog, {
@@ -32,7 +32,7 @@ const GooglePayButton: FC = () => {
             };
         });
 
-        const PayPalLoadScriptPromise: Promise<void> = UseJSSDK(JSLoadParams);
+        const PayPalLoadScriptPromise: Promise<void> = renderJSSDK(JSLoadParams);
 
         Promise.all([GoogleLoadScriptPromise, PayPalLoadScriptPromise])
             .then(() => {

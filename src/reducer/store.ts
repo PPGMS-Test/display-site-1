@@ -7,8 +7,8 @@ import productReducer from "./reducers/productReducer";
 import shoppingCartReducer from "./reducers/shoppingCartReducer";
 import orderReducer from "./reducers/orderReducer";
 import APMReducer from "./reducers/APMReducer";
-import VaultReducer from './reducers/VaultReducer';
-import ClientSecretReducer from './reducers/ClientSecretReducer';
+import VaultReducer from './reducers/vaultReducer';
+import ClientSecretReducer from './reducers/clientSecretReducer';
 // 持久化配置
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // 默认使用 localStorage

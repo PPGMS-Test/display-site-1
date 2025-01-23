@@ -40,7 +40,7 @@ export const paymentSlice = createSlice({
 export const { setPaymentMethod, updateDisplayMethodsInCheckoutPagePaymentTable } = paymentSlice.actions;
 
 //获取当前的支付方式
-export const get_payment_method = (state: RootState) =>
+export const getPaymentMethod = (state: RootState) =>
   state.paymentMethod.method;
 
 //改变Checkout Page中Payment Table要展示的支付方

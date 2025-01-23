@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 // import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useAppDispatch, useAppSelector } from "../../typeHooks";
 import {
-    get_payment_method,
+    getPaymentMethod,
     getDisplayMethodsInCheckoutPagePaymentTable,
     setPaymentMethod,
 } from "../../reducer/reducers/paymentMethodReducer";
@@ -44,7 +44,7 @@ const PaymentTable = () => {
     const [useRadioOnChange, setUseRadioOnChange] = useState(true);
 
     const paymentMethodRD = useAppSelector((state) =>
-        get_payment_method(state)
+        getPaymentMethod(state)
     );
     const [radio_value, setRadioValue] =
         useState<PAYMENT_METHOD>(paymentMethodRD);

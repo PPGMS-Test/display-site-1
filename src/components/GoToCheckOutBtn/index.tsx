@@ -27,13 +27,13 @@ const GoToCheckOutBtn: FC = () => {
 
     const getLink = () => {
         if (pathname.startsWith("/lab")) {
-            return "/lab/shoppingCartBCDC";
+            return "/lab/CheckoutPage";
         } else if (pathname.startsWith("/display")) {
-            return "/display/shoppingCartBCDC";
+            return "/display/CheckoutPage";
         } else if (pathname.startsWith("/")) {
-            return "/shoppingCartBCDC";
+            return "/CheckoutPage";
         } else {
-            return "/shoppingCartBCDC";
+            return "/CheckoutPage";
         }
     };
 

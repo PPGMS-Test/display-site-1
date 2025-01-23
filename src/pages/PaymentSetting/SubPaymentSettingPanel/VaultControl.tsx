@@ -11,7 +11,7 @@ import {
     setSavePayPalWalletFlag,
     setUseACDCFlag,
     setUsePayPalWalletFlag,
-} from "@/reducer/reducers/VaultReducer";
+} from "@/reducer/reducers/vaultReducer";
 import { useAppDispatch, useAppSelector } from "@/typeHooks";
 import { Box, Checkbox, FormControlLabel, Switch } from "@mui/material";
 import { FC, useState } from "react";

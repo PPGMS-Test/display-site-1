@@ -4,7 +4,7 @@ import LeftPart from "./LeftPart";
 import RightPart from "./RightPart";
 import DownloadButtonPart from "./DownloadButtonPart";
 import { useAppSelector } from "../../typeHooks";
-import { get_payment_method } from "../../reducer/reducers/paymentMethodReducer";
+import { getPaymentMethod } from "../../reducer/reducers/paymentMethodReducer";
 import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
 import CodeDisplayAreaPrism from "@/components/CodeDisplayArea/CodeDisplayAreaPrism/CodeDisplayAreaPrism";
 import {
@@ -18,7 +18,7 @@ import { useLocation } from "react-router-dom";
 
 const CheckoutPage: FC = () => {
     const currentPaymentMethod: PAYMENT_METHOD = useAppSelector((state) =>
-        get_payment_method(state)
+        getPaymentMethod(state)
     );
 
     const [showCodeDisplayArea, setShowCodeDisplayArea] = useState(false);
@@ -39,7 +39,7 @@ const CheckoutPage: FC = () => {
     };
 
     const paymentMethodRD = useAppSelector((state) =>
-        get_payment_method(state)
+        getPaymentMethod(state)
     );
 
     const renderFrontEndCode = () => {

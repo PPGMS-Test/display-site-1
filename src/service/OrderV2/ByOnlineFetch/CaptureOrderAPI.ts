@@ -1,11 +1,11 @@
-import store from "../../../reducer/store";
-import { orderSlice } from '../../../reducer/reducers/orderReducer';
-import { base, getJsSDKClientIDSecretKey, handleResponse } from './API';
+
+import { orderSlice } from '@/reducer/reducers/orderReducer';
+import store from '@/reducer/store';
+import { base, generatePayPalAuthAssertion, getJsSDKClientIDSecretKey, getBearerAccessToken, handleResponse } from './API';
 
 const CaptureOrderFetchAPI = async () => {
     const { clientID, secretKey } = getJsSDKClientIDSecretKey();
-
-
+    const bearerToken = getBearerAccessToken()
     console.log("[OrderV2.ByOnlineFetch.CreateOrderAPI] CaptureOrder #1, <Start>")
     const orderID = store.getState().orderInfo.orderID;
     const response = fetch(`${base}/v2/checkout/orders/${orderID}/capture`, {
@@ -13,9 +13,8 @@ const CaptureOrderFetchAPI = async () => {
         headers: {
             "Content-Type": "application/json",
             "PayPal-Partner-Attribution-Id": "PP-Test-Petro",
-            Authorization: `Basic ${btoa(
-                `${clientID}:${secretKey}`
-            )}`,
+            Authorization: bearerToken,
+            "PayPal-Auth-Assertion": generatePayPalAuthAssertion(clientID, "CMHAMMNAXCMGA"),
         }
     });
 

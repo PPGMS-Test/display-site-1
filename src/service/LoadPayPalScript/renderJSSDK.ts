@@ -4,14 +4,16 @@ import { getJsSDKClientIDSecretKey } from '../OrderV2/ByOnlineFetch/API';
 
 
 export interface JSSDKParams {
-    input?: Function,
+    input?: Function, //在SDK加载完成, 也就是这里的onload回调函数里的自定义执行
     addressCountry: string,
     additionalOptions?: Map<string, string>,
+    isUseVault?: boolean, //2025-01-19 增加控制vault的开关参数
+    dataUserIdToken?: string, //2025-01-19 增加data-user-id-token
     [key: string]: any;
 }
 
-const UseJSSDK = function (loadParam: JSSDKParams) {
-    let { input, addressCountry, additionalOptions } = loadParam;
+const renderJSSDK = function (loadParam: JSSDKParams) {
+    let { input, addressCountry, additionalOptions, isUseVault = false, dataUserIdToken } = loadParam;
     // debugger;
     let additionalParams: string[] = new Array<string>();
     if (additionalOptions) {
@@ -29,6 +31,9 @@ const UseJSSDK = function (loadParam: JSSDKParams) {
         console.log("[UseJSSDK.ts] Smart Payment button Url:\r\n", `>> ${url}`)
         PayPal_SPB_JS_SDK_LoadScript.src = url;
         PayPal_SPB_JS_SDK_LoadScript.async = false;
+        if (isUseVault) {
+            PayPal_SPB_JS_SDK_LoadScript.setAttribute("data-user-id-token", dataUserIdToken || "");
+        }
         document
             .getElementById("root")
             ?.appendChild(PayPal_SPB_JS_SDK_LoadScript);
@@ -41,4 +46,4 @@ const UseJSSDK = function (loadParam: JSSDKParams) {
         };
     });
 };
-export default UseJSSDK;
+export default renderJSSDK;

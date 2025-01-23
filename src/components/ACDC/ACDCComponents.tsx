@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
-import UseJSSDK, { JSSDKParams } from "../../service/LoadPayPalScript/UseJSSDK";
+
 import {
     createOrderCallback,
     onApproveCallback,
@@ -9,8 +9,9 @@ import {
 import classNames from "classnames";
 
 import { useAppDispatch, useAppSelector } from "../../typeHooks";
-import { setIsCustomizedClient } from "../../reducer/reducers/ClientSecretReducer";
+import { setIsCustomizedClient } from "../../reducer/reducers/clientSecretReducer";
 import CommonTextDialog, { DialogRef } from "../Dialog/CommonTextDialog";
+import renderJSSDK, { JSSDKParams } from "@/service/LoadPayPalScript/renderJSSDK";
 
 const ACDCComponents: FC = () => {
     let [cardFormDisplay, setCardFormDisplay] = useState("inline-block");
@@ -95,7 +96,7 @@ const ACDCComponents: FC = () => {
             map.set("components", "buttons,card-fields");
             JSLoadParams.additionalOptions = map;
             console.log("[1][ACDC.Page.init]:Start to load JS SDK");
-            await UseJSSDK(JSLoadParams).then(renderCard);
+            await renderJSSDK(JSLoadParams).then(renderCard);
         })();
     });
 

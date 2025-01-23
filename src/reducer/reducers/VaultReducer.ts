@@ -1,8 +1,38 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
+export type VaultReducerType = {
+    vaultSetting: {
+        oneTime: {
+            isOneTime: boolean,
+            oneTimeSetting: {
+                isSavePayPalWallet: boolean,
+                isSaveACDC: boolean
+            }
+        },
+        recurring: {
+            isRecurring: boolean,
+            recurringSetting: {
+                isUsePayPalWallet: boolean,
+                isUseACDC: boolean
+            }
+        }
+    },
+    vaultData: {
+        paypalWallet: {
+            customerId: string,
+            vaultId: string,
+            merchantID: string
+        },
+        acdc: {
+            customerId: string,
+            vaultId: string,
+            merchantID: string
+        }
+    }
+}
 
-const initialState = {
+const initialState: VaultReducerType = {
     vaultSetting: {
         oneTime: {
             isOneTime: true,
@@ -20,7 +50,16 @@ const initialState = {
         }
     },
     vaultData: {
-
+        paypalWallet: {
+            customerId: "lmCozwDftT",
+            vaultId: "3y87970523539652h",
+            merchantID: "CMHAMMNAXCMGA"
+        },
+        acdc: {
+            customerId: "gmstestbuyeracdc",
+            vaultId: "",
+            merchantID: ""
+        }
     }
 }
 
@@ -52,6 +91,25 @@ export const vaultSlice = createSlice({
         setUseACDCFlag: (state, action: PayloadAction<boolean>) => {
             state.vaultSetting.recurring.recurringSetting.isUseACDC = action.payload;
         },
+
+        setPayPalWalletVaultID: (state, action: PayloadAction<string>) => {
+            state.vaultData.paypalWallet.vaultId = action.payload;
+        },
+        setPayPalWalletCustomerID: (state, action: PayloadAction<string>) => {
+            state.vaultData.paypalWallet.customerId = action.payload;
+        },
+        setPayPalWalletMerchantID: (state, action: PayloadAction<string>) => {
+            state.vaultData.paypalWallet.merchantID = action.payload;
+        },
+        setACDCVaultID: (state, action: PayloadAction<string>) => {
+            state.vaultData.acdc.vaultId = action.payload;
+        },
+        setACDCCustomerID: (state, action: PayloadAction<string>) => {
+            state.vaultData.acdc.customerId = action.payload;
+        },
+        setACDCMerchantID: (state, action: PayloadAction<string>) => {
+            state.vaultData.acdc.merchantID = action.payload;
+        },
     },
 });
 
@@ -66,6 +124,16 @@ export const getRecurringFlag = (state: RootState) => state.vault.vaultSetting.r
 export const getUsePayPalWalletFlag = (state: RootState) => state.vault.vaultSetting.recurring.recurringSetting.isUsePayPalWallet;
 export const getUseACDCFlag = (state: RootState) => state.vault.vaultSetting.recurring.recurringSetting.isUseACDC;
 
+export const getPayPalWalletVaultID = (state: RootState) => state.vault.vaultData.paypalWallet.vaultId;
 
+export const getPayPalWalletCustomerID = (state: RootState) => state.vault.vaultData.paypalWallet.customerId;
+
+export const getPayPalWalletMerchantID = (state: RootState) => state.vault.vaultData.paypalWallet.merchantID;
+
+export const getACDCVaultID = (state: RootState) => state.vault.vaultData.acdc.vaultId;
+
+export const getACDCCustomerID = (state: RootState) => state.vault.vaultData.acdc.customerId;
+
+export const getACDCMerchantID = (state: RootState) => state.vault.vaultData.acdc.merchantID;
 
 export default vaultSlice.reducer;

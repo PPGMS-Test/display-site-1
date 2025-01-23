@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
-import CreateOrderObject from "../../../../service/LoadPayPalScript/createOrderObject";
-import UseJSSDK from "../../../../service/LoadPayPalScript/UseJSSDK";
+import CreateOrderObject from "../../../../../service/LoadPayPalScript/createOrderObject.util";
+import renderJSSDK from "../../../../../service/LoadPayPalScript/renderJSSDK";
 import { useNavigate } from "react-router-dom";
 
 const BNPLButton: FC = () => {

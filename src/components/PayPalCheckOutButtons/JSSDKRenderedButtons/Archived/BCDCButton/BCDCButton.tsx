@@ -11,9 +11,9 @@
  *****************************************************/
 
 import React, { FC, useEffect } from "react";
-import CreateOrderObject from "../../../../service/LoadPayPalScript/createOrderObject";
+import CreateOrderObject from "../../../../../service/LoadPayPalScript/createOrderObject.util";
 // import PayPal_SPB_JS_SDK_LoadScript from "../LoadPayPalScript/JSSDK";
-import UseJSSDK from "../../../../service/LoadPayPalScript/UseJSSDK";
+import renderJSSDK from "../../../../../service/LoadPayPalScript/renderJSSDK";
 import { useNavigate } from "react-router-dom";
 // import { useAppSelector } from "../../typeHooks";
 // import { getBuyerInfo } from "../../reducer/reducers/buyerInfoReducer";
