@@ -5,7 +5,7 @@ import { base, generatePayPalAuthAssertion, getJsSDKClientIDSecretKey, getBearer
 
 const CaptureOrderFetchAPI = async () => {
     const { clientID, secretKey } = getJsSDKClientIDSecretKey();
-    const bearerToken = getBearerAccessToken()
+    const bearerToken = await getBearerAccessToken()
     console.log("[OrderV2.ByOnlineFetch.CreateOrderAPI] CaptureOrder #1, <Start>")
     const orderID = store.getState().orderInfo.orderID;
     const response = fetch(`${base}/v2/checkout/orders/${orderID}/capture`, {

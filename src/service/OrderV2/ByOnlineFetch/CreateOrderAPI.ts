@@ -8,10 +8,12 @@ import { orderSlice } from "@/reducer/reducers/orderReducer";
 const CreateOrderFetchAPI = async (requestBody: any) => {
     console.log("[OrderV2.ByOnlineFetch.CreateOrderAPI] CreateOrder #1, <Start>")
     const { clientID, secretKey } = getJsSDKClientIDSecretKey();
-    // debugger;
+    debugger;
     console.log("clientID:", clientID)
     console.log("secretKey:", secretKey)
-    const bearerToken = getBearerAccessToken()
+    const bearerToken = await getBearerAccessToken()
+    console.log("bearerToken:", bearerToken);
+
     console.log(JSON.stringify(requestBody, null, "  "))
     const response = fetch(`${base}/v2/checkout/orders`, {
         method: "POST",

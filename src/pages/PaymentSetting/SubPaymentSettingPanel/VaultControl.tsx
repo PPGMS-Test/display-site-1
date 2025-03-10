@@ -216,6 +216,7 @@ const VaultControl: FC = () => {
     return (
         <div className=" pt-4">
             <p className=" font-extrabold  text-2xl">Make your Vault Setting</p>
+            <p>(ACDC Vault feature is not developed yet)</p>
             <div className="flex items-center">
                 <div className="m-2 rounded-lg border-2">
                     <FormControlLabel

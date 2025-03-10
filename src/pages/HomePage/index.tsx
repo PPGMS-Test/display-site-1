@@ -11,6 +11,9 @@ import {
     getPayPalWalletMerchantID,
     getPayPalWalletVaultID,
 } from "@/reducer/reducers/vaultReducer";
+import { Button } from "@mui/material";
+
+import { persistor } from "@/reducer/store";
 
 const codeHighlightStyle = {
     borderRadius: ".25rem",
@@ -49,6 +52,15 @@ const HomePage: FC = () => {
             </MyPanel>
 
             <MyPanel>
+                <div>
+                    <Button onClick={()=>{
+                        persistor.purge();
+                    }}>Purge Browser LocalStorage</Button>                   
+                </div>
+                Please Refresh Browser Tag after purge LocalStorage, because Data in Memory is not cleared yet. <br/>
+                If you want to use your own Vault Info, then do not purge LocalStorage.
+            </MyPanel>
+            <MyPanel>
                 <div className="justify-between flex">
                     <p style={codeHighlightStyle}>ClientID:</p>
                     <p>{clientID}</p>
@@ -57,9 +69,12 @@ const HomePage: FC = () => {
                     <p style={codeHighlightStyle}>SecretKey:</p>
                     <p>{secretKey}</p>
                 </div>
+
                 <div className="flex items-center">
-                    <div className="m-2 rounded-lg border-2">
-                        <div className="justify-between flex">
+                    <div className="m-2 rounded-lg border-2 p-2">
+                        <div className="m-1">PayPal Wallet Vault Info</div>
+                        <hr />
+                        <div className="justify-between flex mt-1">
                             <p style={codeHighlightStyle}>VaultID:</p>
                             <p>{vaultID}</p>
                         </div>

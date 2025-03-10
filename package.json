@@ -29,7 +29,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "cross-env port=20241 cross-env REACT_APP_ENV=development craco start",
+    "dev": "cross-env port=20241 cross-env REACT_APP_ENV=development craco start",
     "build:test": "cross-env NODE_ENV=test FAST_REFRESH=false craco build",
     "build:external": "cross-env NODE_ENV=production craco build"
   },

@@ -25,8 +25,14 @@ export const getJsSDKClientIDSecretKey = () => {
     }
 }
 
-export const getBearerAccessToken = () => {
-    return `Bearer ${getAccessToken(store.getState())}`
+export const getBearerAccessToken = async () => {
+    let token = getAccessToken(store.getState());
+    if (token !== "") {        
+        return `Bearer ${token}`
+    }else{
+        let tokenData = (await generateAccessToken())?.access_token;
+        return `Bearer ${tokenData}`
+    }
 }
 
 const storeAccessToken = (accessToken: string) => {
