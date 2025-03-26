@@ -1,7 +1,8 @@
-import CaptureOrderFetchAPI from "../../service/OrderV2/ByOnlineFetch/CaptureOrderAPI";
-import CreateOrderFetchAPI from "../../service/OrderV2/ByOnlineFetch/CreateOrderAPI";
+import { getTransactionID } from './../../reducer/reducers/orderReducer';
+import CaptureOrderFetchAPI from "@/service/OrderV2/ByOnlineFetch/CaptureOrderAPI";
+import CreateOrderFetchAPI from "@/service/OrderV2/ByOnlineFetch/CreateOrderAPI";
 
-
+//[2025-03-25](Feat) 这个方法实际上已经废弃了. 现在ACDC的createOrder已经不再使用这个方法了. 和SPB的支付使用同样的方法: getCreateOrderObjectFn
 export async function createOrderCallback(data: any) {
     console.log("[checkout.js] createOrderCallback #1");
     console.log(
@@ -40,6 +41,7 @@ export async function createOrderCallback(data: any) {
             ],
         }
 
+
         const { orderID, httpStatusCode } = await CreateOrderFetchAPI(payloadBody);
 
         if (String(httpStatusCode).startsWith("2")) {
@@ -60,8 +62,10 @@ export async function createOrderCallback(data: any) {
     }
 }
 
+
+
 export async function onApproveCallback(data: any, actions: any) {
- 
+
     console.log("[checkout.js] onApproveCallback #1");
     try {
         const { transactionID, jsonResponse, httpStatusCode } = await CaptureOrderFetchAPI();
@@ -73,9 +77,8 @@ export async function onApproveCallback(data: any, actions: any) {
         //   (2) Other non-recoverable errors -> Show a failure message
         //   (3) Successful transaction -> Show confirmation or thank you message
 
-        const transaction =
-            orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
-            orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
+        const transaction = getTransaction(orderData);
+        // debugger;
         const errorDetail = orderData?.details?.[0];
 
         // this actions.restart() behavior only applies to the Buttons component
@@ -106,28 +109,37 @@ export async function onApproveCallback(data: any, actions: any) {
         } else {
             // (3) Successful transaction -> Show confirmation or thank you message
             // Or go to another URL:  actions.redirect('thank_you.html');
-            resultMessage(
-                `Transaction ${transaction.status}: ${transaction.id}<br><br>See console for all available details`
-            );
+            setSuccessACDCResultMsg(transaction);
             return transaction;
-          
-
-            console.log(
-                "Capture result",
-                orderData,
-                JSON.stringify(orderData, null, 2)
-            );
         }
     } catch (error) {
-        console.error(error);
-        resultMessage(
-            `Sorry, your transaction could not be processed...<br><br>${error}`
-        );
+        setFailACDCResultMsg(error);
     }
 }
 
+export const setSuccessACDCResultMsg = (transaction: any) => {
+    resultMessage(
+        `Transaction ${transaction.status}: ${transaction.id}<br><br>See console for all available details`
+    );
+    return transaction;
+};
+
+export const setFailACDCResultMsg = (error: any) => {
+    console.error(error);
+    resultMessage(
+        `Sorry, your transaction could not be processed...<br><br>${error}`
+    );
+}
+
+export function getTransaction(orderData: any) {
+    const transaction =
+        orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
+        orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
+    return transaction
+}
+
 export function resultMessage(message: string) {
-    
+
     const container = document.querySelector("#result-message");
     if (container)
         container.innerHTML = message;

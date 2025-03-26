@@ -8,7 +8,7 @@ import { orderSlice } from "@/reducer/reducers/orderReducer";
 const CreateOrderFetchAPI = async (requestBody: any) => {
     console.log("[OrderV2.ByOnlineFetch.CreateOrderAPI] CreateOrder #1, <Start>")
     const { clientID, secretKey } = getJsSDKClientIDSecretKey();
-    debugger;
+    // debugger;
     console.log("clientID:", clientID)
     console.log("secretKey:", secretKey)
     const bearerToken = await getBearerAccessToken()
@@ -38,7 +38,7 @@ const CreateOrderFetchAPI = async (requestBody: any) => {
     // store.dispatch(setOrderID(orderID))
 
     // debugger;
-    return { orderID, httpStatusCode }
+    return { orderID, httpStatusCode, jsonResponse }
 };
 
 

@@ -3,23 +3,26 @@ import { FC, useState } from "react";
 import LeftPart from "./LeftPart";
 import RightPart from "./RightPart";
 import DownloadButtonPart from "./DownloadButtonPart";
-import { useAppSelector } from "../../typeHooks";
-import { getPaymentMethod } from "../../reducer/reducers/paymentMethodReducer";
-import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
+import { useAppSelector } from "@/typeHooks";
+import { getPaymentMethod } from "@/reducer/reducers/paymentMethodReducer";
+import PAYMENT_METHOD from "@/enum/PAYMENT_METHOD";
 import CodeDisplayAreaPrism from "@/components/CodeDisplayArea/CodeDisplayAreaPrism/CodeDisplayAreaPrism";
 import {
     CODE_SNIPPET_NAME,
     PrismThemeNAME,
 } from "@/components/CodeDisplayArea/CodeDisplayAreaPrism/PrismDisplayContextProvider";
-import ACDCTestCard from "../../components/ACDC/ACDCTestCard";
+import ACDCTestCard from "@/components/ACDC/ACDCTestCard";
 import { CommonToggle } from "@/components/Toggles/CommonToggle";
 import classNames from "classnames";
 import { useLocation } from "react-router-dom";
+import { getUseACDCFlag } from "@/reducer/reducers/vaultReducer";
 
 const CheckoutPage: FC = () => {
     const currentPaymentMethod: PAYMENT_METHOD = useAppSelector((state) =>
         getPaymentMethod(state)
     );
+
+    const isUseACDCVault = useAppSelector((state) =>getUseACDCFlag(state));
 
     const [showCodeDisplayArea, setShowCodeDisplayArea] = useState(false);
 
@@ -33,14 +36,12 @@ const CheckoutPage: FC = () => {
     };
 
     const renderACDCTestPart = () => {
-        if (currentPaymentMethod === PAYMENT_METHOD.PAYPAL_ACDC) {
+        if (currentPaymentMethod === PAYMENT_METHOD.PAYPAL_ACDC && !isUseACDCVault) {
             return <ACDCTestCard />;
         }
     };
 
-    const paymentMethodRD = useAppSelector((state) =>
-        getPaymentMethod(state)
-    );
+    const paymentMethodRD = useAppSelector((state) => getPaymentMethod(state));
 
     const renderFrontEndCode = () => {
         let codeSnippetName: CODE_SNIPPET_NAME = CODE_SNIPPET_NAME.SPB_STANDARD;
@@ -128,10 +129,12 @@ const CheckoutPage: FC = () => {
                 <div className=" basis-1/2  m-2">
                     <LeftPart></LeftPart>
                 </div>
-                <div className=" basis-1/4  m-2">
+
+                {/* [2025-03-25](fix)  添加min-w-fit, 让右侧panel在14寸的电脑上的显示正常点*/}
+                <div className=" basis-1/4  m-2 min-w-fit">
                     <RightPart />
                     {
-                        // 2024-11-25去到下载按钮
+                        // 2024-11-25去掉下载按钮
                         // renderDownloadButtonPart()
                     }
                     {renderACDCTestPart()}

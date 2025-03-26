@@ -22,6 +22,9 @@ const SPB: FC<ButtonType> = ({ buttonType }) => {
 
     const isUseVault = useAppSelector((store) => getRecurringFlag(store));
 
+ 
+    console.log(`%c["SmartPaymentButton.tsx"]isUseVault:`, "color:green", isUseVault);
+
     let infoMessageArea = document.getElementById(
         "smart-payment-button-info-area"
     );
@@ -39,7 +42,6 @@ const SPB: FC<ButtonType> = ({ buttonType }) => {
 
     const navigate = useNavigate();
     const location = useLocation();
-
     const pathname = location.pathname;
 
     const getLink = () => {

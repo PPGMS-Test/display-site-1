@@ -9,6 +9,8 @@ import CreateOrderFetchAPI from "../OrderV2/ByOnlineFetch/CreateOrderAPI";
 import { VaultReducerType } from "@/reducer/reducers/vaultReducer";
 import { getPaymentMethod } from "@/reducer/reducers/paymentMethodReducer";
 import PAYMENT_METHOD from "@/enum/PAYMENT_METHOD";
+import { getTransaction, onApproveCallback, setSuccessACDCResultMsg } from "@/components/ACDC/ACDCCallBack";
+import { create } from "domain";
 
 
 // let state;
@@ -41,7 +43,7 @@ const assemblePayPalOneTimeObject = (createOrderObj: ExtendedObj, buyerInfo: Buy
                 given_name: buyerInfo.Contact.LastName,
                 surname: buyerInfo.Contact.FirstName,
             },
-            address: {
+            billing_address: {
                 address_line_1: buyerInfo.Address.Address1,
                 address_line_2: buyerInfo.Address.Address2,
                 admin_area_2: "Manchester",
@@ -64,6 +66,11 @@ const assemblePayPalOneTimeObject = (createOrderObj: ExtendedObj, buyerInfo: Buy
                     customer_type: "CONSUMER",
                 }
             },
+            // "stored_credential": {
+            //     "payment_initiator": "CUSTOMER",
+            //     "payment_type": "ONE_TIME",
+            //     "usage": "FIRST"
+            // },
             "experience_context": {
                 "return_url": "https://www.google.com/success",
                 "cancel_url": "https://www.google.com/cancel"
@@ -72,7 +79,7 @@ const assemblePayPalOneTimeObject = (createOrderObj: ExtendedObj, buyerInfo: Buy
     }
 }
 
-const assemblePayPalSDKRecurringObject = (createOrderObj: ExtendedObj) => {
+const assemblePayPalRecurringObject = (createOrderObj: ExtendedObj) => {
     (createOrderObj as any).payment_source = {
         'paypal': {
             "experience_context": {
@@ -84,6 +91,63 @@ const assemblePayPalSDKRecurringObject = (createOrderObj: ExtendedObj) => {
         }
     }
 }
+
+
+const assembleACDCOneTimeObject = (createOrderObj: ExtendedObj, buyerInfo: BuyerInfo) => {
+
+    (createOrderObj as any).payment_source = {
+        'card': {
+            name: `${buyerInfo.Contact.FirstName} ${buyerInfo.Contact.LastName}`,
+            billing_address: {
+                address_line_1: buyerInfo.Address.Address1,
+                address_line_2: buyerInfo.Address.Address2,
+                admin_area_2: "Manchester",
+                admin_area_1: "Kent",
+                postal_code: buyerInfo.Address.PostalCode,
+                country_code: buyerInfo.Address.Country,
+            },
+            email_address: "petro-test01-us@cctest.com",
+            password: "Qq111222333",
+            phone: {
+                phone_type: "MOBILE",
+                phone_number: {
+                    national_number: buyerInfo.Contact.Phone,
+                },
+            },
+            "attributes": {
+                "vault": {
+                    store_in_vault: "ON_SUCCESS",
+                    usage_type: "MERCHANT",
+                    customer_type: "CONSUMER",
+                }
+            },
+            // "stored_credential": {
+            //     "payment_initiator": "CUSTOMER",
+            //     "payment_type": "ONE_TIME",
+            //     "usage": "FIRST"
+            // },
+            "experience_context": {
+                "return_url": "https://www.google.com/success",
+                "cancel_url": "https://www.google.com/cancel"
+            }
+        }
+    }
+}
+
+const assembleACDCRecurringObject = (createOrderObj: ExtendedObj, ACDCVaultID: string) => {
+    (createOrderObj as any).payment_source = {
+        'card': {
+            "experience_context": {
+                shipping_preference: "NO_SHIPPING",
+                // shipping_preference: "SET_PROVIDED_ADDRESS",
+                "return_url": "https://www.google.com/success",
+                "cancel_url": "https://www.google.com/cancel"
+            },
+            "vault_id": ACDCVaultID
+        }
+    }
+}
+
 
 //2024-11-19, payer这个字段, 虽然能用, 但是有问题. 把payer信息放到payment_source字段下
 //2025-01-22, 重构代码
@@ -105,19 +169,42 @@ function assembleCreateOrderOject(buyerInfo: BuyerInfo, ShoppingCartList: Shoppi
         ],
     };
 
-    if (vaultReducerSetting.vaultSetting.oneTime.isOneTime) {
-        if (vaultReducerSetting.vaultSetting.oneTime.oneTimeSetting.isSavePayPalWallet) {
-            //PayPal Wallet
-            assemblePayPalOneTimeObject(createOrderObj, buyerInfo);
-        }
 
-    }
-    if (vaultReducerSetting.vaultSetting.recurring.isRecurring) {
-        if (vaultReducerSetting.vaultSetting.recurring.recurringSetting.isUsePayPalWallet) {
-            //PayPal Wallet
-            assemblePayPalSDKRecurringObject(createOrderObj);
+    //适用于 PayPal Wallet, PayLater, BCDC的支付选项
+    if (paymentMethod === PAYMENT_METHOD.PAYPAL_BCDC || paymentMethod === PAYMENT_METHOD.PAYPAL_STANDARD || paymentMethod === PAYMENT_METHOD.PAYPAL_BNPL) {
+        if (vaultReducerSetting.vaultSetting.oneTime.isOneTime) {
+            if (vaultReducerSetting.vaultSetting.oneTime.oneTimeSetting.isSavePayPalWallet) {
+                //PayPal Wallet - One Time
+                assemblePayPalOneTimeObject(createOrderObj, buyerInfo);
+            }
+
+        }
+        if (vaultReducerSetting.vaultSetting.recurring.isRecurring) {
+            if (vaultReducerSetting.vaultSetting.recurring.recurringSetting.isUsePayPalWallet) {
+                //PayPal Wallet - Recurring
+                assemblePayPalRecurringObject(createOrderObj);
+            }
         }
     }
+
+    //适用于 ACDC的支付选项
+    if (paymentMethod === PAYMENT_METHOD.PAYPAL_ACDC) {
+        if (vaultReducerSetting.vaultSetting.oneTime.isOneTime) {
+            if (vaultReducerSetting.vaultSetting.oneTime.oneTimeSetting.isSaveACDC) {
+                //ACDC - One Time
+                assembleACDCOneTimeObject(createOrderObj, buyerInfo);
+            }
+
+        }
+        if (vaultReducerSetting.vaultSetting.recurring.isRecurring) {
+            if (vaultReducerSetting.vaultSetting.recurring.recurringSetting.isUseACDC) {
+                //ACDC - Recurring
+                const ACDCVaultID = vaultReducerSetting.vaultData.acdc.vaultId;
+                assembleACDCRecurringObject(createOrderObj, ACDCVaultID);
+            }
+        }
+    }
+
 
     return createOrderObj;
 }
@@ -152,28 +239,58 @@ const getCreateOrderObjectFn = (callbackFnSet: CreateOrderObjectFnParamType) => 
     console.log(`%c${JSON.stringify(createOrderObj, null, "  ")}`, "color:green");
     // debugger;
 
-    let paypalObject: ExtendedObj = {
-        createOrder: async function () {
-            return (await CreateOrderFetchAPI(createOrderObj)).orderID;
-        },
-        onApprove: async function (data: any, actions: any) {
+
+    const afterApprove: Function = (transactionID: string) => {
+        // debugger;
+        if (isOpenDialog) {
+            // a Dialog to PopUp transaction ID;
+            openDialogFn(transactionID);
+            return;
+        }
+        setTimeout(() => {
+            navigate(getLink())
+        }, 1800)
+    }
+
+
+    let paypalObject: ExtendedObj = {};
+
+    if (PAYMENT_METHOD.PAYPAL_BCDC === paymentMethod || PAYMENT_METHOD.PAYPAL_STANDARD === paymentMethod || PAYMENT_METHOD.PAYPAL_BNPL === paymentMethod) {
+        const onApprove = async function (data: any, actions: any) {
             const { transactionID, jsonResponse, httpStatusCode } = await CaptureOrderFetchAPI();
+            afterApprove(transactionID);
+        };
+
+        paypalObject = {
+            createOrder: async function () {
+                return (await CreateOrderFetchAPI(createOrderObj)).orderID;
+            },
+            onApprove: onApprove,
+            onCancel: function (data: any) {
+                // window.alert("Cancel!")
+                // window.close();
+                // Show a cancel page, or return to cart
+            },
+        };
+    }
+
+    if (PAYMENT_METHOD.PAYPAL_ACDC === paymentMethod) {
+        const onApproveACDC = async function (data: any, actions: any) {
             // debugger;
-            if (isOpenDialog) {
-                // a Dialog to PopUp transaction ID;
-                openDialogFn(transactionID);
-                return;
-            }
-            setTimeout(() => {
-                navigate(getLink())
-            }, 1800)
-        },
-        onCancel: function (data: any) {
-            // window.alert("Cancel!")
-            // window.close();
-            // Show a cancel page, or return to cart
-        },
-    };
+
+            const transactionID = await onApproveCallback(data, actions);
+            afterApprove(transactionID.id);
+        }
+
+        paypalObject = {
+            createOrder: async function () {
+                return (await CreateOrderFetchAPI(createOrderObj)).orderID;
+            },
+            onApprove: onApproveACDC,
+
+        };
+    }
+
 
     //TODO//待完成
     //物流运费功能还没搞定, 会报错
@@ -201,10 +318,29 @@ const getCreateOrderObjectFn = (callbackFnSet: CreateOrderObjectFnParamType) => 
         };
     }
 
+    if (PAYMENT_METHOD.PAYPAL_ACDC === paymentMethod && vaultReducerSetting.vaultSetting.recurring.recurringSetting.isUseACDC) {
+        paypalObject = {
+            createOrder: async () =>
+                await CreateOrderFetchAPI(createOrderObj)
+            ,
+            onSuccess: (orderData: any) => {
+                const transaction = getTransaction(orderData);
+                const transactionID = transaction.id;
+                setSuccessACDCResultMsg(transaction);
+                afterApprove(transactionID);
+            }
+        }
+        return paypalObject;
+
+    }
+
     return paypalObject;
 };
 
 export default getCreateOrderObjectFn;
+
+
+// ************************* EOF *************************
 
 //[2024-02-20 payer这个属性已经不维护了, 要重新组织, 我这里只有shipping address, 没有billing address, billing address要配合页面展示一起修改]
 // function assembleCreateOrderOject() {

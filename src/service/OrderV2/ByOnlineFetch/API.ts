@@ -1,5 +1,8 @@
 
+import PAYMENT_METHOD from "@/enum/PAYMENT_METHOD";
 import { getAccessToken } from "@/reducer/reducers/clientSecretReducer";
+import { PaymentState } from "@/reducer/reducers/paymentMethodReducer";
+import { vaultSlice } from "@/reducer/reducers/vaultReducer";
 import store from "@/reducer/store";
 
 
@@ -27,9 +30,9 @@ export const getJsSDKClientIDSecretKey = () => {
 
 export const getBearerAccessToken = async () => {
     let token = getAccessToken(store.getState());
-    if (token !== "") {        
+    if (token !== "") {
         return `Bearer ${token}`
-    }else{
+    } else {
         let tokenData = (await generateAccessToken())?.access_token;
         return `Bearer ${tokenData}`
     }
@@ -131,16 +134,30 @@ export const generateAccessToken = async () => {
             isUsePayPalWallet,
             isUseACDC)
 
+        //[2025-03-25](Fix)当isRecurring为true时, 需要对选择ACDC和PayPal使用不同的merchantID. 不然会刷掉另一个支付方式的merchantID
+        let paymentMethod: PAYMENT_METHOD = store.getState().paymentMethod.method;
+
+
         if (isRecurring) {
             let target_customer_id: string = "";
-            if (isUsePayPalWallet) {
-                let { paypalWallet } = getVaultPayPalData();
-                target_customer_id = paypalWallet.customerId;
+
+            //[2025-03-25](Fix)当isRecurring为true时, 需要对选择ACDC和PayPal使用不同的merchantID. 不然会刷掉另一个支付方式的merchantID
+            if (paymentMethod === PAYMENT_METHOD.PAYPAL_STANDARD) {
+                if (isUsePayPalWallet) {
+                    let { paypalWallet } = getVaultPayPalData();
+                    target_customer_id = paypalWallet.customerId;
+                }
             }
-            if (isUseACDC) {
-                let { acdc } = getVaultACDCData();
-                target_customer_id = acdc.customerId;
+
+            if (paymentMethod === PAYMENT_METHOD.PAYPAL_ACDC) {
+                if (isUseACDC) {
+                    let { acdc } = getVaultACDCData();
+                    target_customer_id = acdc.customerId;
+                }
             }
+
+
+
             body = new URLSearchParams({
                 grant_type: "client_credentials",
                 response_type: "id_token",
@@ -149,6 +166,16 @@ export const generateAccessToken = async () => {
         }
         if (isOneTime) {
             body = "grant_type=client_credentials"
+
+            //[2025-03-25](Feat)当isOneTime为true时, 如果要保存ACDC(isSaveACDC === true), 使用ACDC的customerId
+            if (paymentMethod === PAYMENT_METHOD.PAYPAL_ACDC && isSaveACDC) {
+                let { acdc } = getVaultACDCData();
+                body = new URLSearchParams({
+                    grant_type: "client_credentials",
+                    response_type: "id_token",
+                    target_customer_id: acdc.customerId,
+                })
+            }
         }
 
         console.log(JSON.stringify(request, null, "  "))
@@ -178,6 +205,53 @@ export async function handleResponse(responsePromise: Promise<any>) {
     } catch (err) {
         const errorMessage = await responsePromise.then(data => data.text());
         throw new Error(errorMessage);
+    }
+}
+
+
+//[2025-03-25](Feat)保存Vault信息
+export const handleSaveVaultInfo = async (httpStatusCode: number, jsonResponse: any) => {
+    const { isOneTime, isRecurring, isSaveACDC, isSavePayPalWallet } = getVaultSetting();
+    if (isRecurring) return;
+
+    if (httpStatusCode === 200 || httpStatusCode === 201) {
+        console.log("[handleSaveVaultInfo]Vault Info Saved Successfully!");
+
+        let paymentMethod: PAYMENT_METHOD = store.getState().paymentMethod.method;
+
+        if (paymentMethod === PAYMENT_METHOD.PAYPAL_ACDC && isSaveACDC) {
+            handleSaveVaultInfoACDC(jsonResponse);
+        }
+        if ((paymentMethod === PAYMENT_METHOD.PAYPAL_STANDARD || paymentMethod === PAYMENT_METHOD.PAYPAL_BCDC) && isSavePayPalWallet) {
+            handleSaveVaultInfoACDC(jsonResponse);
+        }
+    }
+}
+
+const handleSaveVaultInfoACDC = (jsonResponse: any) => {
+    const cardBrand = jsonResponse["payment_source"]["card"]["brand"];
+    const cardLast4 = jsonResponse["payment_source"]["card"]["last_digits"];
+    const cardExpiry = jsonResponse["payment_source"]["card"]["expiry"];
+
+
+    store.dispatch(vaultSlice.actions.setACDCCardBrand(cardBrand))
+    store.dispatch(vaultSlice.actions.setACDCCardLast4(cardLast4))
+    store.dispatch(vaultSlice.actions.setACDCCardExpiry(cardExpiry))
+
+    const vaultAttributes = jsonResponse["payment_source"]["card"]["attributes"]["vault"];
+    if (vaultAttributes["status"] === "VAULTED") {
+        store.dispatch(vaultSlice.actions.setACDCVaultID(vaultAttributes["id"]))
+        store.dispatch(vaultSlice.actions.setACDCCustomerID(vaultAttributes["customer"]["id"]))
+    }
+}
+
+const handleSaveVaultInfoPayPalWallet = (jsonResponse: any) => {
+
+
+    const vaultAttributes = jsonResponse["payment_source"]["paypal"]["attributes"]["vault"];
+    if (vaultAttributes["status"] === "VAULTED") {
+        store.dispatch(vaultSlice.actions.setPayPalWalletVaultID(vaultAttributes["id"]))
+        store.dispatch(vaultSlice.actions.setPayPalWalletCustomerID(vaultAttributes["customer"]["id"]))
     }
 }
 

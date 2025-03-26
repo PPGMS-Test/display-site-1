@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import PAYMENT_METHOD from "@/enum/PAYMENT_METHOD";
 
-interface PaymentState {
+export interface PaymentState {
   method: PAYMENT_METHOD;
   displayMethodsInCheckoutPagePaymentTable: { paymentMethod: PAYMENT_METHOD, isDisplay: boolean }[]
 }

@@ -1,6 +1,6 @@
 import ErrorPage from "../pages/error-page";
 
-import CheckoutPage from "../pages/ShoppingCartBCDC";
+import CheckoutPage from "../pages/ShoppingCartCheckout";
 
 import Product from "../pages/Product";
 import Thankyou from "../pages/Thankyou";

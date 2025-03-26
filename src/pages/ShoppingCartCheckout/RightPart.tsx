@@ -3,23 +3,25 @@ import { FC, useState } from "react";
 import PricingSeparate from "./PricingSeparate";
 import PricingTotal from "./PricingTotal";
 
-import { useAppSelector, useAppDispatch } from "../../typeHooks";
+import { useAppSelector, useAppDispatch } from "@/typeHooks";
 
-import SmartPaymentButton from "../../components/PayPalCheckOutButtons/JSSDKRenderedButtons/SmartPaymentBtn/SmartPaymentButton";
+import SmartPaymentButton from "@/components/PayPalCheckOutButtons/JSSDKRenderedButtons/SmartPaymentBtn/SmartPaymentButton";
 // BCDCButton这个模块已经废弃, 通过SmartPaymentButton的buttonType属性来控制渲染不同的Button类型
-// import BCDCButton from "../../components/PayPalCheckOutButtons/JSSDKRenderedButtons/BCDCButton/BCDCButton";
+// import BCDCButton from "@/components/PayPalCheckOutButtons/JSSDKRenderedButtons/BCDCButton/BCDCButton";
 import APMDisplayArea from "../APM/APMDisplayArea";
-import PAYMENT_METHOD from "../../enum/PAYMENT_METHOD";
-import { getShoppingCart } from "../../reducer/reducers/shoppingCartReducer";
-import { getPaymentMethod } from "../../reducer/reducers/paymentMethodReducer";
-import { getAPMMethod } from "../../reducer/reducers/APMReducer";
+import PAYMENT_METHOD from "@/enum/PAYMENT_METHOD";
+import { getShoppingCart } from "@/reducer/reducers/shoppingCartReducer";
+import { getPaymentMethod } from "@/reducer/reducers/paymentMethodReducer";
+import { getAPMMethod } from "@/reducer/reducers/APMReducer";
 import APM_METHOD_ENUM from "../APM/APM_METHOD_ENUM";
-import ACDCComponents from "../../components/ACDC/ACDCComponents";
+import ACDCComponents from "@/components/ACDC/ACDCComponents";
 import GooglePayButton from "@/components/PayPalCheckOutButtons/GooglePayButton/GooglePayButton";
 import ApplePayButton from "@/components/PayPalCheckOutButtons/ApplePayButton/ApplePayButton";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { Tooltip } from "@mui/material";
 import FakeApplePayButton from "@/components/PayPalCheckOutButtons/ApplePayButton/FakeApplePayButton";
+import { getUseACDCFlag } from "@/reducer/reducers/vaultReducer";
+import ACDCRecurring from "@/components/ACDC/ACDCRecurring";
 
 function renderSmartPaymentButtons() {
     return (
@@ -66,12 +68,20 @@ function renderBNPLButton() {
     );
 }
 
-function renderACDC() {
-    return (
-        <>
-            <ACDCComponents />
-        </>
-    );
+function renderACDC(isUseACDCVault: boolean) {
+    if (!isUseACDCVault) {
+        return (
+            <>
+                <ACDCComponents />
+            </>
+        );
+    } else {
+        return (
+            <>
+                <ACDCRecurring />
+            </>
+        );
+    }
 }
 
 function renderGooglePay() {
@@ -93,7 +103,8 @@ function renderApplePay() {
 
 function CurrentPaymentMethod(
     selectPaymentMethod: PAYMENT_METHOD,
-    APMMethod: APM_METHOD_ENUM
+    APMMethod: APM_METHOD_ENUM,
+    isUseACDCVault: boolean
 ) {
     switch (selectPaymentMethod) {
         case PAYMENT_METHOD.PAYPAL_STANDARD:
@@ -109,7 +120,7 @@ function CurrentPaymentMethod(
             return renderBNPLButton();
             break;
         case PAYMENT_METHOD.PAYPAL_ACDC:
-            return renderACDC();
+            return renderACDC(isUseACDCVault);
             break;
         case PAYMENT_METHOD.PAYPAL_APPLEPAY:
             return renderApplePay();
@@ -131,6 +142,8 @@ const RightPart: FC = () => {
     const APMMethod = useAppSelector((state) => {
         return getAPMMethod(state);
     });
+
+    const isUseACDCVault = useAppSelector((state) => getUseACDCFlag(state));
 
     let [showPaymentMethod, setShowPaymentMethod] =
         useState(selectPaymentMethod);
@@ -159,7 +172,8 @@ const RightPart: FC = () => {
                         <div>
                             {CurrentPaymentMethod(
                                 selectPaymentMethod,
-                                APMMethod
+                                APMMethod,
+                                isUseACDCVault
                             )}
                         </div>
                     </div>

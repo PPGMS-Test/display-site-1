@@ -31,6 +31,10 @@ const renderJSSDK = function (loadParam: JSSDKParams) {
         console.log("[UseJSSDK.ts] Smart Payment button Url:\r\n", `>> ${url}`)
         PayPal_SPB_JS_SDK_LoadScript.src = url;
         PayPal_SPB_JS_SDK_LoadScript.async = false;
+
+        console.log(`%c["renderJSSDK.ts"]isUseVault:`, "color:green", isUseVault);
+        console.log(`%c["renderJSSDK.ts"]data-user-id-token:`, "color:green", dataUserIdToken);
+
         if (isUseVault) {
             PayPal_SPB_JS_SDK_LoadScript.setAttribute("data-user-id-token", dataUserIdToken || "");
         }

@@ -7,6 +7,9 @@ import {
     getJsSDKSecretKey,
 } from "@/reducer/reducers/clientSecretReducer";
 import {
+    getACDCCustomerID,
+    getACDCMerchantID,
+    getACDCVaultID,
     getPayPalWalletCustomerID,
     getPayPalWalletMerchantID,
     getPayPalWalletVaultID,
@@ -27,15 +30,20 @@ const codeHighlightStyle = {
 const HomePage: FC = () => {
     const clientID = useAppSelector((state) => getJsSDKClientID(state));
     const secretKey = useAppSelector((state) => getJsSDKSecretKey(state));
-    const vaultID = useAppSelector((state) => getPayPalWalletVaultID(state));
 
-    const customerID = useAppSelector((state) =>
+    const walletVaultID = useAppSelector((state) =>
+        getPayPalWalletVaultID(state)
+    );
+    const walletCustomerID = useAppSelector((state) =>
         getPayPalWalletCustomerID(state)
     );
-
-    const merchantID = useAppSelector((state) =>
+    const walletMerchantID = useAppSelector((state) =>
         getPayPalWalletMerchantID(state)
     );
+
+    const ACDCVaultID = useAppSelector((state) => getACDCVaultID(state));
+    const ACDCCustomerID = useAppSelector((state) => getACDCCustomerID(state));
+    const ACDCMerchantID = useAppSelector((state) => getACDCMerchantID(state));
 
     return (
         <div className=" space-y-2">
@@ -53,12 +61,18 @@ const HomePage: FC = () => {
 
             <MyPanel>
                 <div>
-                    <Button onClick={()=>{
-                        persistor.purge();
-                    }}>Purge Browser LocalStorage</Button>                   
+                    <Button
+                        onClick={() => {
+                            persistor.purge();
+                        }}
+                    >
+                        Purge Browser LocalStorage
+                    </Button>
                 </div>
-                Please Refresh Browser Tag after purge LocalStorage, because Data in Memory is not cleared yet. <br/>
-                If you want to use your own Vault Info, then do not purge LocalStorage.
+                Please Refresh Browser Tag after purge LocalStorage, because
+                Data in Memory is not cleared yet. <br />
+                If you want to use your own Vault Info, then do not purge
+                LocalStorage.
             </MyPanel>
             <MyPanel>
                 <div className="justify-between flex">
@@ -75,16 +89,41 @@ const HomePage: FC = () => {
                         <div className="m-1">PayPal Wallet Vault Info</div>
                         <hr />
                         <div className="justify-between flex mt-1">
-                            <p style={codeHighlightStyle}>VaultID:</p>
-                            <p>{vaultID}</p>
+                            <p style={codeHighlightStyle}>
+                                PayPal Wallet VaultID:
+                            </p>
+                            <p>{walletVaultID}</p>
                         </div>
                         <div className="justify-between flex">
-                            <p style={codeHighlightStyle}>CustomerID:</p>
-                            <p>{customerID}</p>
+                            <p style={codeHighlightStyle}>
+                                PayPal Wallet CustomerID:
+                            </p>
+                            <p>{walletCustomerID}</p>
                         </div>
                         <div className="justify-between flex">
-                            <p style={codeHighlightStyle}>MerchantID:</p>
-                            <p>{merchantID}</p>
+                            <p style={codeHighlightStyle}>
+                                PayPal Wallet MerchantID:
+                            </p>
+                            <p>{walletMerchantID}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex items-center">
+                    <div className="m-2 rounded-lg border-2 p-2">
+                        <div className="m-1">ACDC Vault Info</div>
+                        <hr />
+                        <div className="justify-between flex mt-1">
+                            <p style={codeHighlightStyle}>ACDC VaultID:</p>
+                            <p>{ACDCVaultID}</p>
+                        </div>
+                        <div className="justify-between flex">
+                            <p style={codeHighlightStyle}>ACDC CustomerID:</p>
+                            <p>{ACDCCustomerID}</p>
+                        </div>
+                        <div className="justify-between flex">
+                            <p style={codeHighlightStyle}>ACDC MerchantID:</p>
+                            <p>{ACDCMerchantID}</p>
                         </div>
                     </div>
                 </div>

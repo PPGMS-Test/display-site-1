@@ -27,7 +27,12 @@ export type VaultReducerType = {
         acdc: {
             customerId: string,
             vaultId: string,
-            merchantID: string
+            merchantID: string,
+            cardInfo: {
+                brand: string,
+                last4: string,
+                expiry: string
+            }
         }
     }
 }
@@ -57,8 +62,13 @@ const initialState: VaultReducerType = {
         },
         acdc: {
             customerId: "gmstestbuyeracdc",
-            vaultId: "",
-            merchantID: ""
+            vaultId: "8we100615y074045e",
+            merchantID: "CMHAMMNAXCMGA",
+            cardInfo: {
+                brand: "VISA",
+                last4: "1111",
+                expiry: "2027-12"
+            }
         }
     }
 }
@@ -110,6 +120,20 @@ export const vaultSlice = createSlice({
         setACDCMerchantID: (state, action: PayloadAction<string>) => {
             state.vaultData.acdc.merchantID = action.payload;
         },
+
+        //[2025-03-25](Feat)ACDC Card Info
+        setACDCCardInfo: (state, action: PayloadAction<any>) => {
+            state.vaultData.acdc.cardInfo = action.payload;
+        },
+        setACDCCardBrand: (state, action: PayloadAction<string>) => {
+            state.vaultData.acdc.cardInfo.brand = action.payload;
+        },
+        setACDCCardLast4: (state, action: PayloadAction<string>) => {
+            state.vaultData.acdc.cardInfo.last4 = action.payload;
+        },
+        setACDCCardExpiry: (state, action: PayloadAction<string>) => {
+            state.vaultData.acdc.cardInfo.expiry = action.payload;
+        }
     },
 });
 
@@ -125,15 +149,17 @@ export const getUsePayPalWalletFlag = (state: RootState) => state.vault.vaultSet
 export const getUseACDCFlag = (state: RootState) => state.vault.vaultSetting.recurring.recurringSetting.isUseACDC;
 
 export const getPayPalWalletVaultID = (state: RootState) => state.vault.vaultData.paypalWallet.vaultId;
-
 export const getPayPalWalletCustomerID = (state: RootState) => state.vault.vaultData.paypalWallet.customerId;
-
 export const getPayPalWalletMerchantID = (state: RootState) => state.vault.vaultData.paypalWallet.merchantID;
 
 export const getACDCVaultID = (state: RootState) => state.vault.vaultData.acdc.vaultId;
-
 export const getACDCCustomerID = (state: RootState) => state.vault.vaultData.acdc.customerId;
-
 export const getACDCMerchantID = (state: RootState) => state.vault.vaultData.acdc.merchantID;
+
+//[2025-03-25](Feat)ACDC Card Info
+export const getACDCCardInfo = (state: RootState) => state.vault.vaultData.acdc.cardInfo;
+export const getACDCCardBrand = (state: RootState) => state.vault.vaultData.acdc.cardInfo.brand;
+export const getACDCCardLast4 = (state: RootState) => state.vault.vaultData.acdc.cardInfo.last4;
+export const getACDCCardExpiry = (state: RootState) => state.vault.vaultData.acdc.cardInfo.expiry;  
 
 export default vaultSlice.reducer;

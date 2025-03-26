@@ -8,7 +8,7 @@ const ACDCTestCard:FC=()=>{
             <List>
                 <ListItem alignItems="flex-start">
                     <ListItemText
-                        primary="4032030601156491"
+                        primary="4111111111111111"
                         secondary="Card Number"
                     />
                 </ListItem>
@@ -16,7 +16,7 @@ const ACDCTestCard:FC=()=>{
                     <ListItemText secondary="Expire Date" primary="10/2027" />
                 </ListItem>
                 <ListItem alignItems="flex-start">
-                    <ListItemText secondary="CVV" primary="448" />
+                    <ListItemText secondary="CVV" primary="123" />
                 </ListItem>
             </List>
         </div>

@@ -13,6 +13,33 @@ module.exports = {
             "@scss": path.resolve(__dirname, "src", "assets", "styles"),
         },
         plugins: [new WebpackBar()],
+        module: {
+            rules: [
+                {
+                    test: /\.module\.css$/,
+                    use: [
+                        {
+                            loader: "style-loader",
+                        },
+                        {
+                            loader: "css-loader",
+                            options: {
+                                modules: {
+                                    localIdentName: "[local]_[hash:base64:5]", // Customize class names
+                                },
+                                importLoaders: 1,
+                            },
+                        },
+                    ],
+                },
+                // Add this rule to handle non-module CSS files (if any)
+                {
+                    test: /\.css$/i,
+                    exclude: /\.module\.css$/,
+                    use: ["style-loader", "css-loader"],
+                },
+            ],
+        },
 
         // devServer: {
         //     port: 20241,
