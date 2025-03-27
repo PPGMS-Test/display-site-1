@@ -9,8 +9,8 @@ import { RootState } from "../store";
 import user_data from '@/Mock/Person/US_Tom.json'
 import address_data from '@/Mock/Address/USAddress.json'
 
-import { User } from "../../interface/user/User";
-import { Address } from "../../interface/address/Address";
+import { User } from "@/interface/user/User";
+import { Address } from "@/interface/address/Address";
 
 
 export interface BuyerInfo {

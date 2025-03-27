@@ -1,7 +1,8 @@
 const path = require("path");
 const WebpackBar = require("webpackbar");
+const { getLoader, loaderByName } = require("@craco/craco");
 
-const url = process.env.REACT_APP_URL
+const url = process.env.REACT_APP_URL;
 module.exports = {
     // webpack 配置
     webpack: {
@@ -39,6 +40,22 @@ module.exports = {
                     use: ["style-loader", "css-loader"],
                 },
             ],
+        },
+
+        // Add this section for PostCSS configuration
+        style: {
+            postcss: {
+                plugins: [
+                    require("postcss-flexbugs-fixes"),
+                    require("postcss-preset-env")({
+                        autoprefixer: {
+                            flexbox: "no-2009",
+                        },
+                        stage: 3,
+                    }),
+                    require("@tailwindcss/postcss")(), // Note the () here
+                ],
+            },
         },
 
         // devServer: {

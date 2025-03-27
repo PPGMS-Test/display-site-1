@@ -11,7 +11,7 @@ export interface PaymentState {
 const initialState: PaymentState = {
   method: PAYMENT_METHOD.PAYPAL_STANDARD,
   displayMethodsInCheckoutPagePaymentTable: Object.values(PAYMENT_METHOD).map(
-    (item: PAYMENT_METHOD, index) => {
+    (item: PAYMENT_METHOD) => {
       return {
         paymentMethod: item,
         // 默认的选项就只保留Standard，BCDC，AP 和 GP，其他的3个都默认不选中

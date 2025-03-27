@@ -1,7 +1,7 @@
-import { APMMethod } from './../../pages/APM/index';
+
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import APM_METHOD_ENUM from '../../pages/APM/APM_METHOD_ENUM';
+import APM_METHOD_ENUM from '@/pages/APM/APM_METHOD_ENUM';
 
 
 //默认的支付方式

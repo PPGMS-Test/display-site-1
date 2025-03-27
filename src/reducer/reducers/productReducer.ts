@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import product_data from "../../Mock/Product/ChildrenWear.json";
+import product_data from "@/Mock/Product/ChildrenWear.json";
 
 export interface Product {
     ProductName: string;
